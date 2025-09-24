@@ -7,3 +7,9 @@ tanulási módszerek alkalmazásával összefüggéseket találjon, következtet
 Az elemzésekhez a Python programozási nyelvhez elérhető elemzőeszközök kerülnek
 felhasználásra (például: NumPy, pandas). A dolgozathoz tartozó szoftverek, elemzések
 Jupyter munkafüzetek formájában készülnek.
+
+-Dataset-ek:
+
+https://www.kaggle.com/datasets/nikdavis/steam-store-games
+https://www.kaggle.com/datasets/fronkongames/steam-games-dataset
+https://www.kaggle.com/datasets/artermiloff/steam-games-dataset
