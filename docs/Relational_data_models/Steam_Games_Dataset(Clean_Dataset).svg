@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
-<svg width="49cm" height="29cm" viewBox="-243 198 980 567" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="49cm" height="29cm" viewBox="-243 198 976 567" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
     <rect style="fill: #ffffff" x="201" y="323" width="180" height="18"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="201" y="323" width="180" height="18"/>
-    <text font-size="11.2" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="291" y="337">Game (steam.csv)</text>
+    <text font-size="11.2" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="291" y="337">game (steam.csv)</text>
     <rect style="fill: #ffffff" x="201" y="341" width="180" height="292"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="201" y="341" width="180" height="292"/>
     <polygon style="fill: #000000" points="204,351 206,354 208,351 206,348 "/>
@@ -64,11 +64,11 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="343.2" y="629">int</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="-243" y="222" width="245.95" height="18"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-243" y="222" width="245.95" height="18"/>
-    <text font-size="11.2" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-120.025" y="236">Description (steam_description_data.csv)</text>
-    <rect style="fill: #ffffff" x="-243" y="240" width="245.95" height="68"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-243" y="240" width="245.95" height="68"/>
+    <rect style="fill: #ffffff" x="-243" y="222" width="244.5" height="18"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-243" y="222" width="244.5" height="18"/>
+    <text font-size="11.2" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-120.75" y="236">description (steam_description_data.csv)</text>
+    <rect style="fill: #ffffff" x="-243" y="240" width="244.5" height="68"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-243" y="240" width="244.5" height="68"/>
     <polygon style="fill: #000000" points="-240,250 -238,253 -236,250 -238,247 "/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-234" y="256">steam_appid</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-70" y="256">int</text>
@@ -84,11 +84,11 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-70" y="304">text</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="463" y="198" width="187.3" height="18"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="463" y="198" width="187.3" height="18"/>
-    <text font-size="11.2" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="556.65" y="212">Media (steam_media_data.csv)</text>
-    <rect style="fill: #ffffff" x="463" y="216" width="187.3" height="100"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="463" y="216" width="187.3" height="100"/>
+    <rect style="fill: #ffffff" x="463" y="198" width="188" height="18"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="463" y="198" width="188" height="18"/>
+    <text font-size="11.2" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="557" y="212">media (steam_media_data.csv)</text>
+    <rect style="fill: #ffffff" x="463" y="216" width="188" height="100"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="463" y="216" width="188" height="100"/>
     <polygon style="fill: #000000" points="466,226 468,229 470,226 468,223 "/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="472" y="232">mediaid</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="574.4" y="232">int</text>
@@ -99,10 +99,10 @@
     <ellipse style="fill: #000000" cx="468" cy="258" rx="2" ry="2"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="472" y="264">header_image</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="574.4" y="264">text</text>
-    <ellipse style="fill: #000000" cx="468" cy="274" rx="2" ry="2"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.2; stroke: #000000" cx="468" cy="274" rx="2" ry="2"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="472" y="280">screenshots</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="574.4" y="280">text</text>
-    <ellipse style="fill: #000000" cx="468" cy="290" rx="2" ry="2"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.2; stroke: #000000" cx="468" cy="290" rx="2" ry="2"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="472" y="296">background</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="574.4" y="296">text</text>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.2; stroke: #000000" cx="468" cy="306" rx="2" ry="2"/>
@@ -110,11 +110,11 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="574.4" y="312">text</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="463" y="425" width="273.3" height="18"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="463" y="425" width="273.3" height="18"/>
-    <text font-size="11.2" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="599.65" y="439">Requirements (steam_requirements_data.csv)</text>
-    <rect style="fill: #ffffff" x="463" y="443" width="273.3" height="116"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="463" y="443" width="273.3" height="116"/>
+    <rect style="fill: #ffffff" x="463" y="425" width="270" height="18"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="463" y="425" width="270" height="18"/>
+    <text font-size="11.2" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="598" y="439">requirements (steam_requirements_data.csv)</text>
+    <rect style="fill: #ffffff" x="463" y="443" width="270" height="116"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="463" y="443" width="270" height="116"/>
     <polygon style="fill: #000000" points="466,453 468,456 470,453 468,450 "/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="472" y="459">reqid</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="620.6" y="459">int</text>
@@ -122,7 +122,7 @@
     <ellipse style="fill: #000000" cx="468" cy="469" rx="2" ry="2"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="472" y="475">steam_appid</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="620.6" y="475">int</text>
-    <ellipse style="fill: #000000" cx="468" cy="485" rx="2" ry="2"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.2; stroke: #000000" cx="468" cy="485" rx="2" ry="2"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="472" y="491">pc_requirements</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="620.6" y="491">text</text>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.2; stroke: #000000" cx="468" cy="501" rx="2" ry="2"/>
@@ -134,16 +134,16 @@
     <ellipse style="fill: #000000" cx="468" cy="533" rx="2" ry="2"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="472" y="539">minimum</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="620.6" y="539">text</text>
-    <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.2; stroke: #000000" cx="468" cy="549" rx="2" ry="2"/>
+    <ellipse style="fill: #000000" cx="468" cy="549" rx="2" ry="2"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="472" y="555">recommended</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="620.6" y="555">text</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="-203.5" y="437.5" width="203.8" height="18"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-203.5" y="437.5" width="203.8" height="18"/>
-    <text font-size="11.2" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-101.6" y="451.5">Support (steam_support_info.csv)</text>
-    <rect style="fill: #ffffff" x="-203.5" y="455.5" width="203.8" height="68"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-203.5" y="455.5" width="203.8" height="68"/>
+    <rect style="fill: #ffffff" x="-203.5" y="437.5" width="202.45" height="18"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-203.5" y="437.5" width="202.45" height="18"/>
+    <text font-size="11.2" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-102.275" y="451.5">support (steam_support_info.csv)</text>
+    <rect style="fill: #ffffff" x="-203.5" y="455.5" width="202.45" height="68"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-203.5" y="455.5" width="202.45" height="68"/>
     <polygon style="fill: #000000" points="-200.5,465.5 -198.5,468.5 -196.5,465.5 -198.5,462.5 "/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-194.5" y="471.5">steam_appid</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-84.4" y="471.5">int</text>
@@ -159,17 +159,17 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-84.4" y="519.5">text</text>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="2.95,250 101.975,250 101.975,351 190,351 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1.5,250 101.25,250 101.25,351 190,351 "/>
     <polygon style="fill: #000000" points="190,356 200,351 190,346 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="190,356 200,351 190,346 "/>
-    <text font-size="9.6" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="6.95" y="246">1</text>
+    <text font-size="9.6" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="5.5" y="246">1</text>
     <text font-size="9.6" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="197" y="347">1</text>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="0.3,465.5 102,465.5 102,351 190,351 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-1.05,465.5 102,465.5 102,351 190,351 "/>
     <polygon style="fill: #000000" points="190,356 200,351 190,346 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="190,356 200,351 190,346 "/>
-    <text font-size="9.6" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="4.3" y="461.5">1</text>
+    <text font-size="9.6" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2.95" y="461.5">1</text>
     <text font-size="9.6" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="197" y="347">1</text>
   </g>
   <g>
@@ -189,14 +189,14 @@
   <g>
     <rect style="fill: #ffffff" x="120" y="695" width="110.7" height="18"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="120" y="695" width="110.7" height="18"/>
-    <text font-size="11.2" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="175.35" y="709">Game_Tag</text>
+    <text font-size="11.2" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="175.35" y="709">game_tag</text>
     <rect style="fill: #ffffff" x="120" y="713" width="110.7" height="52"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="120" y="713" width="110.7" height="52"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.2; stroke: #000000" cx="125" cy="723" rx="2" ry="2"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="129" y="729">appid</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="185.2" y="729">int</text>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.2; stroke: #000000" cx="125" cy="739" rx="2" ry="2"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="129" y="745">tag_id</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="129" y="745">tagid</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="185.2" y="745">int</text>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.2; stroke: #000000" cx="125" cy="755" rx="2" ry="2"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="129" y="761">weight</text>
@@ -205,7 +205,7 @@
   <g>
     <rect style="fill: #ffffff" x="298" y="700" width="118.4" height="18"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="298" y="700" width="118.4" height="18"/>
-    <text font-size="11.2" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="357.2" y="714">Tags</text>
+    <text font-size="11.2" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="357.2" y="714">tags</text>
     <rect style="fill: #ffffff" x="298" y="718" width="118.4" height="36"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="298" y="718" width="118.4" height="36"/>
     <polygon style="fill: #000000" points="301,728 303,731 305,728 303,725 "/>
