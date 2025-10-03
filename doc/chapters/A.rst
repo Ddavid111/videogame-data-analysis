@@ -6,62 +6,53 @@ Normalizálás lépései
 
 Első normálforma (1NF)
 ~~~~~~~~~~~~~~~~~~~~~~
-- A denormalizált tábla redundáns, ismétlődő mezőket tartalmazott
-  (pl. több screenshot, több tag vagy kategória egy sorban).
-- 1NF követelménye, hogy minden attribútum atomi értéket vegyen fel.
-- Ennek érdekében a komplex és listaértékű mezőket külön táblákba bontottam.
+- Az eredeti CSV-ben több attribútum nem atomi értékeket tartalmazott 
+  (pl. több screenshot, több címke, több kategória egyetlen cellában).
+- Az 1NF követelménye, hogy minden attribútum oszthatatlan, atomi értéket vegyen fel.
+- A listaértékű és összetett attribútumokat külön táblákba helyeztem.
 
   Például:
-  
-  * ``tags`` – a címkék önálló entitásba kerültek
-  * ``game_tag`` – a játék–címke kapcsolat külön asszociatív tábla
-  * ``categories`` és ``game_category`` – kategóriák normalizálása
-  * ``platforms`` és ``game_platform`` – platformok normalizálása
-  * ``owners_range`` – a tulajdonosi tartomány külön mezőkre bontva (min, max)
-  * ``screenshots`` és ``movies`` – minden média URL külön rekordban tárolódik
-  * ``requirements`` – az eredeti JSON mezők felbontva soronként, 
-    OS + minimum/recommended bontással
+
+  * ``tags`` + ``game_tag`` – címkék és játék–címke kapcsolat
+  * ``categories`` + ``game_category`` – kategóriák és játék–kategória kapcsolat
+  * ``platforms`` + ``game_platform`` – platformok és játék–platform kapcsolat
+  * ``screenshots`` és ``movies`` – minden kép vagy videó külön rekordban tárolva
+  * ``requirements`` – a rendszerkövetelmények OS és típus (minimum/ajánlott) szerinti bontásban
 
 Második normálforma (2NF)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-- 2NF feltétele, hogy minden nem-kulcs attribútum teljes mértékben függjön
-  az elsődleges kulcstól.
 - A ``game`` tábla elsődleges kulcsa az ``appid``.
-- A leírás, támogatás, média és rendszerkövetelmény adatok nem a játék
-  alapadataitól, hanem magától az ``appid``-tól függnek.
-- Ezért külön táblákba kerültek:
-  
-  * ``description`` – részletes, rövid és általános leírás
-  * ``support`` – támogatási információk (weboldal, email, URL)
-  * ``media`` – képek, háttér és videók
-  * ``requirements`` – platformonkénti rendszerkövetelmények
+- Az olyan adatok, amelyek csak az ``appid``-tól függnek, de nem a játék alapadatait írják le,
+  külön táblákba kerültek:
+
+  * ``description`` – részletes, rövid és általános leírások
+  * ``support`` – támogatási információk (support URL, email, weboldal)
+  * ``media`` – fejléckép és háttér
+  * ``requirements`` – operációs rendszer és követelménytípus szerinti bontás
 
 Harmadik normálforma (3NF)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-- 3NF követelménye, hogy ne legyen tranzitív függőség.
-- A fejlesztők és kiadók adatai ismétlődhettek volna,
-  ezért külön táblába kerültek:
-  
-  * ``developers`` + ``game_developer``
-  * ``publishers`` + ``game_publisher``
+- A tranzitív függőségeket megszüntettem:
 
-- A címkék, kategóriák és platformok is külön azonosítót kaptak,
-  így nem kell szöveges mezőket ismételni a táblákban.
-- Minden sok-sok kapcsolat kapcsolótáblával van kezelve.
+  * A ``developers`` és ``publishers`` önálló entitások lettek, 
+    az ``appid``-hoz kapcsolótáblákon (``game_developer``, ``game_publisher``) keresztül kötődnek.
+  * A ``categories``, ``genres``, ``tags``, ``platforms`` táblák külön tárolják a neveket,
+    és csak azonosítók szerepelnek a kapcsolatokban.
+
+- Minden sok–sok kapcsolat kapcsolótáblával van kezelve, így nincs redundancia a szöveges értékekben.
 
 Végső séma – "A" reláció
------------------------
+-------------------------
 
-A normalizálás eredményeként az **"A" séma** a következő relációkból áll:
+A normalizálás eredményeként az **"A" séma** a következő főbb táblákból épül fel:
 
 * ``game`` – játék alapadatai
-* ``description`` – részletes leírások
+* ``description`` – leírások (részletes, rövid, about the game)
 * ``support`` – támogatási információk
-* ``media`` – alap médiaadatok
-* ``screenshots`` – játékhoz tartozó képek
-* ``movies`` – játékhoz tartozó videók
-* ``requirements`` – platformonkénti minimum/ajánlott követelmények
-* ``owners_range`` – tulajdonosok számtartománya
+* ``media`` – háttér és fejléckép
+* ``screenshots`` – képek
+* ``movies`` – videók
+* ``requirements`` – rendszerkövetelmények OS és típus szerint
 * ``categories`` – kategóriák
 * ``genres`` – műfajok
 * ``tags`` – címkék
@@ -69,9 +60,10 @@ A normalizálás eredményeként az **"A" séma** a következő relációkból �
 * ``developers`` – fejlesztők
 * ``publishers`` – kiadók
 
-Kapcsolótáblák:  
-
+Kapcsolótáblák
+~~~~~~~~~~~~~~
 * ``game_category`` – játék–kategória kapcsolat
+* ``game_genre`` – játék–műfaj kapcsolat
 * ``game_tag`` – játék–címke kapcsolat
 * ``game_platform`` – játék–platform kapcsolat
 * ``game_developer`` – játék–fejlesztő kapcsolat
@@ -79,6 +71,7 @@ Kapcsolótáblák:
 
 Összefoglalás
 -------------
+
 Az **"A" relációs séma** normalizálási lépései biztosítják:
 
 - Az adatredundancia minimális szinten tartását

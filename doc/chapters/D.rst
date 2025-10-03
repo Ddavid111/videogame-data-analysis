@@ -1,97 +1,103 @@
 Egységes relációs séma normalizálás
 ===================================
 
-Az **"A", "B"** és **"C"** relációs sémák mind különböző forrásokból (külön CSV fájlokból) 
-származtak, de hasonló logikai struktúrával rendelkeztek: a játékok alapadatai, 
-szöveges leírások, támogatási információk, médiák, kategóriák, nyelvek, címkék, 
-fejlesztők, kiadók és értékelések.  
+Bevezetés
+---------
+A "D" séma a korábbi három (A, B, C) sémák összevonásával és egységesítésével jött létre.  
+Kiindulási alapként több, különböző forrásból származó CSV-fájl szolgált, amelyek részben eltérő szerkezetűek voltak, illetve eltérő mezőket tartalmaztak.  
 
-A normalizálási folyamat célja az volt, hogy mindhárom séma redundanciáit 
-megszüntessük, és egy **egységes, tiszta adatmodellt** hozzunk létre, 
-amely lefedi az összes forrás által biztosított információt.
+A 2024-es és 2025-ös adatfájlok közötti fő különbség, hogy a 2025-ös verzió tartalmazta a
+``discount`` mezőt, míg a 2024-es verzió nem.  
+A különböző forrásokból érkező táblák összehangolásával egy egységes, teljes és normalizált adatmodell jött létre.
 
 Normalizálás lépései
 --------------------
 
 Első normálforma (1NF)
 ~~~~~~~~~~~~~~~~~~~~~~
-- A denormalizált forrásokban több mező is listajellegű adatot tartalmazott 
-  (pl. ``screenshots``, ``tags``, ``categories``, ``genres``, 
-  ``supported_languages``).  
-- Ezeket külön táblákba bontottam, így minden attribútum atomi értéket vesz fel.  
-- Létrejöttek a következő entitások: ``media``, ``description``, 
-  ``requirements``, ``categories``, ``genres``, ``languages``, ``tags``.  
+- Az eredeti CSV-fájlok több attribútuma nem atomi értékeket tartalmazott
+  (pl. ``tags``, ``genres``, ``categories``, ``supported_languages``, ``requirements`` JSON formában).
+- 1NF követelménye, hogy minden attribútum csak atomi értéket vehessen fel.
+- Az ilyen mezők önálló táblákba kerültek, a kapcsolatok pedig asszociatív táblákban vannak tárolva.
+
+  Példák:
+  * ``game_language`` + ``languages`` (nyelvek + audio flag)
+  * ``requirements`` (OS + típus szerinti bontás)
+  * ``game_tag`` + ``tags`` (címkék súlyozással)
+  * ``game_genre`` + ``genres``
+  * ``game_category`` + ``categories``
+  * ``game_platform`` + ``platforms``
+  * ``game_package`` + ``packages``
 
 Második normálforma (2NF)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-- A játék fő táblájának elsődleges kulcsa az ``appid``.  
-- Az olyan információkat, amelyek csak az ``appid``-tól függnek, de nem a játék 
-  többi alapadatát írják le, külön táblákba helyeztem:  
-
-  * ``support`` – támogatási információk  
-  * ``media`` – multimédiás adatok (képek, háttér, videók)  
-  * ``description`` – szöveges leírások  
-  * ``requirements`` – rendszerkövetelmények (JSON mezők szétbontva: OS, típus, leírás)  
-  * ``categories`` – kategóriák  
-  * ``genres`` – műfajok  
-  * ``languages`` – támogatott nyelvek és teljes audio nyelvek  
-  * ``developers`` – fejlesztők  
-  * ``publishers`` – kiadók  
-  * ``tags`` – címkék  
-
-- A több-több kapcsolatokat kapcsolótáblákkal kezeltem:
-
-  * ``game_category (appid, categoryid)``  
-  * ``game_genre (appid, genreid)``  
-  * ``game_language (appid, languageid, is_audio)``  
-  * ``game_developer (appid, developerid)``  
-  * ``game_publisher (appid, publisherid)``  
-  * ``game_tag (appid, tagid)``  
+- A ``game`` tábla elsődleges kulcsa az ``appid``.
+- A nem a játék alapadatait leíró, de az ``appid``-tól függő adatok külön táblákba kerültek:
+  
+  * ``description`` – részletes, rövid és "about the game" leírás
+  * ``support`` – támogatási adatok (URL, email, weboldal)
+  * ``media`` – multimédiás adatok (fejléckép, háttér)
+  * ``screenshots`` – képernyőképek
+  * ``movies`` – videók
+  * ``requirements`` – rendszerkövetelmények (OS, minimum/ajánlott)
+  * ``owners`` – tulajdonosi tartomány szöveges formában
 
 Harmadik normálforma (3NF)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-- A tranzitív függőségeket megszüntettem:  
+- A tranzitív függőségek megszüntetésére az ismétlődő szöveges mezők önálló entitásokba kerültek.
+- A sok-sok kapcsolatokat asszociatív táblák kezelik:
 
-  * a ``categories``, ``genres``, ``languages``, ``developers``, ``publishers``, 
-    ``tags`` táblák önállóan tárolják a megnevezéseket (pl. ``genre_name``)  
-  * a kapcsolótáblák kizárólag azonosítókat tartalmaznak, így nincs redundancia,  
-  * a ``requirements`` tábla normalizált formában tárolja a JSON-ból 
-    származó rendszerkövetelményeket.  
+  * ``game_language (appid, langid, audio)``  
+  * ``game_tag (appid, tagid, weight)``  
+  * ``game_genre (appid, genreid)``  
+  * ``game_category (appid, catid)``  
+  * ``game_platform (appid, platid)``  
+  * ``game_developer (appid, devid)``  
+  * ``game_publisher (appid, pubid)``  
+  * ``game_package (appid, packid)``  
 
-Végső egységes séma
--------------------
-A normalizálás eredményeként az **egységes relációs séma** a következő táblákból áll:  
+- Ez biztosítja az adatok konzisztenciáját, minimalizálja a redundanciát
+  és lehetővé teszi az egyszerű bővíthetőséget.
 
-**Fő entitások:**
+Végső séma – "D" reláció
+-------------------------
+A normalizálás eredményeként a **"D" séma** a következő fő relációkból áll:
 
-* ``game`` – játék alapadatai (appid, név, megjelenés dátuma, ár, értékelések, playtime, metacritic, statisztikai mutatók)  
+* ``game`` – játék alapadatai (név, megjelenési dátum, ár, értékelések, játszási idők, metacritic, tulajdonosok, statisztikák)  
+* ``description`` – részletes és rövid szöveges leírások  
 * ``support`` – támogatási információk  
-* ``media`` – multimédiás adatok  
-* ``description`` – szöveges leírások  
-* ``requirements`` – rendszerkövetelmények normalizált formában  
+* ``media`` – multimédiás adatok (fejléckép, háttér)  
+* ``screenshots`` – játékhoz tartozó képernyőképek  
+* ``movies`` – játékhoz tartozó videók  
+* ``requirements`` – rendszerkövetelmények (platform + típus szerinti bontás)  
+* ``languages`` – nyelvek (külön audio flag az asszociatív táblában)  
 * ``categories`` – kategóriák  
 * ``genres`` – műfajok  
-* ``languages`` – nyelvek  
+* ``tags`` – címkék (súlyozással)  
+* ``platforms`` – platformok  
 * ``developers`` – fejlesztők  
 * ``publishers`` – kiadók  
-* ``tags`` – címkék  
+* ``packages`` – csomagok  
 
-**Kapcsolótáblák:**
+Kapcsolótáblák:
 
-* ``game_category`` – játék–kategória kapcsolat  
+* ``game_language`` – játék–nyelv kapcsolat  
+* ``game_tag`` – játék–címke kapcsolat  
 * ``game_genre`` – játék–műfaj kapcsolat  
-* ``game_language`` – játék–nyelv kapcsolat (jelölve, ha teljes audio támogatás)  
+* ``game_category`` – játék–kategória kapcsolat  
+* ``game_platform`` – játék–platform kapcsolat  
 * ``game_developer`` – játék–fejlesztő kapcsolat  
 * ``game_publisher`` – játék–kiadó kapcsolat  
-* ``game_tag`` – játék–címke kapcsolat  
+* ``game_package`` – játék–csomag kapcsolat  
 
 Összefoglalás
 -------------
-Az **egységes relációs séma** biztosítja:  
+A **D relációs séma** az előző A, B és C sémák összevonásából született meg.  
+Fő előnyei:
 
-- Az 1NF, 2NF és 3NF követelményeinek teljesülését  
-- Az összes forrásból származó információk egységes integrációját  
-- Az adatredundancia minimális szintre csökkentését  
-- A több-több kapcsolatok kezelését kapcsolótáblákkal  
-- A rendszerkövetelmények (requirements) JSON struktúrájának normalizálását  
-- A séma könnyű bővíthetőségét és karbantarthatóságát a jövőben  
+- Egységesítette a különböző CSV-forrásokból származó adatokat  
+- Biztosítja az 1NF, 2NF és 3NF követelményeit  
+- Megszüntette a redundáns és nem atomi mezőket  
+- Kezeli a sok-sok kapcsolatokat asszociatív táblákon keresztül  
+- Tartalmaz minden fontos információt a játékokról, bővíthető módon  
+- Megkülönbözteti a források közti eltéréseket (pl. ``discount`` csak a 2025-ös adatokban szerepelt)  

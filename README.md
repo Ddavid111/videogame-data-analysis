@@ -10,6 +10,6 @@ Jupyter munkafüzetek formájában készülnek.
 
 -Dataset-ek:
 
-https://www.kaggle.com/datasets/nikdavis/steam-store-games
-https://www.kaggle.com/datasets/fronkongames/steam-games-dataset
-https://www.kaggle.com/datasets/artermiloff/steam-games-dataset
+https://www.kaggle.com/datasets/nikdavis/steam-store-games (A)
+https://www.kaggle.com/datasets/fronkongames/steam-games-dataset (B)
+https://www.kaggle.com/datasets/artermiloff/steam-games-dataset (C)
