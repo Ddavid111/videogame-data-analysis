@@ -72,7 +72,7 @@ Kapcsolótáblák:
 * ``game_platform`` – játék–platform kapcsolat  
 
 Összefoglalás
--------------
+--------------
 A **B relációs séma** eredménye egy tiszta, normalizált adatmodell, amely:  
 
 - Atomi értékeket tartalmaz (1NF)  

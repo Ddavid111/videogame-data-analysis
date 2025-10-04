@@ -2,7 +2,7 @@ A relációs séma normalizálás
 ============================
 
 Bevezetés
----------
+----------
 Ez a dokumentáció az **"A", "B", "C" relációs séma** normalizálási folyamatát mutatja be.  
 Az eredeti (denormalizált) struktúra egy nagy táblában tartalmazta az összes 
 játékhoz kapcsolódó információt mind három esetben: játék adatok, leírások, médiák, támogatási 

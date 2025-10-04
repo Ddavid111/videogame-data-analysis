@@ -60,7 +60,7 @@ Harmadik normálforma (3NF)
   és lehetővé teszi az egyszerű bővíthetőséget.
 
 Végső séma – "D" reláció
--------------------------
+--------------------------
 A normalizálás eredményeként a **"D" séma** a következő fő relációkból áll:
 
 * ``game`` – játék alapadatai (név, megjelenési dátum, ár, értékelések, játszási idők, metacritic, tulajdonosok, statisztikák)  

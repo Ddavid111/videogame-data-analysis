@@ -42,7 +42,7 @@ Harmadik normálforma (3NF)
 - Minden sok–sok kapcsolat kapcsolótáblával van kezelve, így nincs redundancia a szöveges értékekben.
 
 Végső séma – "A" reláció
--------------------------
+--------------------------
 
 A normalizálás eredményeként az **"A" séma** a következő főbb táblákból épül fel:
 
