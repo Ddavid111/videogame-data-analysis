@@ -15,3 +15,5 @@ Videójátékok adatainak elemzése Python alapú gépi tanulási eszközök seg
    chapters/B
    chapters/C
    chapters/D
+   chapters/SQL
+   chapters/Queries

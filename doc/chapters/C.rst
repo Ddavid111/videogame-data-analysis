@@ -104,7 +104,7 @@ Kapcsolótáblák:
 * ``game_package`` – játék–csomag kapcsolat  
 
 Összefoglalás
--------------
+--------------
 A **C relációs séma** eredménye egy egységes, tiszta és normalizált adatmodell, amely:  
 
 - Négy külön CSV redundáns tárolásából egy konzisztens sémát hozott létre  
