@@ -7,7 +7,7 @@ Videójátékok adatainak elemzése Python alapú gépi tanulási eszközök seg
 ================================================================================
 
 .. toctree::
-   :maxdepth: 8
+   :maxdepth: 10
    :caption: Contents:
 
    chapters/Relational_Database
@@ -17,3 +17,4 @@ Videójátékok adatainak elemzése Python alapú gépi tanulási eszközök seg
    chapters/D
    chapters/SQL
    chapters/Queries
+   chapters/merge
