@@ -16,38 +16,43 @@ Normalizálás lépései
 Első normálforma (1NF)
 ~~~~~~~~~~~~~~~~~~~~~~
 - Az eredeti CSV-fájlok több attribútuma nem atomi értékeket tartalmazott
-  (pl. ``tags``, ``genres``, ``categories``, ``supported_languages``, ``requirements`` JSON formában).
-- 1NF követelménye, hogy minden attribútum csak atomi értéket vehessen fel.
+  (pl. ``tags``, ``genres``, ``categories``, ``supported_languages``, ``full_audio_languages``, ``packages``, ``requirements`` JSON formában).  
+- Az 1NF megköveteli, hogy minden attribútum csak atomi értéket vehessen fel.  
 - Az ilyen mezők önálló táblákba kerültek, a kapcsolatok pedig asszociatív táblákban vannak tárolva.
 
   Példák:
-  * ``game_language`` + ``languages`` (nyelvek + audio flag)
-  * ``requirements`` (OS + típus szerinti bontás)
+  * ``game_subtitles`` + ``languages`` (felirat nyelvek)
+  * ``game_audio_language`` + ``languages`` (hang nyelvek)
+  * ``requirements`` – rendszerkövetelmények OS és típus (minimum/ajánlott) szerinti bontásban
   * ``game_tag`` + ``tags`` (címkék súlyozással)
   * ``game_genre`` + ``genres``
   * ``game_category`` + ``categories``
   * ``game_platform`` + ``platforms``
-  * ``game_package`` + ``packages``
+  * ``game_package`` + ``packages`` + ``sub_package`` (többszintű csomagszerkezet)
 
 Második normálforma (2NF)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 - A ``game`` tábla elsődleges kulcsa az ``appid``.
 - A nem a játék alapadatait leíró, de az ``appid``-tól függő adatok külön táblákba kerültek:
   
-  * ``description`` – részletes, rövid és "about the game" leírás
-  * ``support`` – támogatási adatok (URL, email, weboldal)
-  * ``media`` – multimédiás adatok (fejléckép, háttér)
-  * ``screenshots`` – képernyőképek
-  * ``movies`` – videók
-  * ``requirements`` – rendszerkövetelmények (OS, minimum/ajánlott)
-  * ``owners`` – tulajdonosi tartomány szöveges formában
+  * ``description`` – részletes, rövid és általános leírások  
+  * ``support`` – támogatási információk (URL, email)  
+  * ``media`` – fejléckép és háttér  
+  * ``screenshots`` – játékhoz tartozó képernyőképek  
+  * ``movies`` – videók  
+  * ``requirements`` – operációs rendszer és követelménytípus szerinti bontás  
+  * ``owners`` – tulajdonosi tartomány szöveges formában  
+  * ``languages`` – nyelvek (önálló entitás, amelyet a két asszociatív tábla kapcsol a játékokhoz)  
+  * ``packages`` – csomagok alapadatai (``packid``, ``title``, ``description``)  
+  * ``sub_package`` – csomag al-elemei (``packid``, ``sub_text``, ``price``)  
 
 Harmadik normálforma (3NF)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-- A tranzitív függőségek megszüntetésére az ismétlődő szöveges mezők önálló entitásokba kerültek.
+- A tranzitív függőségek megszüntetésére az ismétlődő szöveges mezők önálló entitásokba kerültek.  
 - A sok-sok kapcsolatokat asszociatív táblák kezelik:
 
-  * ``game_language (appid, langid, audio)``  
+  * ``game_subtitles (appid, languageid)``  
+  * ``game_audio_language (appid, languageid)``  
   * ``game_tag (appid, tagid, weight)``  
   * ``game_genre (appid, genreid)``  
   * ``game_category (appid, catid)``  
@@ -56,6 +61,11 @@ Harmadik normálforma (3NF)
   * ``game_publisher (appid, pubid)``  
   * ``game_package (appid, packid)``  
 
+- A csomagstruktúra három szinten valósul meg:  
+  * ``game_package`` – a játék és csomag kapcsolata (``appid``, ``packid``)  
+  * ``packages`` – csomag alapadatai (``packid``, ``title``, ``description``)  
+  * ``sub_package`` – a csomag részletei és ára (``packid``, ``sub_text``, ``price``)  
+
 - Ez biztosítja az adatok konzisztenciáját, minimalizálja a redundanciát
   és lehetővé teszi az egyszerű bővíthetőséget.
 
@@ -63,31 +73,33 @@ Végső séma – "D" reláció
 --------------------------
 A normalizálás eredményeként a **"D" séma** a következő fő relációkból áll:
 
-* ``game`` – játék alapadatai (név, megjelenési dátum, ár, értékelések, játszási idők, metacritic, tulajdonosok, statisztikák)  
-* ``description`` – részletes és rövid szöveges leírások  
-* ``support`` – támogatási információk  
-* ``media`` – multimédiás adatok (fejléckép, háttér)  
-* ``screenshots`` – játékhoz tartozó képernyőképek  
+* ``game`` – játék alapadatai (név, megjelenési dátum, ár, értékelések, játszási idők, metacritic, tulajdonosok, statisztikák, és a 2025-ös verziókban a ``discount`` mező)  
+* ``media`` – médiatartalmak  
+* ``screenshots`` – képernyőképek  
 * ``movies`` – játékhoz tartozó videók  
-* ``requirements`` – rendszerkövetelmények (platform + típus szerinti bontás)  
-* ``languages`` – nyelvek (külön audio flag az asszociatív táblában)  
-* ``categories`` – kategóriák  
-* ``genres`` – műfajok  
+* ``support`` – támogatási információk  
+* ``requirements`` – rendszerkövetelmények  
+* ``description`` – leírások  
 * ``tags`` – címkék (súlyozással)  
+* ``genres`` – műfajok  
 * ``platforms`` – platformok  
-* ``developers`` – fejlesztők  
+* ``categories`` – kategóriák  
 * ``publishers`` – kiadók  
-* ``packages`` – csomagok  
+* ``developers`` – fejlesztők  
+* ``languages`` – nyelvek (önálló lista, minden nyelv egyedi sorban)  
+* ``packages`` – csomagok alapadatai  
+* ``sub_package`` – csomag al-elemei (leírás és ár)  
 
 Kapcsolótáblák:
 
-* ``game_language`` – játék–nyelv kapcsolat  
 * ``game_tag`` – játék–címke kapcsolat  
 * ``game_genre`` – játék–műfaj kapcsolat  
-* ``game_category`` – játék–kategória kapcsolat  
 * ``game_platform`` – játék–platform kapcsolat  
-* ``game_developer`` – játék–fejlesztő kapcsolat  
+* ``game_category`` – játék–kategória kapcsolat
 * ``game_publisher`` – játék–kiadó kapcsolat  
+* ``game_developer`` – játék–fejlesztő kapcsolat 
+* ``game_audio_language`` – játék–hangnyelv kapcsolat    
+* ``game_subtitles`` – játék–felirat kapcsolat  
 * ``game_package`` – játék–csomag kapcsolat  
 
 Összefoglalás
@@ -98,6 +110,35 @@ Fő előnyei:
 - Egységesítette a különböző CSV-forrásokból származó adatokat  
 - Biztosítja az 1NF, 2NF és 3NF követelményeit  
 - Megszüntette a redundáns és nem atomi mezőket  
+- Külön kezeli a feliratokat (``game_subtitles``) és a hangnyelveket (``game_audio_language``)  
+- A csomagokat háromszintű struktúrában kezeli (``game_package`` → ``packages`` → ``sub_package``)  
 - Kezeli a sok-sok kapcsolatokat asszociatív táblákon keresztül  
 - Tartalmaz minden fontos információt a játékokról, bővíthető módon  
 - Megkülönbözteti a források közti eltéréseket (pl. ``discount`` csak a 2025-ös adatokban szerepelt)  
+- Az adatok konzisztens, redundanciamentes és bővíthető adatmodellbe szerveződnek  
+
+
+
+
+
+
+
+
+
+
+
+
+Az A-ban lévő screenshotot normalizálni kellett screenshots_full és screenshots_thumbs mezőkre.
+
+Az A-ban lévő moviest normalizálni kellett movies_thumbnail, movies_max és movies_480 mezőkre.
+
+
+A requirements táblában a pc_requirements -> windows a mac_requirements -> mac és linux_requirements -> linux mezőkre lett bontva.
+A type mező minimum és recommended értékeket vehet fel.
+A requirements mező meg a konkrét configot tartalmazza.
+
+
+A tags tábla az A-ban külön oszloponként tartalmazta a címkéket. Ezeket összemergeltem a tags oszlopba dictionaryként.
+
+
+Az A táblában a developerek és a publisherek oszlopa publisher és developer tehát nem publishers és developers.

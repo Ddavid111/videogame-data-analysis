@@ -1,0 +1,77 @@
+@startuml
+left to right direction
+top to bottom direction
+scale 0.8
+
+skinparam backgroundColor white
+skinparam rectangle {
+    BackgroundColor #FCE4D6
+    BorderColor #C00000
+    FontColor #C00000
+}
+skinparam node {
+    BackgroundColor White
+    BorderColor #4472C4
+    FontColor Black
+}
+skinparam arrow {
+    Color #C00000
+    FontColor #C00000
+    Thickness 2
+}
+
+title Merge folyamat – betöltés és egyesítés lépései
+
+' ===========================
+' A forrás – több CSV egyesítése
+' ===========================
+folder "Forrás A\n(Steam CSV-k)" as A {
+    [steam.csv]
+    [steam_description_data.csv]
+    [steam_media_data.csv]
+    [steam_support_info.csv]
+    [steamspy_tag_data.csv]
+    [steam_requirements_data.csv]
+}
+
+rectangle "A_merged.csv\n(belső merge – load_source_a)" as A_merged
+A --> A_merged
+
+' ===========================
+' B forrás – JSON
+' ===========================
+node "games.json" as B_json
+rectangle "B_full.csv\n(JSON feldolgozás – load_source_b)" as B_full
+B_json --> B_full
+
+' ===========================
+' C forrás – több CSV
+' ===========================
+folder "Forrás C\n(2024–2025 CSV-k)" as C {
+    [games_march2025_cleaned.csv]
+    [games_march2025_full.csv]
+    [games_may2024_cleaned.csv]
+    [games_may2024_full.csv]
+}
+
+rectangle "C_combined.csv\n(belső merge – load_source_c)" as C_combined
+C --> C_combined
+
+' ===========================
+' Végső merge
+' ===========================
+rectangle "D\n(merged_master.csv)\nEgységes relációs séma" as D
+
+note right of D
+    Forrás-prioritás:
+     C → elsődleges
+     B → másodlagos
+     A → hiánykitöltés
+end note
+
+' Függőleges, képernyőbarát elrendezés
+C_combined -down-> D : 1. lépés
+B_full -down-> D : 2. lépés
+A_merged -down-> D : 3. lépés
+
+@enduml

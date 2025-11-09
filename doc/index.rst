@@ -17,4 +17,3 @@ Videójátékok adatainak elemzése Python alapú gépi tanulási eszközök seg
    chapters/D
    chapters/SQL
    chapters/Queries
-   chapters/merge

@@ -1,0 +1,199 @@
+Table game {
+  appid int [pk]
+  name text
+  release_date date
+  estimated_owners int
+  required_age int
+  price float
+  DLC_count int
+  num_recommendations int
+  notes text
+  website text
+  metacritic_score int
+  metacritic_url text
+  num_achievements int
+  user_score int
+  score_rank int
+  positive int
+  negative int
+  average_playtime_forever int
+  average_playtime_2weeks int
+  median_playtime_forever int
+  median_playtime_2weeks int
+  peak_ccu int
+  discount int
+  pct_pos_total int
+  pct_pos_recent int
+  num_reviews_total int
+  num_reviews_recent int
+  reviews text
+  english boolean
+}
+
+Table support {
+  supportid int [pk]
+  appid int [ref: > game.appid]
+  support_url text
+  support_email text
+}
+
+Table requirements {
+  reqid int [pk]
+  appid int [ref: > game.appid]
+  os text
+  type text
+  requirements text
+}
+
+Table description {
+  descriptionid int [pk]
+  appid int [ref: > game.appid]
+  detailed_description text
+  about_the_game text
+  short_description text
+}
+
+Table media {
+  mediaid int [pk]
+  appid int [ref: > game.appid]
+  header_image text
+  background text
+}
+
+Table screenshots {
+  screenshotid int [pk]
+  appid int [ref: > game.appid]
+  screenshots_full text
+  screenshots_thumbs text
+}
+
+Table movies {
+  movieid int [pk]
+  appid int [ref: > game.appid]
+  movies_thumbnail text
+  movies_max text
+  movies_480 text
+}
+
+Table languages {
+  id int [pk]
+  name text
+}
+
+Table game_audio_language {
+  appid int [ref: > game.appid]
+  languageid int [ref: > languages.id]
+  indexes {
+    (appid, languageid) [pk]
+  }
+}
+
+Table game_subtitles {
+  appid int [ref: > game.appid]
+  languageid int [ref: > languages.id]
+  indexes {
+    (appid, languageid) [pk]
+  }
+}
+
+Table tags {
+  tagid int [pk]
+  tag_name text
+  weight float
+}
+
+Table game_tag {
+  appid int [ref: > game.appid]
+  tagid int [ref: > tags.tagid]
+  indexes {
+    (appid, tagid) [pk]
+  }
+}
+
+Table genres {
+  genreid int [pk]
+  genre_name text
+}
+
+Table game_genre {
+  appid int [ref: > game.appid]
+  genreid int [ref: > genres.genreid]
+  indexes {
+    (appid, genreid) [pk]
+  }
+}
+
+Table categories {
+  catid int [pk]
+  name text
+}
+
+Table game_category {
+  appid int [ref: > game.appid]
+  catid int [ref: > categories.catid]
+  indexes {
+    (appid, catid) [pk]
+  }
+}
+
+Table developers {
+  devid int [pk]
+  dev_name text
+}
+
+Table game_developer {
+  appid int [ref: > game.appid]
+  devid int [ref: > developers.devid]
+  indexes {
+    (appid, devid) [pk]
+  }
+}
+
+Table publishers {
+  pubid int [pk]
+  pub_name text
+}
+
+Table game_publisher {
+  appid int [ref: > game.appid]
+  pubid int [ref: > publishers.pubid]
+  indexes {
+    (appid, pubid) [pk]
+  }
+}
+
+Table platforms {
+  platid int [pk]
+  name text
+}
+
+Table game_platform {
+  appid int [ref: > game.appid]
+  platid int [ref: > platforms.platid]
+  indexes {
+    (appid, platid) [pk]
+  }
+}
+
+Table packages {
+  packid int [pk]
+  title text
+  description text
+}
+
+Table sub_package {
+  packid int [ref: > packages.packid]
+  sub_text text
+  price float
+  indexes {
+    (packid, sub_text) [pk]
+  }
+}
+
+Table game_package {
+  appid int [ref: > game.appid]
+  packid int [ref: > packages.packid]
+  indexes {
+    (appid, packid) [pk]
+  }
+}

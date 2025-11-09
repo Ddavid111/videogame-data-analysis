@@ -1,0 +1,8 @@
+﻿forrás_kombináció,rekordok_száma,tartalmaz_A,tartalmaz_B,tartalmaz_C
+"C,B",79888,False,True,True
+"C,B,A",24433,True,True,True
+B,5731,False,True,False
+"B,A",1400,True,True,False
+A,1234,True,False,False
+C,161,False,False,True
+"C,A",8,True,False,True

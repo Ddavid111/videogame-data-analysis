@@ -14,8 +14,9 @@ Első normálforma (1NF)
   Például:
 
   * ``tags`` + ``game_tag`` – címkék és játék–címke kapcsolat
-  * ``categories`` + ``game_category`` – kategóriák és játék–kategória kapcsolat
+  * ``genres`` + ``game_genre`` – műfajok és játék–műfaj kapcsolat
   * ``platforms`` + ``game_platform`` – platformok és játék–platform kapcsolat
+  * ``categories`` + ``game_category`` – kategóriák és játék–kategória kapcsolat
   * ``screenshots`` és ``movies`` – minden kép vagy videó külön rekordban tárolva
   * ``requirements`` – a rendszerkövetelmények OS és típus (minimum/ajánlott) szerinti bontásban
 
@@ -26,7 +27,7 @@ Második normálforma (2NF)
   külön táblákba kerültek:
 
   * ``description`` – részletes, rövid és általános leírások
-  * ``support`` – támogatási információk (support URL, email, weboldal)
+  * ``support`` – támogatási információk (URL, email)
   * ``media`` – fejléckép és háttér
   * ``requirements`` – operációs rendszer és követelménytípus szerinti bontás
 
@@ -39,7 +40,7 @@ Harmadik normálforma (3NF)
   * A ``categories``, ``genres``, ``tags``, ``platforms`` táblák külön tárolják a neveket,
     és csak azonosítók szerepelnek a kapcsolatokban.
 
-- Minden sok–sok kapcsolat kapcsolótáblával van kezelve, így nincs redundancia a szöveges értékekben.
+- Minden több-több kapcsolat kapcsolótáblával van kezelve, így nincs redundancia a szöveges értékekben.
 
 Végső séma – "A" reláció
 --------------------------
@@ -47,27 +48,28 @@ Végső séma – "A" reláció
 A normalizálás eredményeként az **"A" séma** a következő főbb táblákból épül fel:
 
 * ``game`` – játék alapadatai
-* ``description`` – leírások (részletes, rövid, about the game)
+* ``description`` – leírások
 * ``support`` – támogatási információk
-* ``media`` – háttér és fejléckép
-* ``screenshots`` – képek
-* ``movies`` – videók
-* ``requirements`` – rendszerkövetelmények OS és típus szerint
-* ``categories`` – kategóriák
-* ``genres`` – műfajok
+* ``media`` – médiatartalmak
+* ``screenshots`` – képernyőképek
+* ``movies`` – előzetesek, videók
+* ``requirements`` – rendszerkövetelmények
 * ``tags`` – címkék
+* ``genres`` – műfajok
 * ``platforms`` – platformok
-* ``developers`` – fejlesztők
+* ``categories`` – kategóriák
 * ``publishers`` – kiadók
+* ``developers`` – fejlesztők
 
 Kapcsolótáblák
 ~~~~~~~~~~~~~~
-* ``game_category`` – játék–kategória kapcsolat
-* ``game_genre`` – játék–műfaj kapcsolat
 * ``game_tag`` – játék–címke kapcsolat
+* ``game_genre`` – játék–műfaj kapcsolat
 * ``game_platform`` – játék–platform kapcsolat
-* ``game_developer`` – játék–fejlesztő kapcsolat
+* ``game_category`` – játék–kategória kapcsolat
 * ``game_publisher`` – játék–kiadó kapcsolat
+* ``game_developer`` – játék–fejlesztő kapcsolat
+
 
 Összefoglalás
 -------------

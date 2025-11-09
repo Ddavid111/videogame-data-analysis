@@ -1,2 +1,9 @@
 doc/_build
 doc/Relational_data_models/*.dia~
+__pycache__/
+.ipynb_checkpoints/
+merge/A_merged.csv
+merge/B_full.csv
+merge/C_full.csv
+merge/merged_master.csv
+split/*.csv
