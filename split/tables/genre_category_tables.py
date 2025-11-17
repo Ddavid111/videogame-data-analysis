@@ -1,12 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import os
 import pandas as pd
 import logging
+
 
 def create_genres_table(master_df: pd.DataFrame, output_dir: str = None):
     """
@@ -39,10 +34,17 @@ def create_genres_table(master_df: pd.DataFrame, output_dir: str = None):
         game_genre_path = os.path.join(output_dir, "game_genre.csv")
         genres_df.to_csv(genres_path, index=False)
         game_genre_df.to_csv(game_genre_path, index=False)
-        logging.info(f"Saved 'genres.csv' ({len(genres_df)} rows) to {output_dir}")
-        logging.info(f"Saved 'game_genre.csv' ({len(game_genre_df)} rows) to {output_dir}")
+        logging.info(
+            "Saved 'genres.csv' "
+            f"({len(genres_df)} rows) to {output_dir}"
+        )
+        logging.info(
+            "Saved 'game_genre.csv' "
+            f"({len(game_genre_df)} rows) to {output_dir}"
+        )
 
     return genres_df, game_genre_df
+
 
 def create_categories_table(master_df: pd.DataFrame, output_dir: str = None):
     """
@@ -71,12 +73,21 @@ def create_categories_table(master_df: pd.DataFrame, output_dir: str = None):
 
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
-        categories_path = os.path.join(output_dir, "categories.csv")
-        game_category_path = os.path.join(output_dir, "game_category.csv")
-        categories_df.to_csv(categories_path, index=False)
-        game_category_df.to_csv(game_category_path, index=False)
-        logging.info(f"Saved 'categories.csv' ({len(categories_df)} rows) to {output_dir}")
-        logging.info(f"Saved 'game_category.csv' ({len(game_category_df)} rows) to {output_dir}")
+        logging.info(
+            "Saved 'categories.csv' "
+            f"({len(categories_df)} rows) to {output_dir}"
+        )
+        logging.info(
+            "Saved 'game_category.csv' "
+            f"({len(game_category_df)} rows) to {output_dir}"
+        )
+        logging.info(
+            "Saved 'categories.csv' "
+            f"({len(categories_df)} rows) to {output_dir}"
+        )
+        logging.info(
+            "Saved 'game_category.csv' "
+            f"({len(game_category_df)} rows) to {output_dir}"
+        )
 
     return categories_df, game_category_df
-

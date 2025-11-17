@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 # ======== IMPORTOK ========
 import re
 import ast
@@ -13,11 +7,13 @@ import numpy as np
 from bs4 import BeautifulSoup
 import logging
 
+
 # ======== CLEANING FUNCTIONS ========
 def clean_columns(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Standardizálja a DataFrame oszlopneveit: levágja a szóközöket, kisbetűssé alakítja,
-    és helyettesíti a szóközöket és kötőjeleket alulvonással.
+    Standardizálja a DataFrame oszlopneveit: levágja a szóközöket,
+    kisbetűssé alakítja, és helyettesíti a szóközöket és kötőjeleket
+    alulvonással.
     """
     try:
         df.columns = (
@@ -31,6 +27,7 @@ def clean_columns(df: pd.DataFrame) -> pd.DataFrame:
     except Exception as e:
         logging.error(f"Hiba az oszlopnevek tisztítása közben: {e}")
         return df
+
 
 def clean_language_field_merged(val):
     """
@@ -81,16 +78,19 @@ def clean_language_field_merged(val):
 
     return result
 
+
 def final_clean_language_list(langs: list[str]) -> list[str]:
     """
     Utólagos tisztítás egy játék nyelvlistáján:
     - HTML/BBCode/technikai morzsák eltávolítása
-    - Tipikus kettős elemek összevonása (Simplified/Traditional Chinese, Spanish – Spain/LatAm, Portuguese – Brazil/Portugal)
+    - Tipikus kettős elemek összevonása (Simplified/Traditional Chinese,
+      Spanish – Spain/LatAm, Portuguese – Brazil/Portugal)
     - Duplikátumok kiszűrése
-    - LAZÁBB validáció (engedjük a kötőjelet, pontot, vesszőt, számot is; 2+ karakter)
-    - Csak a nyilvánvaló szemét (lt, gt, br, strong, audio, support, text, /br) kiszűrése
+    - LAZÁBB validáció (engedjük a kötőjelet, pontot, vesszőt,
+      számot is; 2+ karakter)
+    - Csak a nyilvánvaló szemét (lt, gt, br, strong, audio, support,
+      text, /br) kiszűrése
     """
-    import re, html
 
     if not langs or not isinstance(langs, list):
         return []
@@ -133,18 +133,29 @@ def final_clean_language_list(langs: list[str]) -> list[str]:
         low = w.lower()
         if i < len(cleaned) - 1:
             if low == "simplified" and nxt == "chinese":
-                joined.append("Simplified Chinese"); skip = True; continue
+                joined.append("Simplified Chinese")
+                skip = True
+                continue
             if low == "traditional" and nxt == "chinese":
-                joined.append("Traditional Chinese"); skip = True; continue
+                joined.append("Traditional Chinese")
+                skip = True
+                continue
             if low == "spanish" and "spain" in nxt:
-                joined.append("Spanish - Spain"); skip = True; continue
+                joined.append("Spanish - Spain")
+                skip = True
+                continue
             if low == "spanish" and "latin" in nxt:
-                joined.append("Spanish - Latin America"); skip = True; continue
+                joined.append("Spanish - Latin America")
+                skip = True
+                continue
             if low == "portuguese" and "brazil" in nxt:
-                joined.append("Portuguese - Brazil"); skip = True; continue
+                joined.append("Portuguese - Brazil")
+                skip = True
+                continue
             if low == "portuguese" and "portugal" in nxt:
-                joined.append("Portuguese - Portugal"); skip = True; continue
-
+                joined.append("Portuguese - Portugal")
+                skip = True
+                continue
         joined.append(w)
 
     standardized = []
@@ -159,7 +170,10 @@ def final_clean_language_list(langs: list[str]) -> list[str]:
 
     valid_lang_pattern = re.compile(r"^[A-Za-zÀ-ÿ0-9' .,\-]{2,}$")
 
-    hard_exclude = re.compile(r"\b(?:lt|gt|br|strong|audio|support|text|/br)\b", flags=re.IGNORECASE)
+    hard_exclude = re.compile(
+        r"\b(?:lt|gt|br|strong|audio|support|text|/br)\b",
+        flags=re.IGNORECASE,
+    )
 
     corrections_map = {
         r"\bhe ew\b": "Hebrew",
@@ -191,12 +205,13 @@ def final_clean_language_list(langs: list[str]) -> list[str]:
             out.append(x)
     return out
 
+
 def clean_html_entities(text: str) -> str:
-    """Eltávolítja a HTML tageket és dekódolja az entitásokat (pl. &reg; → ®)."""
+    """Eltávolítja a HTML tageket és dekódolja az entitásokat
+    (pl. &reg; → ®)."""
     if pd.isna(text):
         return ""
     soup = BeautifulSoup(str(text), "html.parser")
     cleaned = soup.get_text(" ", strip=True)
     cleaned = re.sub(r"\s+", " ", cleaned).strip()
     return cleaned
-

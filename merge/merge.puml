@@ -25,13 +25,13 @@ title Merge folyamat – betöltés és egyesítés lépései
 ' ===========================
 ' A forrás – több CSV egyesítése
 ' ===========================
+
 folder "Forrás A\n(Steam CSV-k)" as A {
-    [steam.csv]
-    [steam_description_data.csv]
-    [steam_media_data.csv]
-    [steam_support_info.csv]
-    [steamspy_tag_data.csv]
-    [steam_requirements_data.csv]
+    [steam.csv] -[hidden]down- [steam_description_data.csv]
+    [steam_description_data.csv] -[hidden]down- [steam_media_data.csv]
+    [steam_media_data.csv] -[hidden]down- [steam_support_info.csv]
+    [steam_support_info.csv] -[hidden]down- [steamspy_tag_data.csv]
+    [steamspy_tag_data.csv] -[hidden]down- [steam_requirements_data.csv]
 }
 
 rectangle "A_merged.csv\n(belső merge – load_source_a)" as A_merged
@@ -40,7 +40,9 @@ A --> A_merged
 ' ===========================
 ' B forrás – JSON
 ' ===========================
-node "games.json" as B_json
+folder "Forrás B" as B {
+    node "games.json" as B_json
+}
 rectangle "B_full.csv\n(JSON feldolgozás – load_source_b)" as B_full
 B_json --> B_full
 
@@ -48,14 +50,16 @@ B_json --> B_full
 ' C forrás – több CSV
 ' ===========================
 folder "Forrás C\n(2024–2025 CSV-k)" as C {
-    [games_march2025_cleaned.csv]
-    [games_march2025_full.csv]
-    [games_may2024_cleaned.csv]
-    [games_may2024_full.csv]
+    [games_march2025_cleaned.csv] -[hidden]down- [games_march2025_full.csv]
+    [games_march2025_full.csv] -[hidden]down- [games_may2024_cleaned.csv]
+    [games_may2024_cleaned.csv] -[hidden]down- [games_may2024_full.csv]
 }
 
 rectangle "C_combined.csv\n(belső merge – load_source_c)" as C_combined
 C --> C_combined
+
+A -[hidden]right- B
+B -[hidden]right- C
 
 ' ===========================
 ' Végső merge

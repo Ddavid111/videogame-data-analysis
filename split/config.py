@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 """
 Globális konfigurációs beállítások a split folyamat számára.
 """
@@ -34,4 +28,3 @@ logging.basicConfig(
         logging.StreamHandler()
     ],
 )
-

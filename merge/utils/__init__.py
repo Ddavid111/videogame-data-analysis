@@ -8,11 +8,11 @@ Segédfüggvények a merge projekthez:
 - summaries: összefoglaló és ellenőrző riportok
 """
 
-from .io_utils import *
-from .clean_utils import *
-from .normalize_utils import *
-from .category_utils import *
-from .merge_utils import *
+from . import io_utils
+from . import clean_utils
+from . import normalize_utils
+from . import category_utils
+from . import merge_utils
 
 __all__ = [
     "io_utils",

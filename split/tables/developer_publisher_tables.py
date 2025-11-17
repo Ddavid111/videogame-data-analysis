@@ -1,12 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import os
 import pandas as pd
 import logging
+
 
 def create_developer_tables(master_df: pd.DataFrame, output_dir: str = None):
     """
@@ -26,7 +21,11 @@ def create_developer_tables(master_df: pd.DataFrame, output_dir: str = None):
         if isinstance(devs_raw, list):
             dev_list = [str(d).strip() for d in devs_raw if str(d).strip()]
         else:
-            dev_list = [d.strip() for d in str(devs_raw).split(",") if d.strip()]
+            dev_list = [
+                d.strip()
+                for d in str(devs_raw).split(",")
+                if d.strip()
+            ]
 
         if not dev_list:
             continue
@@ -47,10 +46,19 @@ def create_developer_tables(master_df: pd.DataFrame, output_dir: str = None):
         game_developer_path = os.path.join(output_dir, "game_developer.csv")
         developers_df.to_csv(developers_path, index=False)
         game_developer_df.to_csv(game_developer_path, index=False)
-        logging.info(f"Saved 'developers.csv' ({len(developers_df)} rows) to {output_dir}")
-        logging.info(f"Saved 'game_developer.csv' ({len(game_developer_df)} rows) to {output_dir}")
+        logging.info(
+            "Saved 'developers.csv' (%d rows) to %s",
+            len(developers_df),
+            output_dir,
+        )
+        logging.info(
+            "Saved 'game_developer.csv' (%d rows) to %s",
+            len(game_developer_df),
+            output_dir,
+        )
 
     return developers_df, game_developer_df
+
 
 def create_publisher_tables(master_df: pd.DataFrame, output_dir: str = None):
     """
@@ -70,7 +78,11 @@ def create_publisher_tables(master_df: pd.DataFrame, output_dir: str = None):
         if isinstance(pubs_raw, list):
             pub_list = [str(p).strip() for p in pubs_raw if str(p).strip()]
         else:
-            pub_list = [p.strip() for p in str(pubs_raw).split(",") if p.strip()]
+            pub_list = [
+                p.strip()
+                for p in str(pubs_raw).split(",")
+                if p.strip()
+            ]
 
         if not pub_list:
             continue
@@ -91,8 +103,15 @@ def create_publisher_tables(master_df: pd.DataFrame, output_dir: str = None):
         game_publisher_path = os.path.join(output_dir, "game_publisher.csv")
         publishers_df.to_csv(publishers_path, index=False)
         game_publisher_df.to_csv(game_publisher_path, index=False)
-        logging.info(f"Saved 'publishers.csv' ({len(publishers_df)} rows) to {output_dir}")
-        logging.info(f"Saved 'game_publisher.csv' ({len(game_publisher_df)} rows) to {output_dir}")
+        logging.info(
+            "Saved 'publishers.csv' (%d rows) to %s",
+            len(publishers_df),
+            output_dir,
+        )
+        logging.info(
+            "Saved 'game_publisher.csv' (%d rows) to %s",
+            len(game_publisher_df),
+            output_dir,
+        )
 
     return publishers_df, game_publisher_df
-

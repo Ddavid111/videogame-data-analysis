@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 # ======== IMPORTOK ========
 import os
 import pandas as pd
@@ -31,4 +25,3 @@ def load_source_c(c_path: str) -> pd.DataFrame:
     df_c["appid"] = df_c["appid"].astype(str)
     logging.info(f"C source combined: {len(df_c)} rows")
     return df_c
-

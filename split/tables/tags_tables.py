@@ -1,13 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import os
 import ast
 import pandas as pd
 import logging
+
 
 def create_tags_table(master_df: pd.DataFrame, output_dir: str = None):
     """
@@ -46,7 +41,13 @@ def create_tags_table(master_df: pd.DataFrame, output_dir: str = None):
                 continue
 
             rows_game_tag.append({"appid": appid, "tagid": tagid_counter})
-            rows_tags.append({"tagid": tagid_counter, "tag_name": tag_name, "weight": weight})
+            rows_tags.append(
+                {
+                    "tagid": tagid_counter,
+                    "tag_name": tag_name,
+                    "weight": weight,
+                }
+            )
             tagid_counter += 1
 
     game_tag_df = pd.DataFrame(rows_game_tag)
@@ -60,8 +61,15 @@ def create_tags_table(master_df: pd.DataFrame, output_dir: str = None):
         game_tag_df.to_csv(game_tag_path, index=False, encoding="utf-8-sig")
         tags_df.to_csv(tags_path, index=False, encoding="utf-8-sig")
 
-        logging.info(f"Saved 'game_tag.csv' ({len(game_tag_df)} rows) to {output_dir}")
-        logging.info(f"Saved 'tags.csv' ({len(tags_df)} rows) to {output_dir}")
+        logging.info(
+            "Saved 'game_tag.csv' (%d rows) to %s",
+            len(game_tag_df),
+            output_dir,
+        )
+        logging.info(
+            "Saved 'tags.csv' (%d rows) to %s",
+            len(tags_df),
+            output_dir,
+        )
 
     return game_tag_df, tags_df
-

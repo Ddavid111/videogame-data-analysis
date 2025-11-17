@@ -1,12 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import re
 import pandas as pd
 from bs4 import BeautifulSoup
+
 
 def clean_requirements_text(text):
     if not text or pd.isna(text):
@@ -31,10 +26,12 @@ def clean_requirements_text(text):
 
     return cleaned
 
+
 def split_min_rec(text):
     """
     Szétválasztja a minimum és recommended részt a stringből.
-    Kis-/nagybetűt normalizál, ha a minimumban benne van a recommended, szétvágja.
+    Kis-/nagybetűt normalizál; ha a minimumban benne van a recommended,
+    szétvágja.
     """
     if not text or pd.isna(text):
         return "", ""
@@ -44,9 +41,11 @@ def split_min_rec(text):
     rec_part = parts[1].strip() if len(parts) > 1 else ""
     return min_part, rec_part
 
+
 def join_urls(x) -> str:
     """
-    Lista vagy string URL-eket egységes, vesszővel elválasztott stringgé alakít.
+    Lista vagy string URL-eket egységes, vesszővel elválasztott stringgé
+    alakít.
 
     - Ha lista, akkor elemeit összefűzi ', ' elválasztóval.
     - Ha már string, változatlanul visszaadja.
@@ -57,4 +56,3 @@ def join_urls(x) -> str:
     elif isinstance(x, str):
         return x
     return ""
-

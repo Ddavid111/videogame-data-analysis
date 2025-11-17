@@ -1,12 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import os
 import pandas as pd
 import logging
+
 
 def create_platforms_table(master_df: pd.DataFrame, output_dir: str = None):
     """
@@ -42,8 +37,13 @@ def create_platforms_table(master_df: pd.DataFrame, output_dir: str = None):
         game_platform_path = os.path.join(output_dir, "game_platform.csv")
         platforms_df.to_csv(platforms_path, index=False)
         game_platform_df.to_csv(game_platform_path, index=False)
-        logging.info(f"Saved 'platforms.csv' ({len(platforms_df)} rows) to {output_dir}")
-        logging.info(f"Saved 'game_platform.csv' ({len(game_platform_df)} rows) to {output_dir}")
+        logging.info(
+            f"Saved 'platforms.csv' ({len(platforms_df)} rows) to {output_dir}"
+        )
+        logging.info(
+            "Saved 'game_platform.csv' (%d rows) to %s",
+            len(game_platform_df),
+            output_dir,
+        )
 
     return platforms_df, game_platform_df
-

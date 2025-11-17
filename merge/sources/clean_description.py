@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 # =========================================
 # IMPORTS
 # =========================================
@@ -19,8 +13,10 @@ from bs4 import BeautifulSoup
 # =========================================
 def read_and_fix_multiline_csv(path: str) -> io.StringIO:
     """
-    Beolvassa a CSV-t, és kijavítja azokat a sorokat, amelyek idézőjelek miatt több sorban vannak.
-    Visszatér egy StringIO objektummal, amely egyetlen, egységesített CSV-t tartalmaz.
+    Beolvassa a CSV-t, és kijavítja azokat a sorokat, amelyek
+    idézőjelek miatt több sorban vannak.
+    Visszatér egy StringIO objektummal, amely egyetlen,
+    egységesített CSV-t tartalmaz.
     """
     lines, buf, quote_count = [], [], 0
     with open(path, "r", encoding="utf-8", errors="ignore") as f:
@@ -64,7 +60,8 @@ def strip_html(df: pd.DataFrame, cols: list[str]) -> pd.DataFrame:
 # =========================================
 # CORE PROCESSING FUNCTION
 # =========================================
-def process_description_data(raw_path: str, clean_path: str, desc_cols: list[str]) -> pd.DataFrame:
+def process_description_data(raw_path: str, clean_path: str,
+                             desc_cols: list[str]) -> pd.DataFrame:
     """
     Beolvassa a Steam leírásos CSV-t, kijavítja a hibás sorokat,
     eltávolítja a HTML tageket és menti a megtisztított adatokat.
@@ -105,18 +102,11 @@ def main():
     """
     base_path = r"C:\Users\zalma"
     raw_path = os.path.join(base_path, "A", "steam_description_data.csv")
-    clean_path = os.path.join(base_path, "A", "steam_description_data_cleaned.csv")
+    clean_filename = "steam_description_data_cleaned.csv"
+    clean_path = os.path.join(base_path, "A", clean_filename)
     desc_cols = ["detailed_description", "about_the_game", "short_description"]
-
     df = process_description_data(raw_path, clean_path, desc_cols)
 
     print(f"Normalizált leírás mentve ide: {clean_path}")
     print(f"Rekordok száma: {len(df)} | Oszlopok száma: {len(df.columns)}")
     print(df.head(5)[['appid', 'short_description']])
-
-
-# In[ ]:
-
-
-
-

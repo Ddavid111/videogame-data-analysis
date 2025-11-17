@@ -1,13 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import os
 import ast
 import pandas as pd
 import logging
+
 
 def create_languages_table(master_df: pd.DataFrame, output_dir: str = None):
     """
@@ -34,11 +29,23 @@ def create_languages_table(master_df: pd.DataFrame, output_dir: str = None):
             try:
                 val = ast.literal_eval(str(supported_raw))
                 if isinstance(val, list):
-                    supported = [v.strip() for v in val if isinstance(v, str) and v.strip()]
+                    supported = [
+                        v.strip()
+                        for v in val
+                        if isinstance(v, str) and v.strip()
+                    ]
                 elif isinstance(val, str):
-                    supported = [v.strip() for v in val.split(",") if v.strip()]
+                    supported = [
+                        v.strip()
+                        for v in val.split(",")
+                        if v.strip()
+                    ]
             except Exception:
-                supported = [v.strip() for v in str(supported_raw).split(",") if v.strip()]
+                supported = [
+                    v.strip()
+                    for v in str(supported_raw).split(",")
+                    if v.strip()
+                ]
 
         audio_raw = row.get("full_audio_languages", "")
         full_audio = []
@@ -46,11 +53,23 @@ def create_languages_table(master_df: pd.DataFrame, output_dir: str = None):
             try:
                 val = ast.literal_eval(str(audio_raw))
                 if isinstance(val, list):
-                    full_audio = [v.strip() for v in val if isinstance(v, str) and v.strip()]
+                    full_audio = [
+                        v.strip()
+                        for v in val
+                        if isinstance(v, str) and v.strip()
+                    ]
                 elif isinstance(val, str):
-                    full_audio = [v.strip() for v in val.split(",") if v.strip()]
+                    full_audio = [
+                        v.strip()
+                        for v in val.split(",")
+                        if v.strip()
+                    ]
             except Exception:
-                full_audio = [v.strip() for v in str(audio_raw).split(",") if v.strip()]
+                full_audio = [
+                    v.strip()
+                    for v in str(audio_raw).split(",")
+                    if v.strip()
+                ]
 
         all_langs = set(supported + full_audio)
 
@@ -63,9 +82,13 @@ def create_languages_table(master_df: pd.DataFrame, output_dir: str = None):
             langid = lang_name_to_id[lang]
 
             if lang in supported:
-                rows_game_subtitles.append({"appid": appid, "languageid": langid})
+                rows_game_subtitles.append(
+                    {"appid": appid, "languageid": langid}
+                )
             if lang in full_audio:
-                rows_game_audio.append({"appid": appid, "languageid": langid})
+                rows_game_audio.append(
+                    {"appid": appid, "languageid": langid}
+                )
 
     languages_df = pd.DataFrame(rows_languages)
     game_subtitles_df = pd.DataFrame(rows_game_subtitles)
@@ -73,13 +96,26 @@ def create_languages_table(master_df: pd.DataFrame, output_dir: str = None):
 
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
-        languages_df.to_csv(os.path.join(output_dir, "languages.csv"), index=False, encoding="utf-8-sig")
-        game_subtitles_df.to_csv(os.path.join(output_dir, "game_subtitles.csv"), index=False, encoding="utf-8-sig")
-        game_audio_df.to_csv(os.path.join(output_dir, "game_audio_language.csv"), index=False, encoding="utf-8-sig")
+        languages_df.to_csv(
+            os.path.join(output_dir, "languages.csv"),
+            index=False,
+            encoding="utf-8-sig",
+        )
+        game_subtitles_df.to_csv(
+            os.path.join(output_dir, "game_subtitles.csv"),
+            index=False,
+            encoding="utf-8-sig",
+        )
+        game_audio_df.to_csv(
+            os.path.join(output_dir, "game_audio_language.csv"),
+            index=False,
+            encoding="utf-8-sig",
+        )
 
-        logging.info(f"Saved languages ({len(languages_df)}), "
-                     f"game_subtitles ({len(game_subtitles_df)}), "
-                     f"game_audio_language ({len(game_audio_df)}) to {output_dir}")
+        logging.info(
+            f"Saved languages ({len(languages_df)}), "
+            f"game_subtitles ({len(game_subtitles_df)}), "
+            f"game_audio_language ({len(game_audio_df)}) to {output_dir}"
+        )
 
     return languages_df, game_subtitles_df, game_audio_df
-

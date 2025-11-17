@@ -1,21 +1,15 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 # ======== IMPORTOK ========
 import ast
 import numpy as np
 import pandas as pd
-import logging
 from merge.utils.normalize_utils import flatten_values
 
 
 # ======== DEVELOPER / PUBLISHER MERGE ========
 def combine_cols(row: pd.Series, cols: list[str]) -> str:
     """
-    Több oszlopból származó értékeket kombinál egyetlen, duplikátummentes stringgé.
+    Több oszlopból származó értékeket kombinál egyetlen,
+    duplikátummentes stringgé.
 
     - Kinyeri az értékeket a megadott oszlopokból.
     - Támogatja a listákat, NumPy tömböket és skalárokat is.
@@ -32,22 +26,33 @@ def combine_cols(row: pd.Series, cols: list[str]) -> str:
             vals.extend(flatten_values([val]))
     return ", ".join(list(dict.fromkeys(vals)))
 
-def merge_developers_publishers(D: pd.DataFrame) -> pd.DataFrame:
-    """
-    Összevonja a fejlesztői és kiadói oszlopokat, eltávolítva a duplikált neveket.
 
-    - A 'developer' és 'developers' oszlopokból egyesített 'developers' oszlopot hoz létre.
-    - A 'publisher' és 'publishers' oszlopokból egyesített 'publishers' oszlopot hoz létre.
+def merge_developers_publishers(d: pd.DataFrame) -> pd.DataFrame:
+    """
+    Összevonja a fejlesztői és kiadói oszlopokat, eltávolítva a duplikált
+    neveket.
+
+    - A 'developer' és 'developers' oszlopokból egyesített 'developers'
+      oszlopot hoz létre.
+    - A 'publisher' és 'publishers' oszlopokból egyesített 'publishers'
+      oszlopot hoz létre.
     - Az eredeti ('developer', 'publisher') oszlopokat eltávolítja.
     """
-    D["developers"] = D.apply(lambda row: combine_cols(row, ["developer", "developers"]), axis=1)
-    D["publishers"] = D.apply(lambda row: combine_cols(row, ["publisher", "publishers"]), axis=1)
+    d["developers"] = d.apply(
+        lambda row: combine_cols(row, ["developer", "developers"]),
+        axis=1,
+    )
+    d["publishers"] = d.apply(
+        lambda row: combine_cols(row, ["publisher", "publishers"]),
+        axis=1,
+    )
 
     for col in ["developer", "publisher"]:
-        if col in D.columns:
-            D.drop(columns=[col], inplace=True)
+        if col in d.columns:
+            d.drop(columns=[col], inplace=True)
 
-    return D
+    return d
+
 
 # ======== CATEGORY MERGE ========
 def parse_categories(val) -> list[str]:
@@ -56,14 +61,19 @@ def parse_categories(val) -> list[str]:
 
     - Kezeli a listákat, NumPy tömböket, stringeket és None értékeket.
     - Tisztítja az üres vagy NaN értékeket.
-    - Felismeri a stringként tárolt listákat és a pontosvesszővel tagolt formátumokat.
+    - Felismeri a stringként tárolt listákat és a pontosvesszővel tagolt
+      formátumokat.
     """
     if val is None:
         return []
     if isinstance(val, (float, np.floating)) and np.isnan(val):
         return []
     if isinstance(val, (list, np.ndarray)):
-        return [str(v).strip() for v in val if isinstance(v, str) and v.strip()]
+        return [
+            str(v).strip()
+            for v in val
+            if isinstance(v, str) and v.strip()
+        ]
     if isinstance(val, str):
         val = val.strip()
         if not val:
@@ -72,7 +82,8 @@ def parse_categories(val) -> list[str]:
             try:
                 parsed = ast.literal_eval(val)
                 if isinstance(parsed, list):
-                    return [str(v).strip() for v in parsed if isinstance(v, str) and v.strip()]
+                    return [str(v).strip() for v in parsed
+                            if isinstance(v, str) and v.strip()]
             except Exception:
                 pass
         if ";" in val:
@@ -80,11 +91,15 @@ def parse_categories(val) -> list[str]:
         return [val]
     return []
 
+
 def combine_categories(row: pd.Series) -> str:
     """
-    Egy sor kategóriaoszlopait (A, B, C) kombinálja egyetlen, duplikátummentes stringgé.
+    Egy sor kategóriaoszlopait (A, B, C) kombinálja egyetlen, duplikátummentes
+    stringgé.
     """
-    cats_a = parse_categories(row.get("categories_a", row.get("categories", None)))
+    cats_a = parse_categories(
+        row.get("categories_a", row.get("categories", None))
+    )
     cats_b = parse_categories(row.get("categories_b", None))
     cats_c = parse_categories(row.get("categories_c", None))
 
@@ -99,7 +114,8 @@ def combine_categories(row: pd.Series) -> str:
 
     return ", ".join(merged)
 
-def merge_categories(D: pd.DataFrame) -> pd.DataFrame:
+
+def merge_categories(d: pd.DataFrame) -> pd.DataFrame:
     """
     A források kategóriaoszlopait egyesíti egységes 'categories' oszlopba.
 
@@ -107,31 +123,38 @@ def merge_categories(D: pd.DataFrame) -> pd.DataFrame:
     - Duplikátumokat kiszűri, kisbetű-érzéketlen módon.
     - Eltávolítja a felesleges kategóriaoszlopokat.
     """
-    category_cols = [c for c in D.columns if "categor" in c.lower()]
-    D["categories"] = D.apply(combine_categories, axis=1)
+    category_cols = [c for c in d.columns if "categor" in c.lower()]
+    d["categories"] = d.apply(combine_categories, axis=1)
 
     for col in category_cols:
         if col != "categories":
-            D.drop(columns=[col], inplace=True, errors="ignore")
+            d.drop(columns=[col], inplace=True, errors="ignore")
 
-    return D
+    return d
+
 
 # ======== TAG MERGE ========
-def merge_tags_column(D: pd.DataFrame, a: pd.DataFrame, b: pd.DataFrame, c: pd.DataFrame) -> pd.DataFrame:
+def merge_tags_column(d: pd.DataFrame, a: pd.DataFrame, b: pd.DataFrame,
+                      c: pd.DataFrame) -> pd.DataFrame:
     """
     Egyesíti a címkék (tags) adatokat az A, B, C forrásokból AppID alapján.
 
     - Az A forrásban a tags stringként tárolt, vesszővel elválasztott lista.
     - A B forrásban a tags dict formátumú (név → súly).
     - A C forrásban vegyes formátumot kezel (stringként tárolt dict is lehet).
-    - Az eredmény egy DataFrame, ami appid, tag_name, weight oszlopokat tartalmaz.
+    - Az eredmény egy DataFrame, ami appid, tag_name, weight oszlopokat
+      tartalmaz.
     """
     tags_a_dict = {}
     if 'tags' in a.columns:
         for appid, tags_str in zip(a['appid'], a['tags']):
             if isinstance(tags_str, str):
-                tags_list = [t.strip() for t in tags_str.split(",") if t.strip()]
-                tags_a_dict[str(appid)] = {t: 1 for t in tags_list} 
+                tags_list = [
+                    t.strip()
+                    for t in tags_str.split(",")
+                    if t.strip()
+                ]
+                tags_a_dict[str(appid)] = {t: 1 for t in tags_list}
 
     tags_b_dict = {}
     if 'tags' in b.columns:
@@ -147,11 +170,10 @@ def merge_tags_column(D: pd.DataFrame, a: pd.DataFrame, b: pd.DataFrame, c: pd.D
                     tags_dict = ast.literal_eval(tags_str)
                     if isinstance(tags_dict, dict):
                         tags_c_dict[str(appid)] = tags_dict
-                except:
+                except (ValueError, SyntaxError):
                     continue
-
     tag_rows = []
-    for appid in D['appid']:
+    for appid in d['appid']:
         tag_dict = {}
         tag_dict.update(tags_a_dict.get(str(appid), {}))
         tag_dict.update(tags_b_dict.get(str(appid), {}))
@@ -162,4 +184,3 @@ def merge_tags_column(D: pd.DataFrame, a: pd.DataFrame, b: pd.DataFrame, c: pd.D
 
     tags_df = pd.DataFrame(tag_rows)
     return tags_df
-

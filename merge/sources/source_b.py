@@ -1,15 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 # ======== IMPORTOK ========
 import os
 import json
 import pandas as pd
 import logging
-from typing import Any
 
 
 # ======== SOURCE B LOADING ========
@@ -68,24 +61,46 @@ def load_source_b(base_path: str) -> pd.DataFrame:
 
         list_fields = [
             "packages", "developers", "publishers", "categories", "genres",
-            "supported_languages", "full_audio_languages", "screenshots", "movies"
+            "supported_languages", "full_audio_languages", "screenshots",
+            "movies",
         ]
         record.update({f: game.get(f, []) for f in list_fields})
 
         tags = game.get("tags", {})
         record["tags"] = tags if isinstance(tags, dict) else {}
 
-
         records.append(record)
 
     df_b = pd.DataFrame(records)
 
     if "release_date" in df_b.columns:
-        df_b["release_date"] = pd.to_datetime(df_b["release_date"], errors="coerce")
+        df_b["release_date"] = pd.to_datetime(
+            df_b["release_date"], errors="coerce"
+        )
         df_b["release_date"] = df_b["release_date"].dt.strftime("%Y-%m-%d")
         df_b["release_date"] = df_b["release_date"].replace("NaT", None)
 
-    df_b_exploded = df_b.explode("packages").dropna(subset=["packages"])
+    packages_df = (
+        df_b[["appid", "packages"]]
+        .explode("packages")  # 1 sor = 1 package
+        .dropna(subset=["packages"])
+    )
+
+    # A package mezők (title, description, subs) kibontása oszlopokra
+    packages_df = packages_df.join(
+        pd.json_normalize(packages_df["packages"])
+    )
+
+    packages_df = packages_df.drop(columns=["packages"])
+
+    subs_df = (
+        packages_df[["appid", "title", "subs"]]
+        .explode("subs")
+        .dropna(subset=["subs"])
+    )
+
+    subs_df = subs_df.join(pd.json_normalize(subs_df["subs"]))
+    subs_df = subs_df.drop(columns=["subs"])
 
     numeric_cols = [
         "metacritic_score",
@@ -104,8 +119,6 @@ def load_source_b(base_path: str) -> pd.DataFrame:
         "peak_ccu",
     ]
 
-    packages_df = pd.json_normalize(df_b.explode("packages")["packages"])
-
     for col in numeric_cols:
         if col in df_b.columns:
             df_b[col] = pd.to_numeric(df_b[col], errors="coerce")
@@ -117,4 +130,3 @@ def load_source_b(base_path: str) -> pd.DataFrame:
 
     logging.info(f"B source loaded from JSON: {len(df_b)} rows")
     return df_b
-

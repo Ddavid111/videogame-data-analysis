@@ -1,15 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 # ======== IMPORTOK ========
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib_venn import venn3
-import logging
 
 
 # ======== VENN DIAGRAM FUNCTIONS ========
@@ -40,7 +33,8 @@ def compute_venn_sets(a: pd.DataFrame, b: pd.DataFrame, c: pd.DataFrame):
     }
 
 
-def compute_venn_table(a: pd.DataFrame, b: pd.DataFrame, c: pd.DataFrame) -> pd.DataFrame:
+def compute_venn_table(a: pd.DataFrame, b: pd.DataFrame,
+                       c: pd.DataFrame) -> pd.DataFrame:
     """Visszaadja az elemszámokat egy táblázatban."""
     s = compute_venn_sets(a, b, c)
     data = {
@@ -55,7 +49,8 @@ def compute_venn_table(a: pd.DataFrame, b: pd.DataFrame, c: pd.DataFrame) -> pd.
     return pd.DataFrame(data)
 
 
-def plot_and_save_venn(a: pd.DataFrame, b: pd.DataFrame, c: pd.DataFrame, output_dir: str):
+def plot_and_save_venn(a: pd.DataFrame, b: pd.DataFrame,
+                       c: pd.DataFrame, output_dir: str):
     """Létrehozza és elmenti a Venn-diagramot és a táblázatot."""
     s = compute_venn_sets(a, b, c)
 
@@ -85,4 +80,3 @@ def plot_and_save_venn(a: pd.DataFrame, b: pd.DataFrame, c: pd.DataFrame, output
 
     print("\n=== Elemszámos Venn-diagram táblázat ===")
     print(venn_df.to_string(index=False))
-

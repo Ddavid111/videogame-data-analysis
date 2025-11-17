@@ -5,8 +5,6 @@ Adatforrások betöltése:
 - source_c: Egyesített CSV-k (C forrás)
 """
 
-from .source_a import *
-from .source_b import *
-from .source_c import *
+from . import source_a, source_b, source_c
 
 __all__ = ["source_a", "source_b", "source_c"]
