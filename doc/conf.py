@@ -33,7 +33,21 @@ plantuml = f'java -jar {plantuml_jar_path}'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.todo', 'sphinx.ext.viewcode', 'sphinx.ext.autodoc', 'sphinxcontrib.plantuml',]
+extensions = [
+    'sphinx.ext.todo',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.autodoc',
+    'sphinxcontrib.plantuml',
+    'sphinxcontrib.images',
+]
+
+images_config = {
+    'backend': 'LightBox2',
+    'override_image_directive': True,
+    'default_image_width': '90%',
+    'default_image_height': '90%',
+    'default_show_title': False,
+}
 
 plantuml_output_format = 'svg'
 plantuml_output_dir = 'chapters/images'
@@ -159,6 +173,3 @@ texinfo_documents = [
      author, 'WordCount', 'One line description of project.',
      'Miscellaneous'),
 ]
-
-
-

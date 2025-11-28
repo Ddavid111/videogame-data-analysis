@@ -6,7 +6,7 @@ import os
 import logging
 
 # ======== ALAP MAPPÁK ========
-BASE_PATH = r"C:\Users\zalma"
+BASE_PATH = r"C:\Users\zalma\videogame-data-analysis"
 
 MERGE_PATH = os.path.join(BASE_PATH, "merge")
 OUTPUT_PATH = os.path.join(BASE_PATH, "split")

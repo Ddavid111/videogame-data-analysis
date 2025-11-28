@@ -99,3 +99,18 @@ A **B relációs séma** eredménye egy tiszta, normalizált adatmodell, amely:
 - A ``supported_languages`` információt a ``game_subtitles`` tábla, míg a ``full_audio_languages`` információt a ``game_audio_language`` tábla tartalmazza.  
 - A ``game_package``–``packages``–``sub_package`` struktúra támogatja a több szintű csomagkapcsolatok kezelését.  
 - Könnyen bővíthető, karbantartható és minimális adatredundanciát tartalmaz  
+
+Relációs séma diagram
+----------------------
+
+.. image:: ../Relational_data_models/B.svg
+   :align: center
+   :alt: B relációs séma diagram
+   :class: image-group
+
+Dictionary
+----------
+
+Az **"B" adathalmaz dictionary-je** az alábbi linken érhető el:
+
+* `B dataset dictionary <https://github.com/Ddavid111/videogame-data-analysis/blob/main/doc/Dictionaries/B_schema_data_dictionary.xlsx>`_

@@ -129,3 +129,18 @@ A **C relációs séma** eredménye egy egységes, tiszta és normalizált adatm
 - Rugalmasan kezeli a különbséget a 2024-es és 2025-ös adatforrások között  
   (a ``discount`` mező a 2025-ös CSV-kben szerepel, a 2024-esekben nem)  
 - Könnyen bővíthető a jövőben további entitásokkal és attribútumokkal  
+
+Relációs séma diagram
+----------------------
+
+.. image:: ../Relational_data_models/C.svg
+   :align: center
+   :alt: C relációs séma diagram
+   :class: image-group
+
+Dictionary
+----------
+
+Az **"C" adathalmaz dictionary-je** az alábbi linken érhető el:
+
+* `C dataset dictionary <https://github.com/Ddavid111/videogame-data-analysis/blob/main/doc/Dictionaries/C_schema_data_dictionary.xlsx>`_

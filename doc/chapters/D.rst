@@ -1,5 +1,5 @@
-Egységes relációs séma normalizálás
-===================================
+"D" Egységes relációs séma normalizálás
+============================================
 
 Bevezetés
 ---------
@@ -118,27 +118,17 @@ Fő előnyei:
 - Az adatok konzisztens, redundanciamentes és bővíthető adatmodellbe szerveződnek  
 
 
+Relációs séma diagram
+----------------------
 
+.. image:: ../Relational_data_models/D.svg
+   :align: center
+   :alt: D relációs séma diagram
+   :class: image-group
 
+Dictionary
+----------
 
+Az **"D" adathalmaz dictionary-je** az alábbi linken érhető el:
 
-
-
-
-
-
-
-Az A-ban lévő screenshotot normalizálni kellett screenshots_full és screenshots_thumbs mezőkre.
-
-Az A-ban lévő moviest normalizálni kellett movies_thumbnail, movies_max és movies_480 mezőkre.
-
-
-A requirements táblában a pc_requirements -> windows a mac_requirements -> mac és linux_requirements -> linux mezőkre lett bontva.
-A type mező minimum és recommended értékeket vehet fel.
-A requirements mező meg a konkrét configot tartalmazza.
-
-
-A tags tábla az A-ban külön oszloponként tartalmazta a címkéket. Ezeket összemergeltem a tags oszlopba dictionaryként.
-
-
-Az A táblában a developerek és a publisherek oszlopa publisher és developer tehát nem publishers és developers.
+* `D dataset dictionary <https://github.com/Ddavid111/videogame-data-analysis/blob/main/doc/Dictionaries/D_schema_data_dictionary.xlsx>`_

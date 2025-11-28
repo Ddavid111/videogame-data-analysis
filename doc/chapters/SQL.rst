@@ -1,9 +1,13 @@
 SQL séma – D adatmodell
 ========================
 
+A teljes normalizált **D adatbázis struktúrája** a következő linken is elérhető:
+
+`D adatmodell – SQL adatbázis <https://dbdiagram.io/d/D-690c75716735e111708983ee>`_
+
 Az alábbi SQL kód a végső D adatmodellt definiálja, amely az A, B és C
-adatmodelljeinek egyesítésével készült.  
-A kommentek (`-- [A]`, `-- [B]`, `-- [C]`) jelölik, hogy az adott mező vagy tábla melyik forrásból származik.
+adatmodelljeinek egyesítésével készült. A kommentek (`-- [A]`, `-- [B]`, `-- [C]`)
+jelölik, hogy az adott mező vagy tábla melyik forrásból származik.
 
 .. code-block:: sql
 

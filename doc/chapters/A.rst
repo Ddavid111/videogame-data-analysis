@@ -80,3 +80,18 @@ Az **"A" relációs séma** normalizálási lépései biztosítják:
 - A tranzitív függőségek kiküszöbölését
 - A listás és JSON mezők felbontását önálló táblákba
 - A sémák karbantarthatóságát és bővíthetőségét
+
+Relációs séma diagram
+----------------------
+
+.. image:: ../Relational_data_models/A.svg
+   :align: center
+   :alt: A relációs séma diagram
+   :class: image-group
+
+Dictionary
+----------
+
+Az **"A" adathalmaz dictionary-je** az alábbi linken érhető el:
+
+* `A dataset dictionary <https://github.com/Ddavid111/videogame-data-analysis/blob/main/doc/Dictionaries/A_schema_data_dictionary.xlsx>`_

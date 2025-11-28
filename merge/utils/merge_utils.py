@@ -7,6 +7,7 @@ from merge.utils.normalize_utils import (
     normalize_movies_column,
     dedup_join,
     normalize_tags_column,
+    list_to_clean_string
 )
 from merge.utils.clean_utils import (
     clean_html_entities,
@@ -16,7 +17,7 @@ from merge.utils.clean_utils import (
 from merge.utils.category_utils import (
     merge_developers_publishers,
     merge_categories,
-    merge_tags_column,
+    merge_tags_column
 )
 
 
@@ -298,5 +299,9 @@ def merge_and_finalize(
             "language sets.",
             identical_rows,
         )
+
+    for col in ["genres", "screenshots_full", "movies_max"]:
+        if col in d.columns:
+            d[col] = d[col].apply(list_to_clean_string)
 
     return d

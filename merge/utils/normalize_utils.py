@@ -167,3 +167,26 @@ def flatten_values(vals):
                     pass
         flat.append(str(v).strip())
     return list(dict.fromkeys(flat))
+
+
+def list_to_clean_string(val):
+    """Listák / listás stringek → normál, vesszővel elválasztott string."""
+    if isinstance(val, (list, tuple, np.ndarray)):
+        return ", ".join(str(v).strip() for v in val if str(v).strip())
+    if isinstance(val, str):
+        s = val.strip()
+        if s.startswith("[") and s.endswith("]"):
+            try:
+                parsed = ast.literal_eval(s)
+                if isinstance(parsed, list):
+                    return ", ".join(
+                        str(v).strip()
+                        for v in parsed
+                        if str(v).strip()
+                    )
+            except Exception:
+                pass
+        return s
+    if pd.isna(val):
+        return ""
+    return str(val).strip()

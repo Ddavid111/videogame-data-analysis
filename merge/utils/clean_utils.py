@@ -127,9 +127,6 @@ def final_clean_language_list(langs: list[str]) -> list[str]:
         w = word.strip()
         nxt = cleaned[i + 1].strip().lower() if i < len(cleaned) - 1 else ""
 
-        def join2(a, b):
-            return f"{a} {b}"
-
         low = w.lower()
         if i < len(cleaned) - 1:
             if low == "simplified" and nxt == "chinese":

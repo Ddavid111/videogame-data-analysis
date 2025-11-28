@@ -7,7 +7,7 @@ BASE_PATH = os.path.expanduser(r"C:\Users\zalma")
 A_PATH = os.path.join(BASE_PATH, "A")
 B_PATH = os.path.join(BASE_PATH, "B")
 C_PATH = os.path.join(BASE_PATH, "C")
-OUTPUT_PATH = os.path.join(BASE_PATH, "merge")
+OUTPUT_PATH = os.path.join(BASE_PATH, r"videogame-data-analysis\merge")
 
 # ======== LOGGING CONFIGURATION ========
 os.makedirs(OUTPUT_PATH, exist_ok=True)
