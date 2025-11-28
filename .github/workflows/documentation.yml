@@ -10,7 +10,7 @@ jobs:
       - uses: actions/setup-python@v3
       - name: Install dependencies and PlantUML
         run: |
-          pip install sphinx sphinx_rtd_theme sphinxcontrib-plantuml
+          pip install sphinx sphinx_rtd_theme sphinxcontrib-plantuml sphinxcontrib-images
           sudo apt-get update
           sudo apt-get install -y default-jre graphviz
           wget https://github.com/plantuml/plantuml/releases/latest/download/plantuml.jar -O plantuml.jar
