@@ -20,3 +20,4 @@ Jupyter munkafüzetek formájában készülnek.
    chapters/Visualization
    chapters/Split
    chapters/Game_stores
+   chapters/Future_work
