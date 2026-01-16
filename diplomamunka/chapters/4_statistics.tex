@@ -1,0 +1,485 @@
+\Chapter{Leíró statisztikák}
+
+Ez a fejezet a korábbi fejezetekben előállított, egységesített \textit{merged} adathalmazra épül, amely a különböző forrásokból származó videojáték-metaadatok összefésült és normalizált nézetét tartalmazza. Az adat-előkészítési, összevonási és felbontási lépések eredményeként létrejött adatállomány lehetővé teszi a Steam \cite{steam} platformon megjelenő videojátékok jellemzőinek átfogó, statisztikai szemléletű vizsgálatát.
+
+A fejezet célja az adatok alapvető szerkezeti és mennyiségi tulajdonságainak feltárása, valamint a legfontosabb mintázatok és tendenciák bemutatása leíró statisztikai eszközök segítségével. Az elemzések nem prediktív jellegűek, hanem az adathalmaz megértését, konzisztenciájának ellenőrzését és a későbbi gépi tanulási feladatok előkészítését szolgálják.
+
+A fejezet első alfejezete az előzetes vizsgálatokra fókuszál, amelyek során az adatok alapvető eloszlásai, időbeli lefedettsége és főbb numerikus jellemzői kerülnek áttekintésre. Ezt követően a grafikonokra épülő alfejezet vizuális eszközök segítségével mutatja be a játékmegjelenések, értékelések és egyéb kulcsfontosságú attribútumok közötti összefüggéseket és trendeket.
+
+\Section{Előzetes vizsgálatok}
+\subsection{Források közötti átfedések -- Venn-diagram}
+
+Az A, B és C forrásadatok közötti átfedések vizsgálatához Venn-diagram készült, amely az \textit{appid} azonosítók alapján szemlélteti, hogy mely rekordok érhetők el kizárólag egy adott adatforrásban, illetve melyek jelennek meg több forrás metszetében. A vizsgálat célja annak ellenőrzése volt, hogy az összevonás során mekkora a források közötti lefedettség, valamint milyen mértékű kiegészítő információ várható az egyes adathalmazoktól.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/venn_diagram.png}
+    \caption{Az A, B és C források közötti átfedések Venn-diagramja \textit{appid} alapján}
+    \label{fig:venn_sources}
+\end{figure}
+
+A \ref{fig:venn_sources} ábrán látható, hogy a források közötti legnagyobb átfedés a B és C adathalmazok között figyelhető meg (79\,888 közös \textit{appid}), míg az A adathalmaz jellemzően a B forrással fed át (24\,433 közös \textit{appid}). Az egyedi rekordok száma a B és C források esetében alacsonyabb (5\,731 csak B-ben, 161 csak C-ben), míg az A forrás különálló elemei (1\,234) és az A--C közös, de B-ben nem szereplő rekordok (1\,400) kisebb részarányt képviselnek. A diagram alapján megállapítható, hogy a D adathalmaz kialakítása során a B és C forrás együttes használata biztosítja a legnagyobb lefedettséget, míg az A adathalmaz elsősorban kiegészítő szerepet tölt be.
+
+A Venn-diagram az \texttt{merge/venn\_diagram.png} állományba került mentésre, az elemszámokat tartalmazó összefoglaló táblázat pedig \texttt{venn\_table.csv} formátumban is elérhető.
+
+
+\subsection{Forrásösszegzés (Source Summary)}
+
+A merged master táblában minden rekordhoz tartozik egy \textit{sources} mező, amely jelzi, hogy az adott sor mely eredeti adatforrás(ok)ból származik (A, B, C). Ez lehet egyetlen forrás (például \textit{A}), vagy több forrás kombinációja (például \textit{B,C} vagy \textit{A,B,C}).
+
+A forrásonkénti rekordösszesítő célja annak feltérképezése volt, hogy a végső D adathalmaz milyen arányban épül az egyes forrásokra, illetve milyen mértékű átfedés figyelhető meg közöttük. Az elemzés során meghatározásra kerül:
+\begin{itemize}
+    \item hány rekord származik kizárólag az A, B vagy C forrásból,
+    \item hány rekord érkezik két forrás kombinációjából,
+    \item valamint hány rekord található meg mindhárom adatforrásban.
+\end{itemize}
+
+Az összesítés eredménye egy CSV formátumú táblázatban kerül mentésre, amely a \texttt{source\_summary.csv} fájlban érhető el. Ez a táblázat jól áttekinthető módon mutatja meg az egyes forráskombinációkhoz tartozó rekordok számát, valamint azt is, hogy az adott kombináció tartalmazza-e az A, B vagy C forrást.
+
+A forrásonkénti rekordösszesítés kulcsszerepet játszik annak megértésében, hogy az adathalmazok mennyire fedik egymást, és hogy az összevonás során a meghatározott prioritási sorrend (C → B → A) hogyan jelenik meg a végső adatmodellben.
+
+Az alábbi \ref{lst:save} függvény mutatja be a forrásonkénti rekordösszesítő előállításának megvalósítását:
+
+\begin{python}[caption={Forrásonkénti rekordösszesítő előállításának megvalósítása},captionpos=b,label={lst:save}]
+def save_source_summary(d: pd.DataFrame, output_dir: str):
+
+    summary = d["sources"].value_counts().reset_index()
+    summary.columns = ["source_combination", "record_count"]
+
+    summary["contain_A"] = summary["source_combination"].str.contains("A")
+    summary["contain_B"] = summary["source_combination"].str.contains("B")
+    summary["contain_C"] = summary["source_combination"].str.contains("C")
+
+    output_file = os.path.join(output_dir, "source_summary.csv")
+    summary.to_csv(output_file, index=False, encoding="utf-8-sig")
+
+    logging.info(f"Source summary saved: {output_file}")
+\end{python}
+
+\subsection{Integritásvizsgálat}
+
+Az integritásvizsgálat célja a merged tábla alapvető adatminőségi problémáinak feltárása, amelyek az összevonási folyamat során vagy a forrásadatok sajátosságai miatt jelenhetnek meg. Az ellenőrzések elsősorban a kulcsazonosítók, a kötelező mezők és a dátumformátumok konzisztenciájára fókuszálnak, mivel ezek hibái közvetlenül befolyásolják a későbbi normalizálási lépések és az SQL importálás biztonságát.
+
+A vizsgálat az alábbi ellenőrzéseket hajtja végre:
+\begin{itemize}
+    \item duplikált \textit{appid} értékek azonosítása,
+    \item hiányzó \textit{appid} értékek számlálása,
+    \item hiányzó játéknevek (\textit{name}) ellenőrzése,
+    \item hiányzó vagy üres forrásjelölés (\textit{sources}) vizsgálata,
+    \item érvénytelen \textit{release\_date} értékek detektálása dátumkonverzióval.
+\end{itemize}
+
+Az ellenőrzés eredménye egy külön CSV jelentésben kerül mentésre \texttt{integrity\_report.csv} néven, amely a hibák számát ellenőrzésenként összesítve tartalmazza. Ez a jelentés az összefésülés-folyamat utólagos ellenőrzésére és dokumentálására is alkalmas.
+
+Az alábbi \ref{lst:integrity} függvény szemlélteti az integritásvizsgálat megvalósítását:
+
+\begin{python}[caption={Integritásvizsgálat megvalósítása},captionpos=b,label={lst:integrity}]
+def validate_integrity(d: pd.DataFrame, output_dir: str):
+
+    results = []
+
+    results.append({
+        "check": "Duplicate appids",
+        "error_count": d["appid"].duplicated().sum()
+    })
+
+    results.append({
+        "check": "Missing appids",
+        "error_count": d["appid"].isna().sum()
+    })
+
+    if "name" in d.columns:
+        results.append({
+            "check": "Missing names",
+            "error_count": d["name"].isna().sum()
+        })
+
+    if "sources" in d.columns:
+        results.append({
+            "check": "Missing sources",
+            "error_count": (d["sources"] == "").sum()
+        })
+
+    if "release_date" in d.columns:
+        invalid = pd.to_datetime(d["release_date"], 
+        errors="coerce").isna().sum()
+        results.append({
+            "check": "Invalid release_date",
+            "error_count": invalid
+        })
+
+    integrity_df = pd.DataFrame(results)
+
+    output_file = os.path.join(output_dir, "integrity_report.csv")
+    integrity_df.to_csv(output_file, index=False, encoding="utf-8-sig")
+
+    logging.info(f"Integrity check completed, saved to {output_file}")
+\end{python}
+
+
+\Section{Grafikonok}
+
+\subsection{Hisztogramok és trendvizualizációk}
+
+\subsubsection{Játékmegjelenések 2010 előtt}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/hist_pre2010.png}
+    \caption{A Steam platformon megjelent játékok száma évente 2010 előtt}
+    \label{fig:hist_pre2010}
+\end{figure}
+
+A 2010 előtti időszakban a megjelenésszámok viszonylag alacsonyak voltak, és jellemzően a hagyományos kiadói modell dominált. Ebben az érában a belépési küszöb magasabb volt, az önálló fejlesztők és kisebb stúdiók megjelenése még korlátozott szerepet játszott a platform kínálatában.
+
+\subsubsection{Játékmegjelenések 2010 után}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/hist_post2010.png}
+    \caption{A Steam platformon megjelent játékok száma évente 2010 után}
+    \label{fig:hist_post2010}
+\end{figure}
+
+A 2010 utáni időszakban a megjelenésszámok jelentős növekedése figyelhető meg, különösen 2014-et követően. A 2020 és 2024 közötti években a megjelenések száma stabilan 10–20 ezer közötti tartományban mozgott évente, ami jól tükrözi a digitális disztribúció térnyerését és a platform nyitottabbá válását a kisebb fejlesztők számára.
+
+\subsubsection{Összes játék megjelenése évente}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/hist_all_years.png}
+    \caption{A Steam \cite{steam} platformon megjelent játékok száma évente (1997--2025 májusáig)}
+    \label{fig:hist_all_years}
+\end{figure}
+
+Az \ref{fig:hist_all_years} ábra jól szemlélteti a videojáték-megjelenések számának hosszú távú növekedését. A 2014 utáni időszakban különösen meredek emelkedés figyelhető meg, amely szoros összefüggésbe hozható a Steam Direct \cite{steamdirect} modell bevezetésével és az indie fejlesztők számának ugrásszerű növekedésével. A megjelenések száma 2024-ben érte el csúcspontját, több mint 21\,000 új címmel. A 2025-ös érték részleges adatokat tartalmaz, mivel az adathalmaz csak az adott évig rendelkezésre álló megjelenéseket tartalmazza.
+
+\subsubsection{Forrás szerinti bontás (A, B, C kategória)}
+
+Az összefésült adathalmaz lehetőséget ad arra, hogy a játékmegjelenéseket az eredeti
+adatforrások szerint elkülönítve is vizsgáljuk. Ennek megfelelően az elemzés
+három kategóriát különböztet meg:
+
+\begin{itemize}
+    \item \textbf{A dataset} – Steam \cite{steam} metaadatok korábbi, strukturált CSV-alapú forrása
+    \item \textbf{B dataset} – SteamSpy \cite{steamspy} adatok (JSON-alapú, külső statisztikai forrás)
+    \item \textbf{C dataset} – 2024--2025-ös, legfrissebb Steam adatgyűjtések
+\end{itemize}
+
+Az alábbi ábrák az egyes forrásokhoz tartozó játékmegjelenések számát mutatják
+évenkénti bontásban.
+
+\paragraph{A kategória}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/hist_sources_A.png}
+    \caption{Az A kategóriába tartozó játékmegjelenések évenkénti alakulása}
+\end{figure}
+
+Az \textbf{A} forrás esetében jól látható, hogy a megjelenések száma
+korlátozottabb, és elsősorban a korábbi évek játékait fedi le.
+A 2015–2018 közötti időszakban átmeneti növekedés figyelhető meg,
+amelyet azonban a forrás időbeli lefedettségének kifutása követ.
+A 2018 utáni visszaesés nem piaci trendet, hanem az adatforrás
+strukturális lezárulását tükrözi.
+
+\paragraph{B kategória}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/hist_sources_B.png}
+    \caption{A B kategóriába tartozó játékmegjelenések évenkénti alakulása}
+\end{figure}
+
+A \textbf{B} forrás növekedése jóval dinamikusabb.
+A 2019 utáni időszakban különösen jelentős emelkedés figyelhető meg,
+ami a SteamSpy \cite{steamspy} adatgyűjtési lefedettségének bővülésével magyarázható.
+2025-ben már májusig több mint 2300 \textbf{B} kategóriás megjelenés történt,
+azonban ez az érték részleges adatot reprezentál, mivel az év még nem zárult le.
+
+\paragraph{C kategória}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/hist_sources_C.png}
+    \caption{A C kategóriába tartozó játékmegjelenések évenkénti alakulása}
+\end{figure}
+
+A \textbf{C} kategória tartalmazza a legfrissebb adatokat,
+ezért itt figyelhető meg a legerőteljesebb növekedés.
+A 2021 utáni időszakban a megjelenések száma meredeken emelkedik,
+ami jól tükrözi a Steam platformon tapasztalható tartalombővülést
+és az indie fejlesztések dominanciáját.
+A 2025-ös érték ebben az esetben is részleges,
+mivel az adathalmaz csak az év első hónapjait tartalmazza.
+
+\subsubsection{Top 5 műfaj időbeli trendje}
+
+Az alábbi \ref{fig:top5} ábra a Steam \cite{steam} platformon megjelent videojátékok közül az
+öt leggyakoribb műfaj évenkénti megjelenésszámát mutatja be az adatbázis teljes időtartamára
+(1997--2025 májusáig).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/hist_genres_top5.png}
+    \caption{A Top 5 műfaj időbeli trendje}
+    \label{fig:top5}
+\end{figure}
+
+A legnépszerűbb műfajok a vizsgált időszakban az alábbiak voltak:
+\begin{itemize}
+    \item Indie
+    \item Casual
+    \item Action
+    \item Adventure
+    \item Simulation
+\end{itemize}
+
+Az \textbf{Indie} műfaj toronymagasan vezet, és a modern időszakban
+(2014 után) jó közelítéssel a teljes PC-s játékkínálat bővülésének
+indikátoraként értelmezhető. Az indie címek számának növekedése
+szoros összefüggést mutat a Steam Direct \cite{steamdirect} modell bevezetésével,
+amely jelentősen csökkentette a belépési küszöböt a fejlesztők számára.
+
+A műfajok idősorai között rendkívül erős együttmozgás figyelhető meg.
+A 2014–2024 közötti időszakban számított korrelációs együtthatók
+minden műfajpár esetén kiemelkedően magas értékeket mutatnak.
+Ez arra utal, hogy a különböző műfajok növekedése nem egymás rovására történik,
+hanem egy közös, mögöttes piaci expanziót követ.
+
+Hosszabb távon a volumenek aránya stabilnak tekinthető:
+a \textit{Casual}, \textit{Action} és \textit{Adventure} műfajok
+megjelenésszáma nagyságrendileg az \textit{Indie} megjelenések
+50–70\%-a között alakul, míg a \textit{Simulation} műfaj részesedése
+ennek körülbelül a fele. Ennek megfelelően a műfajok idősorai
+nem tekinthetők függetlennek, és a teljes kínálat növekedése jól
+közelíthető egy központi volumenindikátor (Indie) és közel
+konstans műfajarányok segítségével.
+
+\paragraph{Műfajok közötti korrelációk (2014--2024)}
+
+A Top 5 műfaj idősorai közötti együttmozgást kvantitatív módon is
+ellenőriztem. Az alábbi táblázatok a Pearson-féle lineáris korrelációt \cite{pearson},
+illetve a Spearman-féle rangkorrelációt \cite{spearman} mutatják a 2014–2024 közötti
+időszakra számítva.
+
+\subparagraph{Pearson-korreláció}
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+ & Action & Adventure & Casual & Indie & Simulation \\
+\hline
+Action & 1.000 & 0.997 & 0.998 & 0.997 & 0.994 \\
+\hline
+Adventure & 0.997 & 1.000 & 0.998 & 0.994 & 0.996 \\
+\hline
+Casual & 0.998 & 0.998 & 1.000 & 0.997 & 0.996 \\
+\hline
+Indie & 0.997 & 0.994 & 0.997 & 1.000 & 0.992 \\
+\hline
+Simulation & 0.994 & 0.996 & 0.996 & 0.992 & 1.000 \\
+\hline
+\end{tabular}
+\end{center}
+
+\subparagraph{Spearman-korreláció}
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+ & Action & Adventure & Casual & Indie & Simulation \\
+\hline
+Action & 1.000 & 0.991 & 1.000 & 1.000 & 1.000 \\
+\hline
+Adventure & 0.991 & 1.000 & 0.991 & 0.991 & 0.991 \\
+\hline
+Casual & 1.000 & 0.991 & 1.000 & 1.000 & 1.000 \\
+\hline
+Indie & 1.000 & 0.991 & 1.000 & 1.000 & 1.000 \\
+\hline
+Simulation & 1.000 & 0.991 & 1.000 & 1.000 & 1.000 \\
+\hline
+\end{tabular}
+\end{center}
+
+A kétféle korrelációs mérőszám egybehangzóan rendkívül erős
+együttmozgást jelez, ami alátámasztja, hogy a vizsgált műfajok
+idősorai nem tekinthetők egymástól függetlennek.
+
+\subsubsection{Éves növekedési faktor (logaritmikus skálán)}
+
+Az alábbi ábra az egyes évek közötti növekedési faktort mutatja be,
+vagyis azt, hogy az adott évben megjelent játékok száma
+hányszorosára változott az előző évhez képest.
+Az ábrázolás logaritmikus skálán történt, amely lehetővé teszi
+a szélsőséges növekedési és visszaesési periódusok egyidejű
+áttekintését.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/hist_growth_rates.png}
+    \caption{Éves növekedési faktor logaritmikus skálán}
+\end{figure}
+
+A logaritmikus skála jól kiemeli a kiugró éveket, különösen
+\textbf{2005} és \textbf{2014} környékén, amelyek a Steam \cite{steam} platform
+strukturális változásaihoz köthetők.  
+A 2014-es ugrás egyértelműen összefügg a Steam Direct \cite{steamdirect} modell
+bevezetésével, amely jelentősen megnövelte az új megjelenések számát.
+
+A növekedési faktor az egységérték (1) körüli tartományban
+stagnáló piacot jelez, míg az ez alatti értékek visszaesést,
+az efeletti értékek pedig expanziót mutatnak.
+A 2015 utáni időszakban a növekedési faktor stabilizálódása figyelhető meg,
+ami arra utal, hogy a platform elérte a folyamatos, de kevésbé
+robbanásszerű bővülés szakaszát.
+
+A \textbf{2025-ös érték} részleges adatokat tartalmaz,
+mivel az adathalmaz csak az év első hónapjainak (májusig bezárólag)
+megjelenéseit foglalja magában, ezért az adott év növekedési faktora
+nem tekinthető teljes értékűnek.
+
+\subsubsection{Év $\times$ nap hőtérkép}
+
+Az alábbi hőtérkép az egyes évek és naptári napok mentén mutatja
+a videojáték-megjelenések intenzitását.
+A színezés a napi publikálások számát reprezentálja,
+így egyszerre szemlélteti a hosszú távú növekedési trendet
+és az esetleges szezonális mintázatokat.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/heatmap_year_day.png}
+    \caption{Év $\times$ nap hőtérkép a játékmegjelenések intenzitásáról}
+\end{figure}
+
+A hőtérkép látványosan mutatja a publikálási intenzitás
+hosszú távú növekedését és a szezonalitás jelenlétét.
+A 2014 utáni időszakban a megjelenések sűrűsége folyamatosan emelkedik,
+míg a 2023--2025 közötti években már szinte minden napra
+több tucat új játék jut.
+
+A mintázat alapján a publikálás nem egyenletes:
+bizonyos időszakokban és napokon koncentráltabb aktivitás figyelhető meg.
+Mivel azonban az év napjainak hétköznapra esése évről évre eltér,
+a hét napjaihoz köthető hatások ebben az ábrázolásban
+részben elmosódnak.
+
+\subsubsection{Év $\times$ (ISO hét $\times$ hét napja) hőtérkép}
+
+A következő ábra a napokat ISO hét és a hét napja szerint
+egymásra igazítva ábrázolja, amely lehetővé teszi
+a heti ciklikusság és a szezonalitás pontosabb vizsgálatát.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/heatmap_year_weekday_aligned.png}
+    \caption{Év $\times$ ISO hét $\times$ hét napja hőtérkép}
+\end{figure}
+
+Ebben a nézetben a publikálási mintázat letisztultabban értelmezhető.
+A hét napjai szerint is kimutatható periodicitás jelenik meg,
+miközben az éves szezonális különbségek következetesebben rajzolódnak ki.
+
+A modern időszakban a megjelenések számának növekedése nem
+kampányszerű kiugrások formájában történik, hanem folyamatos,
+ami strukturális piaci bővülésre és stabil publikációs
+mechanizmusokra utal.
+
+\section{Szezonális mintázatok – havi, heti és napi bontás}
+
+A játékmegjelenések időbeli szerkezetét több idősíkban vizsgáltam,
+mivel az eltérő aggregálási szintek különböző jellegű mintázatokat
+emelnek ki. A havi, heti és napi bontás együttesen lehetővé teszi
+a hosszú távú trendek és a rövidebb periódusú ciklikusság elkülönítését.
+
+\subsection{Havi szezonális mintázatok}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/seasonal_monthly_overlay.png}
+    \caption{Játékmegjelenések havi bontásban – évek egymásra rajzolva}
+    \label{fig:seasonal_monthly_overlay}
+\end{figure}
+
+A havi bontás jól szemlélteti a hosszabb távú szezonalitást és az
+évről évre fokozódó volumen növekedést. A modern időszakban
+(2014 után) a megjelenések száma gyakorlatilag minden hónapban
+emelkedő trendet követ, jelentősebb, tartós visszaesések nélkül.
+Ez arra utal, hogy a piac bővülése nem egy-egy kiemelt időszakhoz,
+hanem az év egészéhez köthető.
+
+\subsection{Heti szezonális mintázatok}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/seasonal_weekly_overlay.png}
+    \caption{Játékmegjelenések heti bontásban – évek egymásra rajzolva}
+    \label{fig:seasonal_weekly_overlay}
+\end{figure}
+
+A heti bontás kisimítja a napi szintű ingadozásokat, miközben az
+éven belül jelentkező periodikus mintázatok továbbra is jól
+azonosíthatók maradnak. Az egyes évek görbéi
+jelentős együttmozgást mutatnak, ami arra utal, hogy a publikálási
+dinamika időben stabil szerkezetet követ. A csúcs- és alacsonyabb
+aktivitású időszakok évről évre hasonló hetekhez köthetők.
+
+\subsection{Napi mintázatok ISO-heti igazítással}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/seasonal_weekly_overlay_iso.png}
+    \caption{Heti bontás ISO-heti igazítással – a weekday-hatás csökkentése}
+    \label{fig:seasonal_weekly_overlay_iso}
+\end{figure}
+
+A napi szintű adatok önmagukban rendkívül zajosak, elsősorban
+a hét napjának hatása miatt. Ezért a napi megjelenéseket
+ISO-heti bontásban aggregáltam, amellyel a weekday-hatás
+jelentős része kiküszöbölhető.
+
+Az így kapott idősorok már jól összevethetők egymással:
+a csúcsok és visszaesések időben nagyrészt egybeesnek,
+ami erős együttmozgásra és ismétlődő publikálási mintázatokra utal.
+A 2020 utáni időszakban szinte minden héten tartósan magas
+megjelenésszám figyelhető meg.
+
+\section{2026-os előrejelzés logaritmikus skálán illesztett lineáris trend alapján}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/forecast_2026_log_modern.png}
+    \caption{Játékmegjelenések előrejelzése 2026-ra log-lineáris trend alapján}
+    \label{fig:forecast_2026}
+\end{figure}
+
+A modern évek (2014–2024) adataira illesztett log-lineáris
+(exponenciális) trend alapján a 2026-os évre
+\textbf{megközelítőleg 35\,789 új játékmegjelenés} becsülhető.
+
+A modell 2024-re visszatesztelve körülbelül \textbf{10\%-os túlbecslést}
+mutatott, ezért a 2026-os érték \emph{optimista forgatókönyvként}
+értelmezendő, és inkább felső becslésnek tekinthető. A növekedés üteme
+a piac telítődése vagy platformszabályozási hatások miatt a következő
+években mérséklődhet.
+
+\section{Modellvalidáció – 2024 visszateszt}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/forecast_2024_log_modern.png}
+    \caption{2024-es előrejelzés visszatesztje a log-lineáris modell alapján}
+    \label{fig:forecast_2024}
+\end{figure}
+
+A modell teljesítményének ellenőrzésére a 2014–2023 közötti adatokon
+tanított log-lineáris trend segítségével előrejeleztük a 2024-es évet.
+A becslés \textbf{23\,717} megjelenést adott, míg a tényleges érték
+\textbf{21\,454} volt, ami hozzávetőleg \textbf{10\%-os eltérést} jelent.
+
+Ez az eredmény arra utal, hogy a modell a közelmúltban enyhén optimista,
+ugyanakkor a növekedési trend irányát és nagyságrendjét helyesen ragadja meg,
+így hosszabb távú extrapolációs alapként óvatosan alkalmazható.

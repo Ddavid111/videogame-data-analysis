@@ -7,3 +7,11 @@ merge/B_full.csv
 merge/C_full.csv
 merge/merged_master.csv
 split/*.csv
+diplomamunka/**/*.aux
+diplomamunka/**/*.log
+diplomamunka/**/*.out
+diplomamunka/**/*.toc
+diplomamunka/**/*.synctex.gz
+diplomamunka/**/*.thm
+diplomamunka/**/*.pdf
+!diplomamunka/images/**/*.pdf
