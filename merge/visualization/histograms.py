@@ -4,6 +4,7 @@ import ast
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.colors import LogNorm
 from sklearn.linear_model import LinearRegression
 
 
@@ -199,6 +200,37 @@ def plot_genres(df, latest_year, latest_month, month_names, output_dir):
     plt.show()
     print(f"Mentve: {out_path}")
 
+# =========================================
+# STEP 3/B – Top 5 műfaj korreláció
+# =========================================
+def analyze_genre_correlation(df, start_year=2014, end_year=2024):
+    if "genres" not in df.columns:
+        return
+
+    df = df.copy()
+    df["genres_list"] = df["genres"].apply(parse_genres)
+    df_exp = df.explode("genres_list").dropna(subset=["genres_list"])
+
+    top_genres = df_exp["genres_list"].value_counts().nlargest(5).index
+    df_top = df_exp[df_exp["genres_list"].isin(top_genres)]
+
+    pivot = (
+        df_top
+        .groupby(["year", "genres_list"])
+        .size()
+        .unstack(fill_value=0)
+        .loc[start_year:end_year]
+    )
+
+    print("\n=== Top 5 műfaj korreláció (Pearson) ===")
+    corr = pivot.corr(method="pearson")
+    print(corr.round(3))
+
+    print("\n=== Top 5 műfaj korreláció (Spearman) ===")
+    corr_s = pivot.corr(method="spearman")
+    print(corr_s.round(3))
+
+    return pivot, corr
 
 # =========================================
 # STEP 4 – Éves növekedési ráta (fold-change)
@@ -291,28 +323,28 @@ def plot_weekly_overlay(df, output_dir):
     print(f"Mentve: {out_path}")
 
 
-def plot_daily_overlay(df, output_dir):
+def plot_weekly_overlay_from_daily(df, output_dir):
     df = df.copy()
     df["date"] = pd.to_datetime(df["release_date"], errors="coerce")
     df = df.dropna(subset=["date"])
 
-    df["year"] = df["date"].dt.year
-    df["dayofyear"] = df["date"].dt.dayofyear
+    df["year"] = df["date"].dt.year.astype(int)
+    df["iso_week"] = df["date"].dt.isocalendar().week.astype(int)
 
-    daily = df.groupby(["year", "dayofyear"]).size().unstack(fill_value=0)
+    weekly = df.groupby(["year", "iso_week"]).size().unstack(fill_value=0)
+    weekly = weekly.reindex(columns=range(1, 54), fill_value=0)
 
     plt.figure(figsize=(16, 7))
+    for y in weekly.index:
+        plt.plot(range(1, 54), weekly.loc[y].values, linewidth=1, alpha=0.6, label=y)
 
-    for year in daily.index:
-        plt.plot(range(1, 367), daily.loc[year], linewidth=1, alpha=0.5, label=year)
-
-    plt.xlabel("Nap (1–365)")
-    plt.ylabel("Játékmegjelenések száma")
-    plt.title("Játékmegjelenések napi bontásban – évek egymásra rajzolva")
+    plt.xlabel("ISO hét (1–53)")
+    plt.ylabel("Megjelenések száma (heti)")
+    plt.title("Heti bontás – évek egymásra rajzolva (weekday-hatás csökkentve)")
     plt.grid(True, alpha=0.3)
     plt.legend(ncol=4, fontsize=7)
 
-    out_path = os.path.join(output_dir, "seasonal_daily_overlay.png")
+    out_path = os.path.join(output_dir, "seasonal_weekly_overlay_iso.png")
     plt.tight_layout()
     plt.savefig(out_path, dpi=300)
     plt.show()
@@ -338,7 +370,7 @@ def plot_heatmap_year_day(df, output_dir):
     heat = heat.reindex(columns=range(1, 366), fill_value=0)
 
     plt.figure(figsize=(22, 10))
-    plt.imshow(heat, aspect="auto", cmap="hot", interpolation="nearest")
+    plt.imshow(heat, aspect="auto", cmap="viridis", norm=LogNorm(vmin=1, vmax=heat.values.max()))
 
     plt.colorbar(label="Megjelenések száma")
     plt.title("Játékmegjelenések hőtérképe – év × nap", fontsize=18)
@@ -353,59 +385,203 @@ def plot_heatmap_year_day(df, output_dir):
     plt.show()
     print(f"Mentve: {out_path}")
 
-
 # =========================================
-# STEP 7 – 2026 előrejelzés (logaritmikus trend, modern éra)
+# STEP 6/B – Hőtérkép: év × (ISO hét * 7 + hét napja)
 # =========================================
-def forecast_2026(df, output_dir):
+def plot_heatmap_year_weekday_aligned(df, output_dir):
     """
-    2026-os játékmegjelenés-szám becslése logaritmikus trenddel,
-    csak a modern évekre (2014–2024) illesztve.
+    Hőtérkép, ahol a vízszintes tengely 52/53 hét * 7 nap.
+    Így a hét napjai évek között egymásra igazodnak (erős weekday-minta jobban kijön).
     """
     df = df.copy()
     df["date"] = pd.to_datetime(df["release_date"], errors="coerce")
-    df["year"] = df["date"].dt.year
+    df = df.dropna(subset=["date"])
 
-    counts = df["year"].value_counts().sort_index()
+    iso = df["date"].dt.isocalendar()
+    df["year"] = df["date"].dt.year.astype(int)
+    df["iso_week"] = iso.week.astype(int)
+    df["iso_weekday"] = iso.day.astype(int)
 
-    modern = counts[(counts.index >= 2014) & (counts.index <= 2024)]
+    df["week_day_idx"] = (df["iso_week"] - 1) * 7 + (df["iso_weekday"] - 1)
 
-    years = np.array(modern.index).reshape(-1, 1)
-    values = modern.values
-    log_values = np.log(values)
+    heat = df.groupby(["year", "week_day_idx"]).size().unstack(fill_value=0)
 
-    model = LinearRegression()
-    model.fit(years, log_values)
+    heat = heat.reindex(columns=range(0, 53 * 7), fill_value=0)
 
-    log_pred = model.predict(np.array([[2026]]))
-    pred_2026 = float(np.exp(log_pred)[0])
+    plt.figure(figsize=(22, 10))
+    plt.imshow(heat, aspect="auto", cmap="viridis", norm=LogNorm(vmin=1, vmax=heat.values.max()))
 
-    print("\n=== 2026 logaritmikus előrejelzés (modern évek alapján) ===")
-    print(f"Előrejelzés: ~{pred_2026:.0f} játék")
-    print("============================================================\n")
+    plt.colorbar(label="Megjelenések száma")
+    plt.title("Játékmegjelenések hőtérképe – év × (ISO hét × hét napja)", fontsize=18)
+    plt.xlabel("Idő (hetek 1–53, naponként bontva)")
+    plt.ylabel("Év")
+    plt.yticks(ticks=np.arange(len(heat.index)), labels=heat.index)
 
-    plt.figure(figsize=(12, 6))
-    plt.scatter(modern.index, modern.values, label="Modern adatok (2014–2024)")
+    for x in range(0, 53 * 7, 7):
+        plt.axvline(x - 0.5, linewidth=0.3, alpha=0.3)
 
-    x_range = np.arange(2014, 2027)
-    y_curve = np.exp(model.predict(x_range.reshape(-1, 1)))
-    plt.plot(x_range, y_curve, color="orange", label="Logaritmikus trend (2014–2024)")
-
-    plt.scatter([2026], [pred_2026], color="red",
-                label=f"2026 becslés: {pred_2026:.0f}")
-
-    plt.title("Játékmegjelenések – logaritmikus trend (modern érából)")
-    plt.xlabel("Év")
-    plt.ylabel("Megjelenések száma")
-    plt.legend()
-
-    out_path = os.path.join(output_dir, "forecast_2026_log_modern.png")
+    out_path = os.path.join(output_dir, "heatmap_year_weekday_aligned.png")
     plt.tight_layout()
     plt.savefig(out_path, dpi=300)
     plt.show()
     print(f"Mentve: {out_path}")
 
+
+# =========================================
+# STEP 7 – Backtest + 2026 előrejelzés (logaritmikus trend, modern éra)
+# =========================================
+def forecast_year_log_modern(
+    df,
+    target_year: int,
+    output_dir: str,
+    train_start: int = 2014,
+    train_end: int = 2024,
+    show_plot: bool = True,
+):
+    """
+    Log-trendes becslés modern évekre illesztve.
+
+    Backtest-kompatibilis: a modell mindig csak a target_year-nál korábbi évekre tanul,
+    így nem "látja" előre a cél-évet.
+
+    Példa:
+      - target_year=2024 -> tréning 2014–2023
+      - target_year=2026 -> tréning 2014–2024 (ha train_end=2024)
+    """
+    df = df.copy()
+    df["date"] = pd.to_datetime(df["release_date"], errors="coerce")
+    df = df.dropna(subset=["date"])
+    df["year"] = df["date"].dt.year.astype(int)
+
+    counts = df["year"].value_counts().sort_index()
+
+    effective_train_end = min(train_end, target_year - 1)
+    modern = counts[(counts.index >= train_start) & (counts.index <= effective_train_end)]
+
+    if len(modern) < 3:
+        raise ValueError(
+            f"Túl kevés tréning év: {len(modern)} db (train: {train_start}–{effective_train_end})."
+        )
+
+    years = np.array(modern.index).reshape(-1, 1)
+    values = modern.values.astype(float)
+
+    if np.any(values <= 0):
+        log_values = np.log(values + 1.0)
+        add_one = True
+    else:
+        log_values = np.log(values)
+        add_one = False
+
+    model = LinearRegression()
+    model.fit(years, log_values)
+
+    log_pred = model.predict(np.array([[target_year]]))[0]
+    pred = float(np.exp(log_pred) - (1.0 if add_one else 0.0))
+
+    actual = float(counts.get(target_year, np.nan))
+
+    print(f"\n=== Log előrejelzés (modern évek) → cél év: {target_year} ===")
+    print(f"Tréning: {train_start}–{effective_train_end} (n={len(modern)})")
+    print(f"Előrejelzés: ~{pred:.0f} játék")
+    if not np.isnan(actual):
+        err = pred - actual
+        ape = abs(err) / actual * 100 if actual != 0 else np.nan
+        print(f"Tényadat:    {actual:.0f} játék")
+        print(f"Hiba:        {err:+.0f} játék | APE: {ape:.1f}%")
+    else:
+        print("Tényadat:    nincs az adathalmazban ehhez az évhez.")
+    print("====================================================\n")
+
+    if show_plot:
+        plt.figure(figsize=(12, 6))
+        plt.scatter(modern.index, modern.values, label=f"Tréning adatok ({train_start}–{effective_train_end})")
+
+        x_min = train_start
+        x_max = max(effective_train_end, target_year)
+        x_range = np.arange(x_min, x_max + 1)
+
+        y_curve = np.exp(model.predict(x_range.reshape(-1, 1)))
+        if add_one:
+            y_curve = y_curve - 1.0
+
+        plt.plot(x_range, y_curve, color="orange", label="Log trend illesztés")
+
+        plt.scatter([target_year], [pred], color="red", label=f"Becslés: {pred:.0f}")
+        if not np.isnan(actual):
+            plt.scatter([target_year], [actual], color="green", label=f"Tény: {actual:.0f}")
+
+        plt.title("Játékmegjelenések – logaritmikus trend (modern éra)")
+        plt.xlabel("Év")
+        plt.ylabel("Megjelenések száma")
+        plt.legend()
+
+        os.makedirs(output_dir, exist_ok=True)
+        out_path = os.path.join(output_dir, f"forecast_{target_year}_log_modern.png")
+        plt.tight_layout()
+        plt.savefig(out_path, dpi=300)
+        plt.show()
+        print(f"Mentve: {out_path}")
+
+    return pred, actual
+
+
+def rolling_backtest_log_modern(
+    df,
+    test_years,
+    output_dir,
+    train_start: int = 2014,
+    train_end: int = 2024,
+    show_plots: bool = False,
+):
+    """
+    Több évre lefuttatott backtest (rolling).
+    """
+    rows = []
+    for y in test_years:
+        pred, actual = forecast_year_log_modern(
+            df,
+            target_year=y,
+            output_dir=output_dir,
+            train_start=train_start,
+            train_end=train_end,
+            show_plot=show_plots,
+        )
+
+        if not np.isnan(actual) and actual != 0:
+            ape = abs(pred - actual) / actual * 100
+        else:
+            ape = np.nan
+
+        rows.append({"year": y, "pred": pred, "actual": actual, "APE_%": ape})
+
+    res = pd.DataFrame(rows).sort_values("year")
+
+    print("\n=== Rolling backtest összefoglaló ===")
+    print(res.to_string(index=False, formatters={
+        "pred": lambda v: f"{v:.0f}" if pd.notna(v) else "nan",
+        "actual": lambda v: f"{v:.0f}" if pd.notna(v) else "nan",
+        "APE_%": lambda v: f"{v:.1f}%" if pd.notna(v) else "nan"
+    }))
+
+    valid = res.dropna(subset=["APE_%"])
+    if len(valid):
+        print(f"\nÁtlagos APE: {valid['APE_%'].mean():.1f}% | Medián APE: {valid['APE_%'].median():.1f}%")
+
+    return res
+
+
+def forecast_2026(df, output_dir):
+    """
+    2026-os játékmegjelenés-szám becslése logaritmikus trenddel,
+    modern évekre (2014–2024) illesztve.
+    """
+    pred_2026, _ = forecast_year_log_modern(df, target_year=2026, output_dir=output_dir, show_plot=True)
+    print("\n=== 2026 logaritmikus előrejelzés (modern évek alapján) ===")
+    print(f"Előrejelzés: ~{pred_2026:.0f} játék")
+    print("============================================================\n")
     return pred_2026
+
 
 
 # =========================================
@@ -436,14 +612,19 @@ def plot_histograms(df: pd.DataFrame, output_dir: str):
 
     plot_genres(df, latest_year, latest_month, month_names, output_dir)
 
+    pivot, corr = analyze_genre_correlation(df)
+
     plot_growth_rates(df, output_dir)
 
     plot_monthly_overlay(df, output_dir)
     plot_weekly_overlay(df, output_dir)
-    plot_daily_overlay(df, output_dir)
+    plot_weekly_overlay_from_daily(df, output_dir)
 
     plot_heatmap_year_day(df, output_dir)
+    plot_heatmap_year_weekday_aligned(df, output_dir)
 
+    forecast_year_log_modern(df, target_year=2024, output_dir=output_dir, show_plot=True)
+    
     forecast_2026(df, output_dir)
 
 
