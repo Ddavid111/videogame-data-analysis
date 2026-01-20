@@ -4,13 +4,19 @@ Ebben a fejezetben a dolgozat során felhasznált adatok forrása és előkész�
 
 \Section{Steam szolgáltatás és a kezelt adatai}
 
+A következő alfejezetek röviden bemutatják a Steam \cite{steam} szolgáltatást mint
+adatforrást, valamint a dolgozat során felhasznált adatok eredetét és
+elérhetőségét. A bemutatás célja annak áttekintése, hogy milyen típusú
+adatok állnak rendelkezésre, és ezek milyen szerepet töltenek be az
+adatelőkészítési folyamatban.
+
 \subsection{A Steam szolgáltatás áttekintése}
 
 A Steam \cite{steam} egy digitális videojáték-disztribúciós platform, amelyet a Valve Corporation \cite{valve} üzemeltet, és amely világszerte az egyik legnagyobb online videojáték-áruháznak számít. A szolgáltatás lehetőséget biztosít videojátékok vásárlására, letöltésére és frissítésére, valamint különböző közösségi funkciók – például értékelések, fórumok és statisztikák – elérésére.
 
 A Steam platformon elérhető videojátékokhoz számos, nyilvánosan hozzáférhető adat kapcsolódik. Ezek közé tartoznak többek között a játékok alapvető jellemzői (például cím, megjelenési dátum, fejlesztő, kiadó), műfaji besorolásuk, felhasználói értékelések, valamint egyes esetekben teljesítményre és népszerűségre vonatkozó mutatók. Az ilyen típusú adatok különösen alkalmasak statisztikai elemzésre és gépi tanulási módszerek alkalmazására.
 
-A Steam által kezelt adatok mennyisége és sokfélesége miatt a platform gyakran szolgál adatforrásként kutatási és elemzési célokra. A játékokhoz kapcsolódó strukturált adatok lehetőséget biztosítanak különböző mintázatok feltárására, például a műfajok közötti különbségek, a felhasználói értékelések alakulása vagy a játékok népszerűségének vizsgálata során. Ennek köszönhetően a Steamhez kapcsolódó adathalmazok jól illeszkednek adatfeldolgozási és gépi tanulási feladatok bemutatásához.
+A Steam által kezelt adatok mennyisége és sokfélesége miatt a platform gyakran szolgál adatforrásként kutatási és elemzési célokra. A játékokhoz kapcsolódó strukturált adatok lehetőséget biztosítanak különböző mintázatok feltárására, például a műfajok közötti különbségek, a felhasználói értékelések alakulása vagy a játékok népszerűségének vizsgálata során. Ennek köszönhetően a Steamhez kapcsolódó adathalmazok jól illeszkednek adatfeldolgozási és gépi tanulási feladatok bemutatásához. A Steam digitális videojáték-disztribúciós platform logóját a \ref{fig:steam_logo} ábra szemlélteti.
 
 \begin{figure}[H]
     \centering
@@ -23,7 +29,8 @@ A Steam által kezelt adatok mennyisége és sokfélesége miatt a platform gyak
 
 A Kaggle \cite{kaggle} egy online adatmegosztó és adatverseny-platform, amely elsősorban adatkutatási és gépi tanulási feladatokhoz biztosít nyilvánosan elérhető adathalmazokat. A platformon a felhasználók különböző forrásokból származó, dokumentált adatállományokat oszthatnak meg, amelyek kutatási és oktatási célokra egyaránt felhasználhatók.
 
-A dolgozat során alkalmazott adathalmazok a Kaggle platformon kerültek publikálásra, és Steamhez kapcsolódó, nyilvános adatok feldolgozott formáit tartalmazzák. A Kaggle egységes hozzáférést, verziókezelést és leírást biztosít az adatkészletekhez, ami megkönnyíti azok összehasonlítható és reprodukálható feldolgozását.
+A dolgozat során alkalmazott adathalmazok a Kaggle platformon kerültek publikálásra, és Steamhez kapcsolódó, nyilvános adatok feldolgozott formáit tartalmazzák. A Kaggle egységes hozzáférést, verziókezelést és leírást biztosít az adatkészletekhez, ami megkönnyíti azok összehasonlítható és reprodukálható feldolgozását. A Kaggle adatmegosztó és adatkutatási platform vizuális
+azonosítóját a \ref{fig:kaggle_logo} ábra mutatja be.
 
 \begin{figure}[H]
     \centering
@@ -36,28 +43,28 @@ A dolgozat során alkalmazott adathalmazok a Kaggle platformon kerültek publik�
 
 A dolgozat során felhasznált adatok a Kaggle \cite{kaggle} platformon elérhető, Steamhez \cite{steam} kapcsolódó nyilvános adathalmazokból származnak. Az adatkészletek manuális letöltéssel kerültek beszerzésre a Kaggle webes felületén keresztül, amelyhez felhasználói fiók megléte szükséges. A letöltött állományok tömörített formában voltak elérhetők, és kicsomagolást követően különálló adatfájlokat tartalmaztak.
 
-Az elsőként vizsgált adatkészlet a \textit{Steam Store Games (Clean dataset)} elnevezésű adathalmaz, amely a továbbiakban \textit{A adathalmazként} kerül hivatkozásra. Az adathalmaz a Steam áruházban elérhető videojátékok különböző jellemzőit tartalmazza, többek között a műfaji besorolásokat és a becsült tulajdonosi számokat. Az adatok a Steam Store és a SteamSpy \cite{steamspy} API-k felhasználásával kerültek összegyűjtésre, és elsősorban a 2019 májusáig megjelent játékokra vonatkoznak. Az adatkészlet több, egymással logikailag összefüggő CSV fájlból áll, és összesen 27\,075 rekordot valamint 409 attribútumot tartalmaz.
+Az elsőként vizsgált adatkészlet a \textit{Steam Store Games (Clean dataset)} elnevezésű adathalmaz, amely a továbbiakban \textit{A adathalmazként} kerül hivatkozásra. Az adathalmaz a Steam áruházban elérhető videojátékok különböző jellemzőit tartalmazza, többek között a műfaji besorolásokat és a becsült tulajdonosi számokat. Az adatok a Steam Store és a SteamSpy \cite{steamspy} API-k felhasználásával kerültek összegyűjtésre, és elsősorban a 2019 májusáig megjelent játékokra vonatkoznak. Az adatkészlet több, egymással logikailag összefüggő CSV fájlból áll, és összesen \num{27075} rekordot valamint 409 attribútumot tartalmaz.
 
-A második adathalmaz a Kaggle platformon \textit{Steam Games Dataset} néven elérhető adatkészlet, amely a továbbiakban \textit{B adathalmazként} kerül megjelölésre. Az adathalmaz CSV és JSON formátumban egyaránt elérhető, és a Steam API, valamint a SteamSpy szolgáltatás adatain alapul. A kezdeti feltáró adatelemzés során a CSV formátum került felhasználásra, mivel annak egyszerűbb szerkezete gyors áttekintést tett lehetővé. Az adathalmazok összevonása során azonban a JSON formátumú állomány került alkalmazásra, mivel az részletesebb és strukturáltabb adatokat biztosított az adatok összekapcsolásához. A B adathalmaz 111\,452 rekordot és 39 attribútumot tartalmaz.
+A második adathalmaz a Kaggle platformon \textit{Steam Games Dataset} néven elérhető adatkészlet, amely a továbbiakban \textit{B adathalmazként} kerül megjelölésre. Az adathalmaz CSV és JSON formátumban egyaránt elérhető, és a Steam API, valamint a SteamSpy szolgáltatás adatain alapul. A kezdeti feltáró adatelemzés során a CSV formátum került felhasználásra, mivel annak egyszerűbb szerkezete gyors áttekintést tett lehetővé. Az adathalmazok összevonása során azonban a JSON formátumú állomány került alkalmazásra, mivel az részletesebb és strukturáltabb adatokat biztosított az adatok összekapcsolásához. A B adathalmaz \num{111452} rekordot és 39 attribútumot tartalmaz.
 
-A harmadik vizsgált adatkészlet a \textit{Steam Games Dataset 2025}, amely a továbbiakban \textit{C adathalmazként} kerül hivatkozásra. Az adathalmaz a Steam áruház weboldalának automatizált feldolgozásával, valamint a Steam API és a SteamSpy adatainak felhasználásával készült, és 2025 márciusáig bezárólag tartalmaz adatokat. Az adatok több CSV fájlban érhetők el, beleértve nyers és előfeldolgozott változatokat is, amelyek a dolgozat későbbi szakaszában közös feldolgozás és összevonás alapjául szolgálnak. A C adathalmaz összesen 89\,618 rekordot és 186 attribútumot foglal magában.
+A harmadik vizsgált adatkészlet a \textit{Steam Games Dataset 2025}, amely a továbbiakban \textit{C adathalmazként} kerül hivatkozásra. Az adathalmaz a Steam áruház weboldalának automatizált feldolgozásával, valamint a Steam API és a SteamSpy adatainak felhasználásával készült, és 2025 márciusáig bezárólag tartalmaz adatokat. Az adatok több CSV fájlban érhetők el, beleértve nyers és előfeldolgozott változatokat is, amelyek a dolgozat későbbi szakaszában közös feldolgozás és összevonás alapjául szolgálnak. A C adathalmaz összesen \num{89618} rekordot és 186 attribútumot foglal magában.
 
-Az adatkészletek eltérő szerkezete, fájlformátuma és attribútumkészlete indokolttá tette az adatok előzetes tisztítását, normalizálását, valamint egy egységes adatszerkezet kialakítását, amely a későbbi elemzési és gépi tanulási feladatok alapját képezi.
+Az adatkészletek eltérő szerkezete, fájlformátuma és attribútumkészlete indokolttá tette az adatok előzetes tisztítását, normalizálását, valamint egy egységes adatszerkezet kialakítását, amely a későbbi elemzési és gépi tanulási feladatok alapját képezi. A felhasznált adathalmazok főbb mennyiségi jellemzőit a \ref{tab:datasets} táblázat foglalja össze.
 
 \begin{table}[H]
 \centering
-\caption{A felhasznált adathalmazok mennyiségi jellemzői}
 \begin{tabular}{|l|c|c|}
 \hline
 \textbf{Adathalmaz} & \textbf{Rekordok száma} & \textbf{Attribútumok száma} \\
 \hline
-A adathalmaz & 27\,075 & 409 \\
+A adathalmaz & \num{27075} & 409 \\
 \hline
-B adathalmaz & 111\,452 & 39 \\
+B adathalmaz & \num{111452} & 39 \\
 \hline
-C adathalmaz & 89\,618 & 186 \\
+C adathalmaz & \num{89618} & 186 \\
 \hline
 \end{tabular}
+\caption{A felhasznált adathalmazok mennyiségi jellemzői}
 \label{tab:datasets}
 \end{table}
 

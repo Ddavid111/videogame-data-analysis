@@ -84,7 +84,7 @@ Az **"A" relációs séma** normalizálási lépései biztosítják:
 Relációs séma diagram
 ----------------------
 
-.. image:: ../Relational_data_models/A.svg
+.. image:: ../Relational_data_models/A_normalized.svg
    :align: center
    :alt: A relációs séma diagram
    :class: image-group

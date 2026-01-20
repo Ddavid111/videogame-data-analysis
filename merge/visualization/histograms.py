@@ -582,6 +582,85 @@ def forecast_2026(df, output_dir):
     print("============================================================\n")
     return pred_2026
 
+def expanding_window_one_step_backtest_log_modern(
+    df,
+    output_dir: str,
+    train_start: int = 2014,
+    first_train_end: int = 2016,
+    last_test_year: int = 2024,
+    show_plot: bool = True,
+):
+    """
+    Expanding-window 1-step backtest:
+      tréning: train_start..t
+      teszt:   t+1
+    és nézi, hogyan változik a hiba, ahogy t nő (több tréningpont).
+    """
+    df = df.copy()
+    df["date"] = pd.to_datetime(df["release_date"], errors="coerce")
+    df = df.dropna(subset=["date"])
+    df["year"] = df["date"].dt.year.astype(int)
+    counts = df["year"].value_counts().sort_index()
+
+    rows = []
+
+    for t in range(first_train_end, last_test_year):
+        target_year = t + 1
+        pred, actual = forecast_year_log_modern(
+            df,
+            target_year=target_year,
+            output_dir=output_dir,
+            train_start=train_start,
+            train_end=t,
+            show_plot=False,
+        )
+
+        if pd.notna(actual) and actual != 0:
+            ape = abs(pred - actual) / actual * 100
+        else:
+            ape = np.nan
+
+        rows.append({
+            "train_end": t,
+            "train_n": (t - train_start + 1),
+            "target_year": target_year,
+            "pred": pred,
+            "actual": actual,
+            "APE_%": ape,
+        })
+
+    res = pd.DataFrame(rows)
+
+    print("\n=== Expanding-window 1-step backtest (log-modern) ===")
+    print(res.to_string(index=False, formatters={
+        "pred": lambda v: f"{v:.0f}" if pd.notna(v) else "nan",
+        "actual": lambda v: f"{v:.0f}" if pd.notna(v) else "nan",
+        "APE_%": lambda v: f"{v:.1f}%" if pd.notna(v) else "nan"
+    }))
+
+    valid = res.dropna(subset=["APE_%"])
+    if len(valid):
+        print(f"\nÁtlagos APE: {valid['APE_%'].mean():.1f}% | Medián APE: {valid['APE_%'].median():.1f}%")
+
+    if show_plot:
+        import matplotlib.pyplot as plt
+        import os
+
+        plt.figure(figsize=(12, 5))
+        plt.plot(res["train_n"], res["APE_%"], marker="o")
+        plt.title("Expanding-window backtest – hiba alakulása a tréningméret függvényében")
+        plt.xlabel("Tréningévek száma (n)")
+        plt.ylabel("APE (%)")
+        plt.grid(True, alpha=0.3)
+
+        os.makedirs(output_dir, exist_ok=True)
+        out_path = os.path.join(output_dir, "expanding_backtest_ape_log_modern.png")
+        plt.tight_layout()
+        plt.savefig(out_path, dpi=300)
+        plt.show()
+        print(f"Mentve: {out_path}")
+
+    return res
 
 
 # =========================================
@@ -623,6 +702,15 @@ def plot_histograms(df: pd.DataFrame, output_dir: str):
     plot_heatmap_year_day(df, output_dir)
     plot_heatmap_year_weekday_aligned(df, output_dir)
 
+    expanding_window_one_step_backtest_log_modern(
+        df,
+        output_dir=output_dir,
+        train_start=2014,
+        first_train_end=2016,
+        last_test_year=2024,
+        show_plot=True,
+    )
+    
     forecast_year_log_modern(df, target_year=2024, output_dir=output_dir, show_plot=True)
     
     forecast_2026(df, output_dir)

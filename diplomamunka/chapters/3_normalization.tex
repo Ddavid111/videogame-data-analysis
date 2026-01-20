@@ -53,13 +53,22 @@ A normalizálási folyamat eredményeként az A adathalmaz relációs sémája t
 
 Az A adathalmaz normalizálási lépései biztosították az adatredundancia minimalizálását, a tranzitív függőségek megszüntetését, valamint a listaértékű és összetett attribútumok önálló táblákba történő szétválasztását. A kialakított relációs séma jól strukturált, karbantartható és alkalmas arra, hogy alapjául szolgáljon a további adatintegrációs és gépi tanulási feladatoknak.
 
-Az A adathalmaz részletes attribútumleírását és az egyes mezők jelentését tartalmazó adatleíró (data dictionary) a dolgozat mellékletei között érhető el.
+Az A adathalmaz részletes attribútumleírását és az egyes mezők jelentését tartalmazó adatleíró (data dictionary) a dolgozat mellékletei között érhető el. Az A adathalmaz normalizálatlan relációs sémáját a \ref{fig:A_unnormalized} ábra, míg a normalizált relációs sémát a
+\ref{fig:A_normalized} ábra szemlélteti.
+
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{images/A_schema.pdf}
+    \includegraphics[width=1.0\textwidth]{images/A_unnormalized.pdf}
+    \caption{Az A adathalmaz normalizálatlan relációs sémája}
+    \label{fig:A_unnormalized}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/A_normalized.pdf}
     \caption{Az A adathalmaz normalizált relációs sémája}
-    \label{fig:A_schema}
+    \label{fig:A_normalized}
 \end{figure}
 
 \subsection{A B adathalmaz normalizálása}
@@ -90,13 +99,20 @@ A normalizálás eredményeként a B adathalmaz relációs sémája egy jól str
 
 A B adathalmaz normalizálási folyamata eredményeként egy tiszta, jól strukturált adatmodell jött létre, amely megfelel az első három normálforma követelményeinek. A kialakított séma atomi értékeket tartalmaz, megszünteti a részleges és tranzitív függőségeket, valamint külön táblákban kezeli az összetett és listaértékű mezőket. Az alkalmazott struktúra jól bővíthető, karbantartható, és minimális adatredundanciát biztosít a további feldolgozási és elemzési lépésekhez.
 
-A B adathalmaz normalizált sémájához tartozó adatleíró (data dictionary), amely az attribútumok jelentését és típusát részletezi, a dolgozat mellékleteiben található.
+A B adathalmaz normalizált sémájához tartozó adatleíró (data dictionary), amely az attribútumok jelentését és típusát részletezi, a dolgozat mellékleteiben található. A B adathalmaz normalizálatlan relációs sémáját a \ref{fig:B_unnormalized} ábra, míg a normalizált relációs sémát a \ref{fig:B_normalized} ábra szemlélteti.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{images/B_schema.pdf}
+    \includegraphics[width=0.6\textwidth]{images/B_unnormalized.pdf}
+    \caption{A B adathalmaz normalizálatlan relációs sémája}
+    \label{fig:B_unnormalized}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/B_normalized.pdf}
     \caption{A B adathalmaz normalizált relációs sémája}
-    \label{fig:B_schema}
+    \label{fig:B_normalized}
 \end{figure}
 
 \subsection{A C adathalmaz normalizálása}
@@ -129,13 +145,20 @@ A normalizálás eredményeként a C adathalmaz relációs sémája egy egysége
 
 A C adathalmaz normalizálása során négy különálló, eltérő időpontból származó CSV-fájl került egységes relációs struktúrába szervezésre. Az alkalmazott normalizálási lépések biztosítják az első három normálforma követelményeinek teljesülését, elkülönítik a felirat- és hangnyelveket, valamint strukturált módon kezelik a játékcsomagokat. A kialakított séma csökkenti az adatredundanciát, elősegíti az adatok konzisztenciáját, és rugalmasan kezeli a 2024-es és 2025-ös adatforrások közötti eltéréseket, így megfelelő alapot biztosít a további integrációs és elemzési feladatokhoz.
 
-A C adathalmaz normalizált sémájához tartozó adatleíró (data dictionary), amely az egyes attribútumok jelentését és típusát részletezi, a dolgozat mellékleteiben található.
+A C adathalmaz normalizált sémájához tartozó adatleíró (data dictionary), amely az egyes attribútumok jelentését és típusát részletezi, a dolgozat mellékleteiben található. A C adathalmaz normalizálatlan relációs sémáját a\ref{fig:C_unnormalized} ábra, míg a normalizált relációs sémát a \ref{fig:C_normalized} ábra szemlélteti.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{images/C_schema.pdf}
+    \includegraphics[width=1.0\textwidth]{images/C_unnormalized.pdf}
+    \caption{A C adathalmaz normalizálatlan relációs sémája}
+    \label{fig:C_unnormalized}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/C_normalized.pdf}
     \caption{A C adathalmaz normalizált relációs sémája}
-    \label{fig:C_schema}
+    \label{fig:C_normalized}
 \end{figure}
 
 \subsection{A D adathalmaz normalizálása}
@@ -168,7 +191,7 @@ A D adathalmaz relációs sémája az A, B és C adathalmazok összevonásával 
 
 A D adathalmaz normalizált sémájához tartozó adatleíró (data dictionary), amely az egyes attribútumok jelentését és típusát részletezi, a dolgozat mellékleteiben található.
 
-A D adathalmaz normalizált relációs sémájának SQL-alapú megvalósítása a dolgozat mellékleteiben található. Az ott bemutatott SQL definíciók a végső adatmodellt írják le, és egyértelműen jelölik, hogy az egyes táblák és attribútumok mely forrásadathalmazokból (A, B vagy C) származnak.
+A D adathalmaz normalizált relációs sémájának SQL-alapú megvalósítása a dolgozat mellékleteiben található. Az ott bemutatott SQL definíciók a végső adatmodellt írják le, és egyértelműen jelölik, hogy az egyes táblák és attribútumok mely forrásadathalmazokból (A, B vagy C) származnak. A D adathalmaz egységesített, normalizált relációs sémája a \ref{fig:D_schema} ábrán látható.
 
 \begin{figure}[H]
     \centering
@@ -179,7 +202,7 @@ A D adathalmaz normalizált relációs sémájának SQL-alapú megvalósítása 
 
 \Section{Adathalmazok összefésülése}
 
-Ebben az alfejezetben az A, B és C adathalmazok összefésülésének folyamata kerül bemutatásra. Az adathalmazok egyesítése során az eltérő forrásokból származó adatok strukturális különbségeinek kezelése, az attribútumok egységesítése, valamint az adatok konzisztenciájának biztosítása volt a fő cél. A összefésülés-folyamat eredményeként jött létre a végső, egységes D adathalmaz, amely a további elemzések alapját képezi.
+Ebben az alfejezetben az A, B és C adathalmazok összefésülésének folyamata kerül bemutatásra. Az adathalmazok egyesítése során az eltérő forrásokból származó adatok strukturális különbségeinek kezelése, az attribútumok egységesítése, valamint az adatok konzisztenciájának biztosítása volt a fő cél. Az összefésülési folyamat eredményeként jött létre a végső, egységes D adathalmaz, amely a további elemzések alapját képezi.
 
 Az alfejezet bemutatja az adathalmazok összefésülésének logikai lépéseit, a folyamat vizuális áttekintését, valamint a megvalósításhoz használt módszereket. Emellett kitér a merge során végrehajtott ellenőrzésekre és azokra a döntésekre, amelyek biztosították az adatok helyes és következetes integrációját.
 
@@ -189,7 +212,7 @@ Az adathalmazok összefésülésének folyamata az A, B és C forrásadatok stru
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{images/merge_folyamat.pdf}
+    \includegraphics[width=1.0\textwidth]{images/merge_folyamat.pdf}
     \caption{Az A, B és C adathalmazok összefésülésének folyamata}
     \label{fig:merge_process}
 \end{figure}
@@ -243,7 +266,7 @@ A teljes kódbázis részletes ismertetése nem szükséges, ezért az alábbiak
 
 \paragraph{Hiányzó adatok kitöltése forrásprioritás alapján}
 
-A merge egyik kulcseleme egy olyan függvény, amely a céladatkészlet hiányzó mezőit más forrásokból pótolja. A kitöltés az \textit{appid} alapján történik, és kizárólag azokat az oszlopokat érinti, amelyek mindkét adathalmazban megtalálhatók. A megoldás biztosítja, hogy a források közötti prioritás (C → B → A) ütközésmentesen érvényesüljön.
+A merge egyik kulcseleme egy olyan függvény (\ref{lst:missing}), amely a céladatkészlet hiányzó mezőit más forrásokból pótolja. A kitöltés az \textit{appid} alapján történik, és kizárólag azokat az oszlopokat érinti, amelyek mindkét adathalmazban megtalálhatók. A megoldás biztosítja, hogy a források közötti prioritás (C → B → A) ütközésmentesen érvényesüljön.
 
 \begin{python}[caption={Hiányzó adatok pótlása},captionpos=b,label={lst:missing}]
 def fill_missing_from_source(d: pd.DataFrame,
@@ -270,7 +293,7 @@ def fill_missing_from_source(d: pd.DataFrame,
 
 \paragraph{Listaértékű attribútumok egyesítése}
 
-A címkék, műfajok, kategóriák és platformok esetében gyakori volt, hogy ugyanazon játékhoz több forrásból is listaértékű adatok tartoztak. Ezek összevonására egy deduplikáló segédfüggvény \ref{lst:dedup} került alkalmazásra, amely a különböző forrásokból származó listákat egyesíti, miközben az ismétlődő elemeket eltávolítja.
+A címkék, műfajok, kategóriák és platformok esetében gyakori volt, hogy ugyanazon játékhoz több forrásból is listaértékű adatok tartoztak. Ezek összevonására egy deduplikáló segédfüggvény (\ref{lst:dedup}) került alkalmazásra, amely a különböző forrásokból származó listákat egyesíti, miközben az ismétlődő elemeket eltávolítja.
 
 \begin{python}[caption={Deduplikáló segédfüggvény},captionpos=b,label={lst:dedup}]
 def dedup_join(*lists):
@@ -291,7 +314,7 @@ A nyelvi mezők feldolgozása az egyik legösszetettebb lépés volt, mivel az A
 
 \paragraph{A B forrás JSON állományainak feldolgozása}
 
-A B adathalmaz JSON formátumú, beágyazott szerkezete miatt külön betöltési és feldolgozási logika készült. A feldolgozás során az egyes játékokhoz tartozó mezők strukturált rekordokká alakultak, a listaértékű attribútumok normalizált formában kerültek eltárolásra, majd az adatok egységes Pandas DataFrame struktúrába rendeződtek.
+A B adathalmaz JSON formátumú, beágyazott szerkezete miatt külön betöltési és feldolgozási logika készült. A feldolgozás során az egyes játékokhoz tartozó mezők strukturált rekordokká alakultak, a listaértékű attribútumok normalizált formában kerültek eltárolásra, majd az adatok egységes Pandas DataFrame struktúrába rendeződtek. A feldolgozás fő lépéseit a \ref{lst:b} kódrészlet mutatja be.
 
 \begin{python}[caption={B adathalmaz feldolgozása},captionpos=b,label={lst:b}]
 def load_source_b(base_path: str) -> pd.DataFrame:
@@ -322,20 +345,18 @@ def load_source_b(base_path: str) -> pd.DataFrame:
 
 Az összefésülési folyamat teljes egészében részletes naplózással került végrehajtásra. A logolás lehetővé tette a forrásfájlok betöltésének, a feldolgozott rekordok számának, valamint az egyes tisztítási és összefésülési lépések nyomon követését. A naplóállományok segítségével a teljes feldolgozási folyamat visszakövethetővé vált, és az esetleges hibák vagy inkonzisztenciák gyorsan azonosíthatók voltak. 
 
-Az összefésülés folyamat során keletkező naplóbejegyzések egy különálló logfájlba kerülnek mentésre. A részletes futási információk, figyelmeztetések és státuszüzenetek a \texttt{merge/merge\_log.txt} állományban kerülnek rögzítésre, amely lehetővé teszi a feldolgozási lépések utólagos ellenőrzését és visszakövetését.
+Az összefésülési folyamat során keletkező naplóbejegyzések egy különálló logfájlba kerülnek mentésre. A részletes futási információk, figyelmeztetések és státuszüzenetek a \texttt{merge/merge\_log.txt} állományban kerülnek rögzítésre, amely lehetővé teszi a feldolgozási lépések utólagos ellenőrzését és visszakövetését.
 
 
 A logolás kiterjedt többek között a forrásadatok betöltésére, az ideiglenes rész-adathalmazok mentésére, az adatok egyesítésére, valamint a végső, egységes D adathalmaz előállítására. Ez a megközelítés biztosította a merge-folyamat átláthatóságát és reprodukálhatóságát.
 
 \Section{Az egységesített adathalmaz felbontása}
 
-\subsection{Az egységesített adathalmaz felbontása}
-
 Az összefésülési folyamat eredményeként létrejött \textit{merged\_master.csv} egyetlen, nagyméretű, összevont adatállományt tartalmazott. A split folyamat célja az volt, hogy ebből az egységesített táblából tematikus, normalizált CSV-fájlok jöjjenek létre, amelyek közvetlenül megfelelnek a kialakított relációs adatmodell struktúrájának.
 
 A feldolgozás során minden egyes résztábla létrehozása külön függvények segítségével történt. Az elkészült CSV-fájlok a \texttt{split/} könyvtárba kerültek mentésre. A kód futása közben részletes naplózás készült, amely a \texttt{split\_log.txt} állományban rögzíti a feldolgozás egyes lépéseit, biztosítva a folyamat átláthatóságát és visszakövethetőségét.
 
-\subsubsection{A split folyamat lépései}
+\subsection{A split folyamat lépései}
 
 A teljes felosztási folyamatot a \texttt{main()} függvény automatizálja, amely az alábbi fő lépésekből áll:
 \begin{itemize}
@@ -345,7 +366,7 @@ A teljes felosztási folyamatot a \texttt{main()} függvény automatizálja, ame
     \item a folyamat közben a feldolgozási lépések naplózása.
 \end{itemize}
 
-\subsubsection{A létrehozott táblák}
+\subsection{A létrehozott táblák}
 
 A split folyamat során az alábbi CSV-fájlok kerülnek előállításra:
 \begin{itemize}
@@ -367,7 +388,7 @@ A split folyamat során az alábbi CSV-fájlok kerülnek előállításra:
     \item \textit{game\_subtitles.csv} és \textit{game\_audio\_language.csv} – felirat- és hangnyelvek.
 \end{itemize}
 
-\subsubsection{A split folyamat működési elvei}
+\subsection{A split folyamat működési elvei}
 
 A résztáblák előállítása során minden feldolgozási lépés azonos alapelveket követett. A master táblából kizárólag az adott relációhoz tartozó oszlopok kerültek kiválasztásra, a listaértékű mezők normalizálása megtörtént, és szükség esetén új azonosítók kerültek generálásra (például műfajok, címkék vagy nyelvek esetében). A több–több kapcsolatok kezelésére minden esetben külön kapcsolótáblák jöttek létre.
 

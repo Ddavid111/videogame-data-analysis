@@ -103,7 +103,7 @@ A **B relációs séma** eredménye egy tiszta, normalizált adatmodell, amely:
 Relációs séma diagram
 ----------------------
 
-.. image:: ../Relational_data_models/B.svg
+.. image:: ../Relational_data_models/B_normalized.svg
    :align: center
    :alt: B relációs séma diagram
    :class: image-group

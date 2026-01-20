@@ -133,7 +133,7 @@ A **C relációs séma** eredménye egy egységes, tiszta és normalizált adatm
 Relációs séma diagram
 ----------------------
 
-.. image:: ../Relational_data_models/C.svg
+.. image:: ../Relational_data_models/C_normalized.svg
    :align: center
    :alt: C relációs séma diagram
    :class: image-group
