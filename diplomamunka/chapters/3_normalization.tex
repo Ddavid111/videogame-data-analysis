@@ -8,7 +8,7 @@ A fejezet első részében az adathalmazok közötti kapcsolatok és relációs 
 
 Az adathalmazok egységes struktúrába szervezésének első lépéseként az egyes adatkészletek relációs sémáinak elemzése történt meg. A vizsgálat célja az volt, hogy feltárja az adatok belső szerkezetét, az attribútumok közötti kapcsolatokat, valamint azokat az azonosítókat, amelyek az adathalmazok későbbi összekapcsolását lehetővé teszik.
 
-A feldolgozás során az A, B és C adathalmazokhoz külön relációs sémák kerültek kialakításra. Ezek a sémák az egyes adatkészletek logikai felépítését írják le, kiemelve a fő entitásokat, azok attribútumait, valamint az elsődleges és idegen kulcsokat. Az elkülönített sémák vizsgálata lehetővé tette az adathalmazok közötti hasonlóságok és szerkezeti eltérések azonosítását.
+A feldolgozás során az A \cite{a}, B \cite{b} és C \cite{c} adathalmazokhoz külön relációs sémák kerültek kialakításra. Ezek a sémák az egyes adatkészletek logikai felépítését írják le, kiemelve a fő entitásokat, azok attribútumait, valamint az elsődleges és idegen kulcsokat. Az elkülönített sémák vizsgálata lehetővé tette az adathalmazok közötti hasonlóságok és szerkezeti eltérések azonosítását.
 
 Az A adathalmaz relációs sémája a videojátékok alapvető jellemzőit tartalmazza, és referenciapontként szolgált a további adatkészletek integrálása során. A B és C adathalmazok sémái kiegészítő információkat hordoznak, amelyek eltérő attribútumkészlettel rendelkeznek, ugyanakkor közös játékazonosítók mentén kapcsolhatók az A adathalmazhoz.
 
@@ -49,7 +49,7 @@ Hasonló módon a kategóriák, műfajok, címkék és platformok esetében is k
 
 \subsubsection{Összegzés}
 
-A normalizálási folyamat eredményeként az A adathalmaz relációs sémája több, logikailag elkülönülő entitásból épül fel. A központi \textit{game} tábla mellett önálló táblák jöttek létre a leírások, támogatási információk, médiatartalmak, rendszerkövetelmények, valamint a különböző kategorizáló attribútumok kezelésére. A sémában minden több–több kapcsolat külön kapcsolótáblán keresztül valósul meg, biztosítva az adatok redundanciamentes tárolását.
+A normalizálási folyamat eredményeként az A adathalmaz \cite{a} relációs sémája több, logikailag elkülönülő entitásból épül fel. A központi \textit{game} tábla mellett önálló táblák jöttek létre a leírások, támogatási információk, médiatartalmak, rendszerkövetelmények, valamint a különböző kategorizáló attribútumok kezelésére. A sémában minden több–több kapcsolat külön kapcsolótáblán keresztül valósul meg, biztosítva az adatok redundanciamentes tárolását.
 
 Az A adathalmaz normalizálási lépései biztosították az adatredundancia minimalizálását, a tranzitív függőségek megszüntetését, valamint a listaértékű és összetett attribútumok önálló táblákba történő szétválasztását. A kialakított relációs séma jól strukturált, karbantartható és alkalmas arra, hogy alapjául szolgáljon a további adatintegrációs és gépi tanulási feladatoknak.
 
@@ -95,7 +95,7 @@ A nyelvek kezelése egységes módon történt, ahol az egyes nyelvek egyszer ke
 
 \subsubsection{Összegzés}
 
-A normalizálás eredményeként a B adathalmaz relációs sémája egy jól strukturált, több entitásból álló adatmodellt alkot. A központi \textit{game} tábla mellett önálló relációk kezelik a támogatási információkat, médiatartalmakat, kategorizáló attribútumokat, nyelveket, fejlesztőket, kiadókat, platformokat, valamint a játékcsomagok és azok al-elemeinek adatait. A séma minden több–több kapcsolatot külön kapcsolótáblákon keresztül valósít meg.
+A normalizálás eredményeként a B \cite{b} adathalmaz relációs sémája egy jól strukturált, több entitásból álló adatmodellt alkot. A központi \textit{game} tábla mellett önálló relációk kezelik a támogatási információkat, médiatartalmakat, kategorizáló attribútumokat, nyelveket, fejlesztőket, kiadókat, platformokat, valamint a játékcsomagok és azok al-elemeinek adatait. A séma minden több–több kapcsolatot külön kapcsolótáblákon keresztül valósít meg.
 
 A B adathalmaz normalizálási folyamata eredményeként egy tiszta, jól strukturált adatmodell jött létre, amely megfelel az első három normálforma követelményeinek. A kialakított séma atomi értékeket tartalmaz, megszünteti a részleges és tranzitív függőségeket, valamint külön táblákban kezeli az összetett és listaértékű mezőket. Az alkalmazott struktúra jól bővíthető, karbantartható, és minimális adatredundanciát biztosít a további feldolgozási és elemzési lépésekhez.
 
@@ -117,7 +117,7 @@ A B adathalmaz normalizált sémájához tartozó adatleíró (data dictionary),
 
 \subsection{A C adathalmaz normalizálása}
 
-A C adathalmaz normalizálásának kiindulópontját négy, időben és feldolgozottságban eltérő CSV-fájl képezte: a 2024 májusi és a 2025 márciusi adatállományok nyers (\textit{full}) és előfeldolgozott (\textit{cleaned}) változatai. A \textit{full} állományok a Steam \cite{steam} áruházból származó teljes, nyers adatokat tartalmazták, míg a \textit{cleaned} változatok már előzetes tisztításon átesett, duplikációktól mentes adatokat biztosítottak.
+A C \cite{c} adathalmaz normalizálásának kiindulópontját négy, időben és feldolgozottságban eltérő CSV-fájl képezte: a 2024 májusi és a 2025 márciusi adatállományok nyers (\textit{full}) és előfeldolgozott (\textit{cleaned}) változatai. A \textit{full} állományok a Steam \cite{steam} áruházból származó teljes, nyers adatokat tartalmazták, míg a \textit{cleaned} változatok már előzetes tisztításon átesett, duplikációktól mentes adatokat biztosítottak.
 
 A 2025-ös adatkészletek a korábbi verziókhoz képest egy további attribútummal is bővültek, amely a játékok aktuális kedvezményét (\textit{discount}) írja le. A normalizálás során az eltérő időpontokból és szerkezetből adódó különbségek egységes kezelése kiemelt szempont volt.
 
@@ -163,7 +163,7 @@ A C adathalmaz normalizált sémájához tartozó adatleíró (data dictionary),
 
 \subsection{A D adathalmaz normalizálása}
 
-A D adathalmaz egységes relációs sémája az A, B és C adathalmazok összevonásával és strukturális egységesítésével jött létre. Kiindulási alapként több, eltérő forrásból származó CSV-fájl szolgált, amelyek részben különböző szerkezettel, eltérő attribútumkészlettel és eltérő időpontokból származó adatokat tartalmaztak. A normalizálás célja egy olyan konzisztens, redundanciamentes adatmodell kialakítása volt, amely egységesen kezeli az eltérő forrásokból származó információkat.
+A D adathalmaz egységes relációs sémája az A \cite{a}, B \cite{b} és C \cite{c} adathalmazok összevonásával és strukturális egységesítésével jött létre. Kiindulási alapként több, eltérő forrásból származó CSV-fájl szolgált, amelyek részben különböző szerkezettel, eltérő attribútumkészlettel és eltérő időpontokból származó adatokat tartalmaztak. A normalizálás célja egy olyan konzisztens, redundanciamentes adatmodell kialakítása volt, amely egységesen kezeli az eltérő forrásokból származó információkat.
 
 A 2024-es és 2025-ös adatkészletek közötti egyik lényeges eltérés, hogy a 2025-ös verziók egy további attribútumot is tartalmaztak, amely a játékok aktuális kedvezményét (\textit{discount}) írja le. Az egységesítés során ezek a forrásbeli különbségek kezelhető módon kerültek beépítésre a végső sémába.
 
@@ -202,13 +202,13 @@ A D adathalmaz normalizált relációs sémájának SQL-alapú megvalósítása 
 
 \Section{Adathalmazok összefésülése}
 
-Ebben az alfejezetben az A, B és C adathalmazok összefésülésének folyamata kerül bemutatásra. Az adathalmazok egyesítése során az eltérő forrásokból származó adatok strukturális különbségeinek kezelése, az attribútumok egységesítése, valamint az adatok konzisztenciájának biztosítása volt a fő cél. Az összefésülési folyamat eredményeként jött létre a végső, egységes D adathalmaz, amely a további elemzések alapját képezi.
+Ebben az alfejezetben az A \cite{a}, B \cite{b} és C \cite{c} adathalmazok összefésülésének folyamata kerül bemutatásra. Az adathalmazok egyesítése során az eltérő forrásokból származó adatok strukturális különbségeinek kezelése, az attribútumok egységesítése, valamint az adatok konzisztenciájának biztosítása volt a fő cél. Az összefésülési folyamat eredményeként jött létre a végső, egységes D adathalmaz, amely a további elemzések alapját képezi.
 
 Az alfejezet bemutatja az adathalmazok összefésülésének logikai lépéseit, a folyamat vizuális áttekintését, valamint a megvalósításhoz használt módszereket. Emellett kitér a merge során végrehajtott ellenőrzésekre és azokra a döntésekre, amelyek biztosították az adatok helyes és következetes integrációját.
 
 \subsection{Az összefésülés logikai folyamata}
 
-Az adathalmazok összefésülésének folyamata az A, B és C forrásadatok strukturált és kontrollált egyesítését mutatja be. A folyamat célja egy egységes, konzisztens adatmodell létrehozása volt, amely a különböző forrásokból származó információkat egységes szerkezetben tartalmazza. Az összefésülés lépéseit és azok egymásra épülését a \ref{fig:merge_process} ábra szemlélteti.
+Az adathalmazok összefésülésének folyamata az A \cite{a}, B \cite{b} és C \cite{c} forrásadatok strukturált és kontrollált egyesítését mutatja be. A folyamat célja egy egységes, konzisztens adatmodell létrehozása volt, amely a különböző forrásokból származó információkat egységes szerkezetben tartalmazza. Az összefésülés lépéseit és azok egymásra épülését a \ref{fig:merge_process} ábra szemlélteti.
 
 \begin{figure}[H]
     \centering
@@ -228,7 +228,7 @@ Első lépésként a C forrás feldolgozása történik meg, amely során a 2024
 
 Második lépésként a B forrás feldolgozása következik, ahol a JSON formátumban elérhető SteamSpy \cite{steamspy} adatok normalizálása és táblásítása történik meg. A feldolgozás eredményeként a \textit{B\_full.csv} állomány jön létre, amely strukturált formában tartalmazza a másodlagos adatforrásból származó információkat.
 
-Harmadik lépésként az A forrás feldolgozása valósul meg, amely során a több CSV-fájlból álló Steam-metaadatok \cite{steam} belső összevonása történik meg. Az eredmény az \textit{A\_merged.csv} állomány, amely az A adathalmaz egységesített változatát tartalmazza.
+Harmadik lépésként az A forrás feldolgozása valósul meg, amely során a több CSV-fájlból álló Steam-metaadatok belső összevonása történik meg. Az eredmény az \textit{A\_merged.csv} állomány, amely az A adathalmaz egységesített változatát tartalmazza.
 
 \subsubsection{Források egyesítése és prioritási sorrend}
 
@@ -245,7 +245,7 @@ A folyamat eredményeként egy egységes relációs struktúra jött létre (\te
 
 \subsection{Az összefésülés megvalósítása}
 
-Ebben az alfejezetben az A, B és C adathalmazok összefésülésének szoftveres megvalósítása kerül bemutatásra. A merge-folyamat egy moduláris felépítésű Python \cite{python} projektként valósult meg, amely külön kezeli a forrásadatok betöltését, az előfeldolgozási és tisztítási lépéseket, valamint az adatok egységesítését és ellenőrzését. A bemutatott kódrészletek nem a teljes implementációt fedik le, hanem a összefésülés-folyamat szempontjából lényeges, nem triviális megoldásokat szemléltetik.
+Ebben az alfejezetben az A \cite{a}, B \cite{b} és C \cite{c} adathalmazok összefésülésének szoftveres megvalósítása kerül bemutatásra. A merge-folyamat egy moduláris felépítésű Python \cite{python} projektként valósult meg, amely külön kezeli a forrásadatok betöltését, az előfeldolgozási és tisztítási lépéseket, valamint az adatok egységesítését és ellenőrzését. A bemutatott kódrészletek nem a teljes implementációt fedik le, hanem a összefésülés-folyamat szempontjából lényeges, nem triviális megoldásokat szemléltetik.
 
 \subsubsection{A merge-kód felépítése}
 

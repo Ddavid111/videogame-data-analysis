@@ -5,10 +5,10 @@ Ebben a fejezetben a dolgozat során felhasznált adatok forrása és előkész�
 \Section{Steam szolgáltatás és a kezelt adatai}
 
 A következő alfejezetek röviden bemutatják a Steam \cite{steam} szolgáltatást mint
-adatforrást, valamint a dolgozat során felhasznált adatok eredetét és
-elérhetőségét. A bemutatás célja annak áttekintése, hogy milyen típusú
-adatok állnak rendelkezésre, és ezek milyen szerepet töltenek be az
-adatelőkészítési folyamatban.
+adatforrást, valamint a dolgozat során felhasznált adatok eredetét,
+elérhetőségét és alapvető jellemzőit. Emellett áttekintésre kerülnek az
+adatelőkészítés és elemzés során alkalmazott fejlesztőkörnyezetek és
+szoftveres eszközök is.
 
 \subsection{A Steam szolgáltatás áttekintése}
 
@@ -39,49 +39,195 @@ azonosítóját a \ref{fig:kaggle_logo} ábra mutatja be.
     \label{fig:kaggle_logo}
 \end{figure}
 
+\subsection{Az elemzés során használt eszközök}
+
+Az adatok feldolgozása és elemzése Python \cite{python} programozási nyelv
+felhasználásával történt. A fejlesztéshez a Visual Studio Code \cite{vscode}
+fejlesztőkörnyezet, valamint Jupyter Notebook \cite{jupyter} alapú munkafüzetek
+kerültek alkalmazásra, amelyek lehetővé tették az interaktív
+adatelemzést és az egyes lépések dokumentálását.
+
+Az adatok kezeléséhez és előfeldolgozásához elsősorban a \texttt{pandas} \cite{pandas}
+és \texttt{NumPy} \cite{numpy} könyvtárak kerültek felhasználásra, míg a
+vizualizációk elkészítéséhez a \texttt{matplotlib} \cite{matplotlib} és
+\texttt{seaborn} \cite{seaborn} csomagok szolgáltak alapul. A gépi tanulási és
+regressziós számítások során a \texttt{scikit-learn} \cite{scikit} könyvtár
+egyes komponensei kerültek alkalmazásra.
+
 \subsection{Letöltés, formátum és mennyiségi jellemzők}
 
-A dolgozat során felhasznált adatok a Kaggle \cite{kaggle} platformon elérhető, Steamhez \cite{steam} kapcsolódó nyilvános adathalmazokból származnak. Az adatkészletek manuális letöltéssel kerültek beszerzésre a Kaggle webes felületén keresztül, amelyhez felhasználói fiók megléte szükséges. A letöltött állományok tömörített formában voltak elérhetők, és kicsomagolást követően különálló adatfájlokat tartalmaztak.
+A dolgozat során felhasznált adatok a Kaggle \cite{kaggle} platformon elérhető,
+Steamhez \cite{steam} kapcsolódó nyilvános adathalmazokból származnak.
+Az adatkészletek manuális letöltéssel kerültek beszerzésre a Kaggle webes felületén
+keresztül, amelyhez felhasználói fiók megléte szükséges.
+A letöltött állományok tömörített formában voltak elérhetők, és kicsomagolást
+követően különálló adatfájlokat (CSV és JSON formátumú táblákat) tartalmaztak.
 
-Az elsőként vizsgált adatkészlet a \textit{Steam Store Games (Clean dataset)} elnevezésű adathalmaz, amely a továbbiakban \textit{A adathalmazként} kerül hivatkozásra. Az adathalmaz a Steam áruházban elérhető videojátékok különböző jellemzőit tartalmazza, többek között a műfaji besorolásokat és a becsült tulajdonosi számokat. Az adatok a Steam Store és a SteamSpy \cite{steamspy} API-k felhasználásával kerültek összegyűjtésre, és elsősorban a 2019 májusáig megjelent játékokra vonatkoznak. Az adatkészlet több, egymással logikailag összefüggő CSV fájlból áll, és összesen \num{27075} rekordot valamint 409 attribútumot tartalmaz.
+Az elsőként vizsgált adatkészlet a
+\textit{Steam Store Games (Clean dataset)} \cite{a},
+amely a továbbiakban \textit{A adathalmazként} kerül hivatkozásra.
+Az adathalmaz a Steam áruházban elérhető videojátékok különböző jellemzőit
+tartalmazza, többek között műfaji besorolásokat, leírásokat, címkéket és
+becsült tulajdonosi adatokat.
+Az adatok a Steam Store és a SteamSpy \cite{steamspy} API-k felhasználásával
+kerültek összegyűjtésre, és elsősorban a 2019 májusáig megjelent játékokra
+vonatkoznak.
+Az A adathalmaz több, egymással logikailag összefüggő CSV fájlból áll,
+amelyek külön relációként értelmezhetők; ezek rekord- és attribútumszáma
+táblánként eltérő.
 
-A második adathalmaz a Kaggle platformon \textit{Steam Games Dataset} néven elérhető adatkészlet, amely a továbbiakban \textit{B adathalmazként} kerül megjelölésre. Az adathalmaz CSV és JSON formátumban egyaránt elérhető, és a Steam API, valamint a SteamSpy szolgáltatás adatain alapul. A kezdeti feltáró adatelemzés során a CSV formátum került felhasználásra, mivel annak egyszerűbb szerkezete gyors áttekintést tett lehetővé. Az adathalmazok összevonása során azonban a JSON formátumú állomány került alkalmazásra, mivel az részletesebb és strukturáltabb adatokat biztosított az adatok összekapcsolásához. A B adathalmaz \num{111452} rekordot és 39 attribútumot tartalmaz.
+A második adathalmaz a Kaggle platformon
+\textit{Steam Games Dataset} \cite{b} néven elérhető,
+amely a továbbiakban \textit{B adathalmazként} kerül megjelölésre.
+Az adathalmaz egyetlen, nagyméretű CSV/JSON alapú táblát tartalmaz,
+amely a Steam API és a SteamSpy szolgáltatás adatain alapul.
+A feltáró adatelemzés során a CSV formátum került alkalmazásra.
+A B adathalmaz összesen \num{111452} rekordot és 40 attribútumot tartalmaz.
 
-A harmadik vizsgált adatkészlet a \textit{Steam Games Dataset 2025}, amely a továbbiakban \textit{C adathalmazként} kerül hivatkozásra. Az adathalmaz a Steam áruház weboldalának automatizált feldolgozásával, valamint a Steam API és a SteamSpy adatainak felhasználásával készült, és 2025 márciusáig bezárólag tartalmaz adatokat. Az adatok több CSV fájlban érhetők el, beleértve nyers és előfeldolgozott változatokat is, amelyek a dolgozat későbbi szakaszában közös feldolgozás és összevonás alapjául szolgálnak. A C adathalmaz összesen \num{89618} rekordot és 186 attribútumot foglal magában.
+A harmadik vizsgált adatkészlet a
+\textit{Steam Games Dataset 2025} \cite{c},
+amely a továbbiakban \textit{C adathalmazként} kerül hivatkozásra.
+Az adathalmaz a Steam áruház weboldalának automatizált feldolgozásával,
+valamint a Steam API és a SteamSpy adatainak felhasználásával készült,
+és 2025 márciusáig bezárólag tartalmaz adatokat.
+Az adatok több CSV fájlban érhetők el, beleértve nyers és előfeldolgozott
+változatokat is, amelyek táblánként eltérő attribútumkészlettel rendelkeznek.
 
-Az adatkészletek eltérő szerkezete, fájlformátuma és attribútumkészlete indokolttá tette az adatok előzetes tisztítását, normalizálását, valamint egy egységes adatszerkezet kialakítását, amely a későbbi elemzési és gépi tanulási feladatok alapját képezi. A felhasznált adathalmazok főbb mennyiségi jellemzőit a \ref{tab:datasets} táblázat foglalja össze.
+Az adatkészletek eltérő szerkezete, fájlformátuma és attribútumkészlete
+indokolttá tette az adatok előzetes tisztítását, normalizálását,
+valamint egy egységesített adatszerkezet kialakítását,
+amely a későbbi elemzési és gépi tanulási feladatok alapját képezi.
+A felhasznált adathalmazok főbb mennyiségi jellemzőit,
+táblánkénti bontásban, a \ref{tab:datasets} táblázat foglalja össze.
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|c|c|}
+\begin{tabular}{|l|l|c|c|}
 \hline
-\textbf{Adathalmaz} & \textbf{Rekordok száma} & \textbf{Attribútumok száma} \\
+\textbf{Adathalmaz} & \textbf{Tábla} & \textbf{Rekordok száma} & \textbf{Attribútumok száma} \\
 \hline
-A adathalmaz & \num{27075} & 409 \\
+A & steam.csv & \num{27075} & 18 \\
+A & steam\_description\_data.csv & \num{27334} & 4 \\
+A & steam\_media\_data.csv & \num{27332} & 5 \\
+A & steam\_requirements\_data.csv & \num{27319} & 6 \\
+A & steamspy\_tag\_data.csv & \num{29022} & 372 \\
 \hline
-B adathalmaz & \num{111452} & 39 \\
+B & games.csv & \num{111452} & 40 \\
 \hline
-C adathalmaz & \num{89618} & 186 \\
+C & games\_march2025\_cleaned.csv & \num{89618} & 47 \\
+C & games\_march2025\_full.csv & \num{94948} & 47 \\
+C & games\_may2024\_cleaned.csv & \num{83646} & 46 \\
+C & games\_may2024\_full.csv & \num{87806} & 46 \\
 \hline
 \end{tabular}
-\caption{A felhasznált adathalmazok mennyiségi jellemzői}
+\caption{A felhasznált adathalmazok táblánkénti mennyiségi jellemzői}
 \label{tab:datasets}
 \end{table}
 
-\Section{A vizsgálandó adathalmaz áttekintése}
+\section{A vizsgálandó adathalmaz áttekintése}
 
-A vizsgált adathalmazok feldolgozása különálló Jupyter \cite{jupyter} munkafüzetekben történt, adathalmazonként elkülönítve. Az A, B és C adathalmazok önálló munkafüzetekben kerültek elemzésre, ami lehetővé tette az egyes adatkészletek szerkezetének, tartalmának és sajátosságainak részletes megismerését, valamint az adatokra jellemző problémák korai azonosítását. Az egyes vizsgálatok részletes dokumentációja a dolgozathoz mellékelt \textit{notebooks} jegyzékében érhető el.
+A vizsgált adathalmazok előzetes feltárása és elemzése különálló
+Jupyter \cite{jupyter} munkafüzetekben történt, adathalmazonként
+elkülönítve. Az A \cite{a}, B \cite{b} és C \cite{c} adathalmazok
+önálló munkafüzetekben kerültek feldolgozásra, ami lehetővé tette az
+egyes adatkészletek szerkezetének, tartalmának és sajátosságainak
+részletes megismerését, valamint az adatokra jellemző problémák korai
+azonosítását. Az egyes vizsgálatok részletes dokumentációja a dolgozathoz
+mellékelt \textit{notebooks} jegyzékében érhető el.
 
-A külön munkafüzetek használata elősegítette a fejlesztési folyamat átláthatóságát, mivel az egyes adathalmazok eltérő szerkezettel, formátummal és attribútumkészlettel rendelkeztek. Ez a megközelítés lehetőséget biztosított arra, hogy az adattisztítási, feltáró elemzési és előfeldolgozási lépések az adott adathalmaz sajátosságaihoz igazodjanak, anélkül hogy azok összekeveredtek volna más adatforrások feldolgozásával.
+A külön munkafüzetek alkalmazása elősegítette a feldolgozási folyamat
+átláthatóságát, mivel az egyes adathalmazok eltérő szerkezettel,
+formátummal és attribútumkészlettel rendelkeztek. Ez a megközelítés
+lehetővé tette, hogy az adattisztítási, feltáró elemzési és
+előfeldolgozási lépések az adott adathalmaz sajátosságaihoz igazodjanak,
+anélkül hogy azok összekeveredtek volna más adatforrások feldolgozásával.
 
-Az egyes adathalmazok esetében azonos alapvető vizsgálati lépések kerültek elvégzésre. Ezek célja az adatok általános állapotának felmérése, valamint a későbbi feldolgozási lépések megalapozása volt. A munkafüzetekben az alábbi vizsgálatok történtek meg:
+Az egyes adathalmazok esetében azonos alapvető vizsgálati lépések kerültek
+elvégzésre. Ezek célja az adatok általános állapotának felmérése, valamint
+a későbbi feldolgozási lépések megalapozása volt. A munkafüzetekben az
+alábbi vizsgálatok történtek meg:
 \begin{itemize}
-    \item az adatok betöltése és szerkezetének áttekintése, beleértve az oszlopok számát, adattípusokat és a hiányzó értékek előfordulását,
+    \item az adatok betöltése és szerkezetének áttekintése, beleértve az
+    oszlopok számát, adattípusokat és a hiányzó értékek előfordulását,
     \item alapvető statisztikai leíró mutatók vizsgálata,
-    \item a főbb attribútumok vizualizációja, például eloszlások, korrelációk és trendek megjelenítése, ahol az releváns volt,
-    \item adatminőségi problémák, kiugró értékek és jellegzetes mintázatok azonosítása.
+    \item a főbb attribútumok vizualizációja, például eloszlások,
+    időbeli trendek és kategória-gyakoriságok megjelenítése,
+    \item adatminőségi problémák, kiugró értékek és jellegzetes mintázatok
+    azonosítása.
 \end{itemize}
 
-A fejlesztés során szerzett tapasztalatok rámutattak arra, hogy az adathalmazok közötti különbségek például az eltérő attribútumnevek, hiányzó értékek és formátumbeli eltérések jelentős hatással vannak a későbbi összevonási és normalizálási lépésekre. A kezdeti, elkülönített feldolgozás ezért kulcsszerepet játszott egy egységes, közös adatszerkezet kialakításának előkészítésében.
+Az előzetes feltáró elemzés során néhány, az adathalmazok jellegét jól
+szemléltető vizualizáció is készült. Ezek célja nem a részletes
+statisztikai elemzés, hanem az adatok alapvető szerkezetének,
+eloszlásainak és időbeli mintázatainak bemutatása.
 
-Az egyes munkafüzetekben végzett előzetes vizsgálatok eredményei szolgáltak alapul a következő fejezetben bemutatott adattisztítási, normalizálási és adathalmaz-összevonási folyamatokhoz.
+Az \textit{A adathalmaz} esetében a játékok átlagos árának időbeli
+alakulását vizsgáltam. A \ref{fig:mean} ábra az éves átlagárak változását
+mutatja, amely alapján hosszabb távú trendek és árszintváltozások
+azonosíthatók. Az ábra rávilágít arra, hogy az átlagár nem állandó,
+hanem az egyes időszakokban számottevő ingadozást mutat, ami a
+Steam-platform üzleti modelljének és a megjelenő játékok összetételének
+változásával hozható összefüggésbe.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/mean.png}
+    \caption{Az A adathalmazban szereplő játékok átlagos ára évenként}
+    \label{fig:mean}
+\end{figure}
+
+Szintén az \textit{A adathalmazhoz} kapcsolódóan a műfaji eloszlás
+vizsgálata is megtörtént. A \ref{fig:top20} ábra a Top~20 műfaj
+előfordulási gyakoriságát szemlélteti. Jól látható, hogy néhány műfaj
+jelentős dominanciával rendelkezik, míg a ritkább kategóriák csak
+korlátozott számban jelennek meg. Ez a jelenség fontos szempont az
+adathalmaz későbbi elemzésekor, mivel a műfajok közötti egyenlőtlen
+eloszlás torzíthat bizonyos statisztikai következtetéseket.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/top20.png}
+    \caption{Az A adathalmaz Top~20 műfajának előfordulási gyakorisága}
+    \label{fig:top20}
+\end{figure}
+
+A \textit{B adathalmaz} esetében a játékok által támogatott platformok
+szerinti megoszlás került vizsgálatra. A \ref{fig:platforms} ábra
+bemutatja, hogy a Windows platform támogatása messze domináns, míg a
+macOS és Linux rendszerek lényegesen kisebb arányban jelennek meg. Ez az
+eltérés jól szemlélteti a platformfüggetlenség korlátait, valamint
+magyarázatot adhat bizonyos platform-specifikus hiányosságokra az
+adatokban.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/platforms.png}
+    \caption{A B adathalmazban szereplő játékok száma támogatott platformonként}
+    \label{fig:platforms}
+\end{figure}
+
+A \textit{C adathalmaz} elemzése során a játékok Metacritic értékeinek
+időbeli alakulása került előtérbe. A \ref{fig:metacritic} ábra a
+Metacritic pontszámok és a kiadási év kapcsolatát ábrázolja. Az ábra
+alapján megfigyelhető, hogy az értékelések jelentős szórást mutatnak
+minden időszakban, ugyanakkor az idő előrehaladtával a pontszámok
+eloszlása kiegyensúlyozottabbá válik. Ez arra utal, hogy a modern
+időszakban a megjelenő játékok minősége stabilabb, illetve az
+értékelési mechanizmus egységesebbé vált.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{images/metacritic.png}
+    \caption{A C adathalmazban szereplő játékok Metacritic értékei a kiadási év függvényében}
+    \label{fig:metacritic}
+\end{figure}
+
+A feltáró vizsgálatok során szerzett tapasztalatok rávilágítottak arra,
+hogy az adathalmazok közötti különbségek — például az eltérő
+attribútumnevek, hiányzó értékek és formátumbeli eltérések — jelentős
+hatással vannak a későbbi összevonási és normalizálási lépésekre. A
+kezdeti, elkülönített feldolgozás ezért kulcsszerepet játszott egy
+egységes, közös adatszerkezet kialakításának előkészítésében. Az itt
+bemutatott előzetes elemzések eredményei szolgáltak alapul a következő
+fejezetben részletezett adattisztítási, normalizálási és
+adathalmaz-összevonási folyamatokhoz.

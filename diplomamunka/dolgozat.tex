@@ -13,13 +13,18 @@
 \usepackage{siunitx}
 \usepackage{booktabs}
 
+\usepackage{fancyhdr}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[R]{\thepage}
+}
+
 \sisetup{
   group-separator = {\,},
   group-minimum-digits = 4,
   detect-all
 }
-
-\renewcommand{\lstlistingname}{Kódábra}
 
 \begin{document}
 
@@ -32,7 +37,8 @@
 \include{cover/feladatkiiras}
 
 \cleardoublepage
-\pagenumbering{gobble}
+\pagenumbering{roman}
+\pagestyle{plain}
 \tableofcontents
 \cleardoublepage
 \pagenumbering{arabic}

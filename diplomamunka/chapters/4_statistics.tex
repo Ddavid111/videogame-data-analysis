@@ -16,7 +16,7 @@ a későbbi statisztikai elemzések és adatbázisba importálás megbízhatós�
 
 \subsection{Források közötti átfedések -- Venn-diagram}
 
-Az A, B és C forrásadatok közötti átfedések vizsgálatához Venn-diagram készült, amely az \textit{appid} azonosítók alapján szemlélteti, hogy mely rekordok érhetők el kizárólag egy adott adatforrásban, illetve melyek jelennek meg több forrás metszetében. A vizsgálat célja annak ellenőrzése volt, hogy az összevonás során mekkora a források közötti lefedettség, valamint milyen mértékű kiegészítő információ várható az egyes adathalmazoktól.
+Az A \cite{a}, B \cite{b} és C \cite{c} forrásadatok közötti átfedések vizsgálatához Venn-diagram készült, amely az \textit{appid} azonosítók alapján szemlélteti, hogy mely rekordok érhetők el kizárólag egy adott adatforrásban, illetve melyek jelennek meg több forrás metszetében. A vizsgálat célja annak ellenőrzése volt, hogy az összevonás során mekkora a források közötti lefedettség, valamint milyen mértékű kiegészítő információ várható az egyes adathalmazoktól.
 
 \begin{figure}[H]
     \centering
@@ -32,7 +32,7 @@ A Venn-diagram az \texttt{merge/venn\_diagram.png} állományba került mentésr
 
 \subsection{Forrásösszegzés (Source Summary)}
 
-A merged master táblában minden rekordhoz tartozik egy \textit{sources} mező, amely jelzi, hogy az adott sor mely eredeti adatforrás(ok)ból származik (A, B, C). Ez lehet egyetlen forrás (például \textit{A}), vagy több forrás kombinációja (például \textit{B,C} vagy \textit{A,B,C}).
+A merged master táblában minden rekordhoz tartozik egy \textit{sources} mező, amely jelzi, hogy az adott sor mely eredeti adatforrás(ok)ból származik (A \cite{a}, B \cite{b} és C \cite{c}). Ez lehet egyetlen forrás (például \textit{A}), vagy több forrás kombinációja (például \textit{B,C} vagy \textit{A,B,C}).
 
 A forrásonkénti rekordösszesítő célja annak feltérképezése volt, hogy a végső D adathalmaz milyen arányban épül az egyes forrásokra, illetve milyen mértékű átfedés figyelhető meg közöttük. Az elemzés során meghatározásra kerül:
 \begin{itemize}
@@ -174,9 +174,9 @@ adatforrások szerint elkülönítve is vizsgáljuk. Ennek megfelelően az elemz
 három kategóriát különböztet meg:
 
 \begin{itemize}
-    \item \textbf{A dataset} – Steam \cite{steam} metaadatok korábbi, strukturált CSV-alapú forrása
-    \item \textbf{B dataset} – SteamSpy \cite{steamspy} adatok (JSON-alapú, külső statisztikai forrás)
-    \item \textbf{C dataset} – 2024--2025-ös, legfrissebb Steam adatgyűjtések
+    \item \textbf{A adathalmaz \cite{a}} – Steam \cite{steam} metaadatok korábbi, strukturált CSV-alapú forrása
+    \item \textbf{B adathalmaz \cite{b}} – SteamSpy \cite{steamspy} adatok (JSON-alapú, külső statisztikai forrás)
+    \item \textbf{C adathalmaz \cite{c}} – 2024--2025-ös, legfrissebb Steam adatgyűjtések
 \end{itemize}
 
 Az alábbi ábrák az egyes forrásokhoz tartozó játékmegjelenések számát mutatják
