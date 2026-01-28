@@ -394,6 +394,13 @@ Ennek eredményeként a vízszintes tengelyen egymás mellett jelennek meg
 azon napok, amelyek az év különböző időpontjaiban ugyanarra a
 hétnapra estek.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/heatmap_year_weekday_aligned.png}
+    \caption{Év $\times$ (ISO hét $\times$ hét napja) hőtérkép a játékmegjelenések intenzitásáról}
+    \label{fig:heatmap_year_weekday_aligned}
+\end{figure}
+
 A hőtérkép egy-egy cellája az adott évben, az adott ISO hét adott
 napján megjelent játékok számát mutatja, ahol a színezés intenzitása
 a publikálások számával arányos. A világosabb színek alacsonyabb,
@@ -481,6 +488,15 @@ A modern évek (2014–2024) adataira illesztett log-lineáris
 (exponenciális) trend alapján a 2026-os évre
 \textbf{megközelítőleg \num{35789} új játékmegjelenés} becsülhető.
 
+A modell becslési pontosságát visszatesztelés során az abszolút
+százalékos hiba (APE, Absolute Percentage Error) \cite{APE} segítségével
+értékeltem, amely az alábbi módon számítható:
+\begin{equation}
+\mathrm{APE} = \frac{|\hat{y} - y|}{y} \cdot 100\%,
+\end{equation}
+ahol $y$ a tényleges megfigyelt érték, $\hat{y}$ pedig a modell által
+becsült érték.
+
 A modell 2024-re visszatesztelve körülbelül \textbf{10\%-os túlbecslést}
 mutatott, ezért a 2026-os érték \emph{optimista forgatókönyvként}
 értelmezendő, és inkább felső becslésnek tekinthető. A növekedés üteme
@@ -490,23 +506,24 @@ a piac telítődése vagy platformszabályozási hatások miatt a következő
 \subsection{Az előrejelzés pontosságának vizsgálata}
 
 A 2026-os évre készített becslés megbízhatóságát
-expanding-window típusú, egy-lépéses visszateszteléssel vizsgáltam.
+expanding-window \cite{expanding_window} típusú, egy-lépéses visszateszteléssel vizsgáltam.
 A módszer lényege, hogy a modell minden lépésben kizárólag
 az adott évnél korábbi adatokra illesztett logaritmikus trend alapján
 becsüli a következő évet, majd az előrejelzést összeveti
 a ténylegesen megfigyelt értékkel.
 
 A vizsgálat során a tréninghalmaz kezdőéve rögzített (2014),
-majd a tréningidőszak évről évre bővül.
-A becslési hiba alakulását az abszolút százalékos hiba (APE)
-segítségével értékeltem.
+majd a trendillesztéshez felhasznált megfigyelési pontok száma
+évről évre bővül, ahol egy tréningpont egy adott év
+összesített játékmegjelenésszámát jelenti. A becslési hiba 
+alakulását az abszolút százalékos hiba (APE) segítségével értékeltem.
 
 Az eredményeket a \ref{fig:expanding_backtest_log} ábra szemlélteti.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.85\textwidth]{images/expanding_backtest_ape_log_modern.png}
-    \caption{Expanding-window visszatesztelés – a becslési hiba alakulása a tréningévek számának függvényében}
+    \caption{Expanding-window visszatesztelés – a becslési hiba alakulása a trendillesztéshez felhasznált tréningévek számának függvényében}
     \label{fig:expanding_backtest_log}
 \end{figure}
 
@@ -514,9 +531,38 @@ Az ábra alapján megfigyelhető, hogy kevés tréningadat esetén
 a becslések jelentős hibával terheltek,
 ami a növekedési trend instabil becslésére vezethető vissza.
 Ahogy azonban a tréningévek száma növekszik,
-a becslési hiba fokozatosan csökken és stabilizálódik.
+a becslési hiba fokozatosan csökken, majd stabilizálódik.
 A 10 éves tréningablaknál a relatív hiba már megközelítőleg 10\%,
 ami a modell konzisztens viselkedését jelzi.
+
+Az abszolút hiba alakulását a becsült és a tényleges értékek különbségeként
+a \ref{fig:expanding_backtest_error} ábra mutatja be.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/expanding_backtest_error_log_modern.png}
+    \caption{Expanding-window visszatesztelés – előrejelzési hiba alakulása}
+    \label{fig:expanding_backtest_error}
+\end{figure}
+
+Az ábra alapján megfigyelhető, hogy a vizsgált időszakban a becslési hiba
+jellemzően pozitív, ami arra utal, hogy a modell többnyire felülbecsüli
+a tényleges játékmegjelenésszámot. A hiba nagysága ugyanakkor a
+tréningidőszak bővülésével mérséklődik.
+
+A becsült és a tényleges értékek időbeli együttalakulását
+a \ref{fig:expanding_backtest_pred_vs_actual} ábra szemlélteti.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/expanding_backtest_pred_vs_actual_log_modern.png}
+    \caption{Expanding-window visszatesztelés – becsült és tényleges értékek összehasonlítása}
+    \label{fig:expanding_backtest_pred_vs_actual}
+\end{figure}
+
+Az ábra alapján látható, hogy a becslések jól követik a játékmegjelenések
+növekvő trendjét, azonban a becsült értékek több évben a tényleges adatok
+felett helyezkednek el, ami a modell optimista jellegére utal.
 
 A teljes vizsgált időszakban a modell jellemzően felülbecsülte
 a tényleges megjelenésszámot.

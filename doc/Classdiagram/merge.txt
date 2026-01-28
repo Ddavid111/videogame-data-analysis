@@ -1,0 +1,51 @@
+@startuml
+title Videogame Data Merge – OOP osztálydiagram (áttekintő)
+
+skinparam classAttributeIconSize 0
+
+' ======= RÉSZLETES OSZTÁLYOK =======
+
+class MergePipeline {
+  +run()
+}
+
+class MergerService {
+  +merge_sources(a, b, c)
+  +merge_and_finalize(a, b, c)
+}
+
+interface DataSource {
+  +load(path: str)
+}
+
+class SourceA
+class SourceB
+class SourceC
+
+DataSource <|.. SourceA
+DataSource <|.. SourceB
+DataSource <|.. SourceC
+
+MergePipeline --> DataSource : uses
+MergePipeline --> MergerService
+
+' ======= CSAK FELSOROLT OSZTÁLYOK =======
+
+class DescriptionProcessor
+class CleanerService
+class NormalizerService
+class CategoryService
+class IOService
+class VennDiagramVisualizer
+class HistogramReportJob
+class SummaryReport
+
+MergePipeline ..> DescriptionProcessor
+MergePipeline ..> CleanerService
+MergePipeline ..> NormalizerService
+MergePipeline ..> CategoryService
+MergePipeline ..> IOService
+MergePipeline ..> VennDiagramVisualizer
+MergePipeline ..> HistogramReportJob
+MergePipeline ..> SummaryReport
+@enduml

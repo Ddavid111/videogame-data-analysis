@@ -1,0 +1,56 @@
+@startuml
+title Videogame Data Split – OOP osztálydiagram (áttekintő)
+
+skinparam classAttributeIconSize 0
+
+' ======= RÉSZLETES OSZTÁLYOK =======
+
+class SplitPipeline {
+  +run(master_df)
+}
+
+interface TableBuilder {
+  +create_table(master_df)
+}
+
+class DeveloperPublisherTableBuilder {
+  +create_developer_tables(master_df)
+  +create_publisher_tables(master_df)
+}
+
+class GenreCategoryTableBuilder {
+  +create_genres_table(master_df)
+  +create_categories_table(master_df)
+}
+
+TableBuilder <|.. DeveloperPublisherTableBuilder
+TableBuilder <|.. GenreCategoryTableBuilder
+
+SplitPipeline --> TableBuilder : uses
+
+' ======= CSAK FELSOROLT OSZTÁLYOK =======
+
+class GameMetadataTableBuilder
+class LanguageTableBuilder
+class MediaTableBuilder
+class PackageTableBuilder
+class PlatformTableBuilder
+class RequirementsTableBuilder
+class SupportTableBuilder
+class TagsTableBuilder
+
+class TextUtils
+class IOService
+
+SplitPipeline ..> GameMetadataTableBuilder
+SplitPipeline ..> LanguageTableBuilder
+SplitPipeline ..> MediaTableBuilder
+SplitPipeline ..> PackageTableBuilder
+SplitPipeline ..> PlatformTableBuilder
+SplitPipeline ..> RequirementsTableBuilder
+SplitPipeline ..> SupportTableBuilder
+SplitPipeline ..> TagsTableBuilder
+SplitPipeline ..> TextUtils
+SplitPipeline ..> IOService
+
+@enduml

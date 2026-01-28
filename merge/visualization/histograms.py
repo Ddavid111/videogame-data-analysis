@@ -643,8 +643,6 @@ def expanding_window_one_step_backtest_log_modern(
         print(f"\nÁtlagos APE: {valid['APE_%'].mean():.1f}% | Medián APE: {valid['APE_%'].median():.1f}%")
 
     if show_plot:
-        import matplotlib.pyplot as plt
-        import os
 
         plt.figure(figsize=(12, 5))
         plt.plot(res["train_n"], res["APE_%"], marker="o")
@@ -653,13 +651,43 @@ def expanding_window_one_step_backtest_log_modern(
         plt.ylabel("APE (%)")
         plt.grid(True, alpha=0.3)
 
-        os.makedirs(output_dir, exist_ok=True)
         out_path = os.path.join(output_dir, "expanding_backtest_ape_log_modern.png")
         plt.tight_layout()
         plt.savefig(out_path, dpi=300)
         plt.show()
         print(f"Mentve: {out_path}")
 
+        res["error"] = res["pred"] - res["actual"]
+
+        plt.figure(figsize=(12, 5))
+        plt.plot(res["target_year"], res["error"], marker="o")
+        plt.axhline(0, linewidth=1, linestyle="--")  # 0-vonal
+        plt.title("Expanding-window backtest – előrejelzési hiba (becsült − valós)")
+        plt.xlabel("Cél év")
+        plt.ylabel("Hiba (játékok száma)")
+        plt.grid(True, alpha=0.3)
+
+        out_path2 = os.path.join(output_dir, "expanding_backtest_error_log_modern.png")
+        plt.tight_layout()
+        plt.savefig(out_path2, dpi=300)
+        plt.show()
+        print(f"Mentve: {out_path2}")
+
+        plt.figure(figsize=(12, 5))
+        plt.plot(res["target_year"], res["pred"], marker="o", label="Becsült")
+        plt.plot(res["target_year"], res["actual"], marker="o", label="Valós")
+        plt.title("Expanding-window backtest – becsült vs valós értékek")
+        plt.xlabel("Cél év")
+        plt.ylabel("Megjelenések száma")
+        plt.grid(True, alpha=0.3)
+        plt.legend()
+
+        out_path3 = os.path.join(output_dir, "expanding_backtest_pred_vs_actual_log_modern.png")
+        plt.tight_layout()
+        plt.savefig(out_path3, dpi=300)
+        plt.show()
+        print(f"Mentve: {out_path3}")
+        
     return res
 
 
