@@ -476,6 +476,13 @@ def forecast_year_log_modern(
     model = LinearRegression()
     model.fit(years, log_values)
 
+    slope = float(model.coef_[0])
+    intercept = float(model.intercept_)
+    r2 = float(model.score(years, log_values))
+
+    yearly_multiplier = float(np.exp(slope))
+    yearly_pct = (yearly_multiplier - 1.0) * 100.0
+
     log_pred = model.predict(np.array([[target_year]]))[0]
     pred = float(np.exp(log_pred) - (1.0 if add_one else 0.0))
 
@@ -491,6 +498,11 @@ def forecast_year_log_modern(
         print(f"Hiba:        {err:+.0f} játék | APE: {ape:.1f}%")
     else:
         print("Tényadat:    nincs az adathalmazban ehhez az évhez.")
+    transform_label = "ln(y+1)" if add_one else "ln(y)"
+    print(f"Illesztés: {transform_label} = {slope:.6f} * év + {intercept:.3f}")
+    print(f"R² (log-térben): {r2:.4f}")
+    print(f"Éves átlagos növekedés: ×{yearly_multiplier:.3f}  (~{yearly_pct:.1f}%)")
+
     print("====================================================\n")
 
     if show_plot:
@@ -505,13 +517,39 @@ def forecast_year_log_modern(
         if add_one:
             y_curve = y_curve - 1.0
 
-        plt.plot(x_range, y_curve, color="orange", label="Log trend illesztés")
+        plt.plot(x_range, y_curve, color="orange", label="Exponenciális trend (log-lineáris illesztés)")
 
         plt.scatter([target_year], [pred], color="red", label=f"Becslés: {pred:.0f}")
         if not np.isnan(actual):
-            plt.scatter([target_year], [actual], color="green", label=f"Tény: {actual:.0f}")
+            plt.scatter([target_year],[actual],color="black",marker="x",s=100,label=f"Tény: {actual:.0f}")
 
-        plt.title("Játékmegjelenések – logaritmikus trend (modern éra)")
+        transform_label = "ln(y+1)" if add_one else "ln(y)"
+
+        pred_formula = f"ŷ({target_year}) = exp({slope:.6f}·{target_year} + {intercept:.3f})"
+        if add_one:
+            pred_formula += " − 1"
+        
+        eq_text = (
+            f"{transform_label} = {slope:.6f}·év + {intercept:.3f}\n"
+            f"R²(log): {r2:.4f}\n"
+            f"Éves szorzó: ×{yearly_multiplier:.3f}  ({yearly_pct:.1f}%)\n"
+            f"{pred_formula}"
+        )
+
+        pred_formula = f"ŷ({target_year}) = exp({slope:.6f}·{target_year} + {intercept:.3f})"
+        if add_one:
+            pred_formula += " − 1"
+        print(pred_formula)
+
+        plt.gca().text(
+            0.02, 0.98, eq_text,
+            transform=plt.gca().transAxes,
+            va="top", ha="left",
+            fontsize=9,
+            bbox=dict(boxstyle="round,pad=0.3", alpha=0.15)
+        )
+        
+        plt.title("Játékmegjelenések – exponenciális trend (log-lineáris illesztés, modern éra)")
         plt.xlabel("Év")
         plt.ylabel("Megjelenések száma")
         plt.legend()

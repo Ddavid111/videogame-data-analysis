@@ -3,15 +3,26 @@ title Videogame Data Split – OOP osztálydiagram (áttekintő)
 
 skinparam classAttributeIconSize 0
 
-' ======= RÉSZLETES OSZTÁLYOK =======
+' ======= KÖZÖS ŐSOSZTÁLYOK / SZEREPKÖRÖK =======
+
+abstract class Service
+abstract class AbstractTableBuilder
+
+' ======= PIPELINE =======
 
 class SplitPipeline {
   +run(master_df)
 }
 
+' ======= TABLE BUILDER ABSZTRAKCIÓ =======
+
 interface TableBuilder {
   +create_table(master_df)
 }
+
+AbstractTableBuilder <|-- TableBuilder
+
+' ======= KONKRÉT TABLE BUILDER-ÖK (RÉSZBEN KIBONTVA) =======
 
 class DeveloperPublisherTableBuilder {
   +create_developer_tables(master_df)
@@ -26,9 +37,10 @@ class GenreCategoryTableBuilder {
 TableBuilder <|.. DeveloperPublisherTableBuilder
 TableBuilder <|.. GenreCategoryTableBuilder
 
-SplitPipeline --> TableBuilder : uses
+' a pipeline több különböző TableBuilder-t is használhat
+SplitPipeline --> "1..*" TableBuilder : uses
 
-' ======= CSAK FELSOROLT OSZTÁLYOK =======
+' ======= TOVÁBBI TABLE BUILDER-ÖK (CSAK FELSOROLVA) =======
 
 class GameMetadataTableBuilder
 class LanguageTableBuilder
@@ -39,17 +51,27 @@ class RequirementsTableBuilder
 class SupportTableBuilder
 class TagsTableBuilder
 
+AbstractTableBuilder <|-- DeveloperPublisherTableBuilder
+AbstractTableBuilder <|-- GenreCategoryTableBuilder
+AbstractTableBuilder <|-- GameMetadataTableBuilder
+AbstractTableBuilder <|-- LanguageTableBuilder
+AbstractTableBuilder <|-- MediaTableBuilder
+AbstractTableBuilder <|-- PackageTableBuilder
+AbstractTableBuilder <|-- PlatformTableBuilder
+AbstractTableBuilder <|-- RequirementsTableBuilder
+AbstractTableBuilder <|-- SupportTableBuilder
+AbstractTableBuilder <|-- TagsTableBuilder
+
+' ======= SERVICE OSZTÁLYOK =======
+
 class TextUtils
 class IOService
 
-SplitPipeline ..> GameMetadataTableBuilder
-SplitPipeline ..> LanguageTableBuilder
-SplitPipeline ..> MediaTableBuilder
-SplitPipeline ..> PackageTableBuilder
-SplitPipeline ..> PlatformTableBuilder
-SplitPipeline ..> RequirementsTableBuilder
-SplitPipeline ..> SupportTableBuilder
-SplitPipeline ..> TagsTableBuilder
+Service <|-- TextUtils
+Service <|-- IOService
+
+' ======= KAPCSOLAT A PIPELINE-NAL =======
+
 SplitPipeline ..> TextUtils
 SplitPipeline ..> IOService
 

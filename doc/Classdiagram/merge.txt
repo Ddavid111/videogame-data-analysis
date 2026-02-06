@@ -3,6 +3,14 @@ title Videogame Data Merge – OOP osztálydiagram (áttekintő)
 
 skinparam classAttributeIconSize 0
 
+' ======= KÖZÖS ŐSOSZTÁLYOK / SZEREPKÖRÖK (bővíthetőség jelzése) =======
+
+abstract class Service
+abstract class Processor
+abstract class Visualizer
+abstract class Job
+abstract class Report
+
 ' ======= RÉSZLETES OSZTÁLYOK =======
 
 class MergePipeline {
@@ -13,6 +21,7 @@ class MergerService {
   +merge_sources(a, b, c)
   +merge_and_finalize(a, b, c)
 }
+Service <|-- MergerService
 
 interface DataSource {
   +load(path: str)
@@ -26,7 +35,8 @@ DataSource <|.. SourceA
 DataSource <|.. SourceB
 DataSource <|.. SourceC
 
-MergePipeline --> DataSource : uses
+' több adatforrás is lehet
+MergePipeline --> "1..*" DataSource : uses (A,B,C)
 MergePipeline --> MergerService
 
 ' ======= CSAK FELSOROLT OSZTÁLYOK =======
@@ -40,6 +50,20 @@ class VennDiagramVisualizer
 class HistogramReportJob
 class SummaryReport
 
+' ======= ÖRÖKLÉSEK (logikai csoportosítás) =======
+
+Service <|-- CleanerService
+Service <|-- NormalizerService
+Service <|-- CategoryService
+Service <|-- IOService
+
+Processor <|-- DescriptionProcessor
+Visualizer <|-- VennDiagramVisualizer
+Job <|-- HistogramReportJob
+Report <|-- SummaryReport
+
+' ======= PIPELINE FÜGGŐSÉGEK =======
+
 MergePipeline ..> DescriptionProcessor
 MergePipeline ..> CleanerService
 MergePipeline ..> NormalizerService
@@ -48,4 +72,5 @@ MergePipeline ..> IOService
 MergePipeline ..> VennDiagramVisualizer
 MergePipeline ..> HistogramReportJob
 MergePipeline ..> SummaryReport
+
 @enduml

@@ -1,1 +1,238 @@
 \Chapter{Osztályozási problémák}
+
+Ebben a fejezetben a korábban előkészített és egységesített Steam\cite{steam}-adatokból
+két, egymástól eltérő \textit{bináris osztályozási} feladatot fogalmazok meg és
+vizsgálok. A két feladat közös jellemzője, hogy mindkettőnél a célváltozó két értéket vehet fel,
+és a modellezés célja a játékok egyes tulajdonságai alapján a megfelelő osztály előrejelzése.
+A módszertan mindkét esetben egységes: adatkijelölés $\rightarrow$ előfeldolgozás $\rightarrow$
+tanító/teszt halmaz képzés $\rightarrow$ modellillesztés $\rightarrow$ teljesítménymérés.
+
+A két vizsgált osztályozási probléma:
+\begin{itemize}
+    \item \textbf{Videójáték ``sikerességének'' becslése} (pozitív értékelési arány alapján képzett címke),
+    \item \textbf{Multiplayer vs. singleplayer} kategória becslése (címkék és leírás alapján képzett címke).
+\end{itemize}
+
+A fejezet célja nem egyetlen konkrét algoritmus kiemelése,
+hanem egy átlátható, reprodukálható osztályozási munkafolyamat bemutatása,
+amely később új célváltozókra is kiterjeszthető.
+
+\Section{Kutatási módszertan és feldolgozási lépések}
+
+Mindkét osztályozási feladatnál az alábbi feldolgozási folyamatot alkalmaztam:
+
+\begin{enumerate}
+    \item \textbf{Cél (target) megfogalmazása:}
+    a bináris osztálycímke definíciója (pl. sikeres/nem sikeres, multiplayer/nem multiplayer).
+    \item \textbf{Adatok kijelölése:}
+    azoknak a rekordoknak és attribútumoknak a kiválasztása, amelyek relevánsak a célváltozóhoz.
+    \item \textbf{Előfeldolgozás és jellemzőképzés:}
+    hiányzó értékek kezelése, numerikus változók skálázása, kategóriák binarizálása,
+    illetve a szöveges mezők vektorizálása (TF--IDF\cite{tf-idf}).
+    \item \textbf{Tanítás és tesztelés:}
+    a tanító és teszt halmazok szétválasztása, majd modellillesztés.
+    \item \textbf{Értékelés:}
+    több metrika alapján (pontosság, precízió, recall, F1\cite{metrics}; ahol releváns, ROC--AUC\cite{roc-auc}),
+    továbbá konfúziós mátrix\cite{metrics} és részletes osztályozási jelentés alapján.
+\end{enumerate}
+
+A módszertan előnye, hogy a két külön feladatra ugyanaz a \textit{logikai szerkezet} alkalmazható,
+miközben a célváltozó és a felhasznált jellemzők a feladat sajátosságaihoz igazodnak.
+
+\Section{Domain 1: Videójáték sikerességének becslése}
+
+\subsection{A probléma specifikációja (cél)}
+A feladat célja annak előrejelzése, hogy egy játék \textit{sikeresnek} tekinthető-e.
+A címke a felhasználói értékelésekből származtatott: a pozitív értékelések arányát
+(\textit{positive ratio}) számítom, és küszöböléssel képezem a bináris osztályt.
+Azoknál a rekordoknál, ahol nincs elegendő/értelmezhető értékelés (pl. 0 összes értékelés),
+a címke nem értelmezhető, ezért ezek a rekordok a tanításhoz nem kerülnek felhasználásra.
+
+\subsection{Adatkijelölés és jellemzők}
+A sikeresség-becsléshez olyan változókat választottam, amelyek a piaci teljesítménnyel
+és a játék jellemzőivel kapcsolatban állhatnak. A munkafüzetben az alábbi típusú jellemzők jelennek meg:
+
+\begin{itemize}
+    \item \textbf{Numerikus alapjellemzők:} például ár (\textit{price}), korhatár
+    (\textit{required\_age}), megjelenési év (\textit{release\_date}), és további, adathalmazban elérhető számszerű mutatók.
+    \item \textbf{Kategória jellegű változók:} műfajok és kategóriák bináris indikátorváltozókká alakítva
+    (multi-hot reprezentáció), hogy a többértékű mezők is használhatók legyenek klasszikus modellekben.
+\end{itemize}
+
+\subsection{Előfeldolgozás}
+A pipeline-ban a numerikus változókat skálázom,
+a kategóriákat pedig bináris oszlopokra bontom. A cél az, hogy a különböző típusú változók
+egységes, modellbarát mátrixba kerüljenek.
+
+\subsection{Tanítás/tesztelés és metrikák}
+A tanító és teszt halmazokat stratifikált módon választottam szét,
+hogy az osztályok aránya mindkét részben hasonló maradjon.
+A teljesítményt több metrika alapján értékeltem:
+
+\begin{itemize}
+    \item \textbf{Accuracy} (pontosság)\cite{metrics} – összes helyes besorolás aránya,
+    \item \textbf{Precision} (precízió), \textbf{Recall, F1}\cite{metrics} – különösen hasznos, ha az osztályok eloszlása nem tökéletesen egyenletes,
+    \item \textbf{Konfúziós mátrix}\cite{metrics} – a tévesztések típusainak áttekintésére,
+    \item ahol releváns, \textbf{ROC--AUC}\cite{roc-auc} – rangsorolási minőség mérésére.
+\end{itemize}
+
+\subsection{Mennyiségi jellemzők és javasolt ábrák}
+
+Az adathalmaz több olyan mennyiségi jellemzőt tartalmaz, amelyek számszerű formában írják le a videojátékok tulajdonságait és a felhasználói visszajelzéseket. 
+Ezek közé tartozik többek között a játék ára, megjelenési éve, korhatár-besorolása, valamint a felhasználói értékelésekhez kapcsolódó mennyiségek.
+
+A sikeresség mérésére használt pozitív értékelési arány folytonos változó, amelynek eloszlása önmagában is fontos információt hordoz. 
+Az eloszlás vizsgálata rámutat arra, hogy a játékok többsége magas pozitív visszajelzési aránnyal rendelkezik, ugyanakkor kisebb részük alacsony értékelési arányt mutat. 
+Ez az eloszlás indokolja a később alkalmazott bináris osztályozási küszöbérték bevezetését.
+A pozitív értékelések arányának eloszlását a \ref{fig:positive_ratio_dist} ábra szemlélteti.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/pos_rating_ratio_distribution.png}
+    \caption{A pozitív értékelések arányának eloszlása a videojátékok között}
+    \label{fig:positive_ratio_dist}
+\end{figure}
+
+Amennyiben a játékok megjelenési ideje is rendelkezésre áll, lehetőség nyílik a pozitív értékelések arányának időbeli vizsgálatára is. 
+Az évek szerinti bontás alapján megfigyelhető, hogy a pozitív visszajelzések átlagos aránya nem állandó, hanem hosszabb távon változó tendenciát mutat. 
+Ez arra utalhat, hogy a felhasználói értékelési szokások, illetve a platform jellege időben módosult.
+A pozitív értékelések átlagos arányának alakulását az évek függvényében a \ref{fig:positive_ratio_trend} ábra mutatja be.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/pos_rating_ratio_trend.png}
+    \caption{A pozitív értékelések átlagos arányának alakulása az évek függvényében}
+    \label{fig:positive_ratio_trend}
+\end{figure}
+
+A bemutatott ábrák nemcsak leíró statisztikai szerepet töltenek be, hanem megalapozzák a későbbi prediktív modellezést is, mivel rávilágítanak a sikerességi mutató eloszlására és időbeli viselkedésére.
+
+\Section{Domain 2: Multiplayer vs. singleplayer osztályozás}
+
+\subsection{A probléma specifikációja (cél)}
+A második feladat célja annak meghatározása, hogy egy játék inkább
+\textit{multiplayer} jellegű-e vagy \textit{singleplayer} jellegű.
+A címkét a rendelkezésre álló kategória- és tagek alapján képeztem:
+a multiplayerhez kapcsolódó jelölések (pl. \textit{Multi-player}, \textit{Online Multi-Player},
+\textit{Co-op} stb.) jelenléte esetén a rekord a multiplayer osztályba kerül.
+
+\subsection{Adatkijelölés és jellemzők}
+Ehhez a feladathoz a játékok \textit{szöveges leírását} és a kapcsolódó információkat használtam fel.
+A jellemzőképzés alapja a szöveg vektorizálása:
+
+\begin{itemize}
+    \item \textbf{Szövegmezők:} például a játék leírása (\textit{about\_the\_game} vagy hasonló mezők),
+    \item \textbf{Szöveges reprezentáció:} TF--IDF (Term Frequency – Inverse Document Frequency)\cite{tf-idf} vektorizálás, amely a gyakori, de kevésbé informatív szavakat
+    leértékeli, és a megkülönböztető kifejezéseket kiemeli.
+\end{itemize}
+
+\subsection{Előfeldolgozás}
+
+A multiplayer vs. singleplayer osztályozási feladat során
+a játékok szöveges leírásait numerikus reprezentációvá kellett alakítani,
+hogy azok gépi tanulási modellek bemeneteként felhasználhatók legyenek.
+Ennek érdekében a szöveges mezőket
+TF--IDF (Term Frequency -- Inverse Document Frequency)\cite{tf-idf} vektorizálással
+dolgoztam fel.
+
+A TF--IDF módszer célja,
+hogy az adott dokumentumban gyakran előforduló,
+de a teljes szövegállományban ritkább szavakat nagyobb súllyal reprezentálja,
+miközben a sok dokumentumban megjelenő,
+kevésbé informatív kifejezések hatását csökkenti.
+Ez különösen alkalmas olyan feladatokra,
+ahol a megkülönböztető szavak és kifejezések
+jelentős szerepet játszanak az osztályozásban.
+
+A vektorizálás során
+unigram és bigram kifejezések kerültek figyelembevételre,
+valamint minimális dokumentumgyakorisági küszöb
+(\textit{min\_df}) és maximális szókészletméret
+(\textit{max\_features}) került beállításra
+a ritka, zajos kifejezések kiszűrése érdekében.
+Az előfeldolgozás részeként
+a hiányzó leírásokat és az üres szövegeket eltávolítottam,
+így biztosítva a konzisztens bemeneti adatkészletet.
+
+A TF--IDF vektorizálás eredményeként
+egy $(104\,701 \times 50\,000)$ dimenziójú,
+ritka mátrix jött létre,
+ahol a sorok az egyes játékok leírásait,
+az oszlopok pedig a szókészlet elemeit
+(unigramok és bigramok) reprezentálják.
+A szókészlet mérete elérte az előre meghatározott
+\textit{max\_features = 50\,000} korlátot,
+ami a szövegállomány jelentős nyelvi változatosságára utal.
+
+A nagy dimenziószám és a ritka reprezentáció
+indokolttá teszi lineáris osztályozó algoritmusok alkalmazását,
+mint a logisztikus regresszió\cite{logistic regression} vagy a lineáris SVM\cite{svm},
+amelyek hatékonyan kezelik a magas dimenziós,
+szórványos jellemzőtereket.
+
+
+\subsection{Tanítás/tesztelés és metrikák}
+A tanító/teszt felosztást itt is stratifikált módon készítettem,
+mivel a multiplayer/singleplayer címkék eloszlása torzított lehet.
+A kiértékelés a klasszikus osztályozási metrikák mentén történt:
+
+\begin{itemize}
+    \item \textbf{Accuracy} (pontosság)\cite{metrics} – összes helyes besorolás aránya,
+    \item \textbf{Precision} (precízió), \textbf{Recall, F1}\cite{metrics} – különösen hasznos, ha az osztályok eloszlása nem tökéletesen egyenletes,
+    \item \textbf{Konfúziós mátrix}\cite{metrics} – a tévesztések típusainak áttekintésére,
+    \item ahol releváns, \textbf{ROC--AUC}\cite{roc-auc} – rangsorolási minőség mérésére.
+\end{itemize}
+
+\subsection{Mennyiségi jellemzők és osztályeloszlás}
+
+A multiplayer és singleplayer játékok arányát a
+\ref{fig:mp_sp_distribution} ábra szemlélteti.
+Az adathalmaz erősen kiegyensúlyozatlan, a singleplayer játékok
+jelentős többségben vannak, ami indokolja az osztályozási modellek értékelésénél
+a pontosság mellett további metrikák
+(például precision, recall és F1-mérték)
+alkalmazását.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/eda_target_distribution_multiplayer.png}
+    \caption{A célváltozó eloszlása: multiplayer vs singleplayer}
+    \label{fig:mp_sp_distribution}
+\end{figure}
+
+A szöveges leírás hosszának eloszlását osztályonként
+a \ref{fig:description_length_by_class} ábra szemlélteti.
+Az ábra normalizált gyakoriságokat mutat,
+a szélsőséges értékek hatásának csökkentése érdekében
+a 99. percentilisig korlátozott tartományban.
+
+Megfigyelhető, hogy a multiplayer játékok leírásai
+jellemzően hosszabbak,
+és eloszlásuk jobbra elnyúlóbb a singleplayer játékokéhoz képest.
+Ez arra utal, hogy a leírás hossza
+megkülönböztető információt hordozhat az osztályok között,
+ami indokolja a szöveges jellemzők bevonását
+a későbbi modellezési lépések során.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/eda_description_length_distribution_by_class_p99_normalized.png}
+    \caption{A leírás hosszának eloszlása osztályonként (normalizált)}
+    \label{fig:description_length_by_class}
+\end{figure}
+
+\Section{Átvezetés a következő fejezetre}
+
+A fejezetben bemutatott osztályozási problémákhoz kapcsolódó
+adatelőkészítési lépések, jellemzőelemzések és célváltozó-definíciók
+megalapozták a további modellezési feladatokat.
+A bemutatott mennyiségi jellemzők és eloszlások alapján
+mindkét vizsgált domain esetében indokolt a gépi tanulási
+osztályozási módszerek alkalmazása.
+
+A következő fejezet az előzőekben definiált osztályozási problémák
+konkrét megoldására fókuszál.
+Bemutatásra kerülnek az alkalmazott tanulóalgoritmusok,
+a tanítás és validálás folyamata, valamint az egyes modellek
+teljesítményének összehasonlítása a kiválasztott értékelési
+metrikák segítségével.

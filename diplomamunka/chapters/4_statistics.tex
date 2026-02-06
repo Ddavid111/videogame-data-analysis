@@ -476,6 +476,14 @@ megjelenésszám figyelhető meg.
 
 \section{2026-os előrejelzés logaritmikus skálán illesztett lineáris trend alapján}
 
+A trendillesztés során az éves játékmegjelenések számát
+természetes alapú logaritmikus transzformációnak vetettem alá,
+majd az így kapott adatokra lineáris regressziós modellt illesztettem
+legkisebb négyzetek módszerével.
+Az illesztés Python környezetben, a \texttt{scikit-learn} könyvtár
+\texttt{LinearRegression} osztályának felhasználásával történt,
+alapértelmezett beállítások mellett.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.95\textwidth]{images/forecast_2026_log_modern.png}
@@ -567,7 +575,7 @@ felett helyezkednek el, ami a modell optimista jellegére utal.
 A teljes vizsgált időszakban a modell jellemzően felülbecsülte
 a tényleges megjelenésszámot.
 Ez arra utal, hogy a játékmegjelenések növekedése
-nem tisztán logaritmikus jellegű,
+nem tisztán exponenciális jellegű,
 és a piac bővülését strukturális tényezők
 (például telítődési hatások) mérséklik.
 
@@ -582,7 +590,8 @@ nem tisztán logaritmikus jellegű,
 
 A 2024-es visszateszt eredményei a \ref{fig:forecast_2024} ábrán láthatók.
 A modell teljesítményének ellenőrzésére a 2014–2023 közötti adatokon
-tanított log-lineáris trend segítségével előrejeleztem a 2024-es évet.
+tanított log-lineáris (legkisebb négyzetek módszerével illesztett)
+trend segítségével előrejeleztem a 2024-es évet.
 A becslés \textbf{\num{23717}} megjelenést adott, míg a tényleges érték
 \textbf{\num{21454}} volt, ami hozzávetőleg \textbf{10\%-os eltérést} jelent.
 

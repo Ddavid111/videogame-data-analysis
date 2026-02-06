@@ -1,1 +1,166 @@
 \Chapter{Osztályozási problémák és megoldásuk}
+
+Ebben a fejezetben a korábban definiált osztályozási problémák
+konkrét megoldásának bemutatása és értelmezése történik.
+A cél nem csupán a prediktív teljesítmény számszerű értékelése,
+hanem annak vizsgálata is, hogy az alkalmazott modellek
+milyen jellemzők alapján hozzák meg döntéseiket,
+és ezek a döntések mennyiben tekinthetők értelmezhetőnek.
+
+A fejezet két, eltérő jellegű problématerületre (domainre) bontva
+mutatja be az osztályozási feladatokat.
+Az első domain a videojátékok sikerességének becslésére fókuszál
+felhasználói visszajelzések és strukturált metaadatok alapján,
+míg a második domain a játékok multiplayer és singleplayer jellegének
+automatikus felismerését vizsgálja szöveges leírások
+és kapcsolódó metaadatok felhasználásával.
+
+Mindkét esetben lineáris osztályozási módszerek kerültek alkalmazásra,
+amelyek megfelelő egyensúlyt biztosítanak
+a teljesítmény, a számítási hatékonyság
+és a modellértelmezhetőség között.
+A fejezetben bemutatott eredmények
+megalapozzák a későbbi összehasonlító elemzést,
+amely a különböző módszerek és jellemzők hatását vizsgálja.
+
+\Section{Domain 1: Videójáték sikerességének elemzése}
+
+\subsection{A sikeresség-becslés eredményeinek értelmezése}
+
+A videojátékok sikerességének becslésére bináris osztályozási feladat került megfogalmazásra,
+ahol a cél annak eldöntése volt, hogy egy adott játék a felhasználói értékelések alapján
+sikeresnek tekinthető-e.
+A modell teljesítményének értelmezéséhez nemcsak az összesített metrikák,
+hanem a konfúziós mátrix is fontos információt szolgáltat.
+
+A logisztikus regresszió\cite{logistic regression} modell eredményeit a \ref{fig:confusion_success} ábra szemlélteti.
+A konfúziós mátrix alapján megfigyelhető, hogy a modell a sikeres játékokat
+nagyobb arányban ismeri fel helyesen, mint a nem sikereseket.
+Ez összhangban van azzal, hogy az adathalmazban a sikeres játékok aránya enyhén domináns.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/confusion_matrix_logistic_regression.png}
+    \caption{Konfúziós mátrix a videojátékok sikerességének becslésére (logisztikus regresszió)}
+    \label{fig:confusion_success}
+\end{figure}
+
+A mátrixból látható, hogy a tévesztések jelentős része a hamis pozitív és hamis negatív
+besorolásokból adódik.
+A modell viselkedése alapján megállapítható, hogy inkább optimista becslést ad:
+gyakrabban sorol nem sikeres játékot a sikeres kategóriába, mint fordítva.
+Ez a tulajdonság bizonyos alkalmazási esetekben előnyös lehet, amennyiben a cél
+a potenciálisan sikeres címek minél nagyobb arányú azonosítása.
+
+A modell teljesítményét jellemző ROC--AUC\cite{roc-auc} érték azt mutatja,
+hogy a becslés nem csupán bináris döntésként értelmezhető,
+hanem a játékok sikeresség szerinti rangsorolására is alkalmas.
+Ez azt jelenti, hogy a modell általában magasabb siker-valószínűséget rendel
+a valóban sikeres játékokhoz, mint a nem sikeresekhez,
+ami megerősíti a modell használhatóságát elemzési célokra.
+
+\subsection{A sikerességet befolyásoló jellemzők értelmezése}
+
+A prediktív teljesítmény értékelése mellett fontos szempont annak vizsgálata is,
+hogy a modell mely bemeneti változókat tekinti meghatározónak a videojátékok
+sikerességének becslése során.
+Ennek érdekében a logisztikus regresszió modell koefficienseit elemeztem,
+mivel ezek közvetlenül értelmezhető információt adnak a változók hatásának
+irányáról és relatív erősségéről.
+
+A legnagyobb abszolút értékű koefficiensekkel rendelkező változókat a
+\ref{fig:feature_importance_logreg} ábra mutatja be.
+Pozitív koefficiens esetén az adott jellemző növeli a sikeres besorolás
+valószínűségét, míg negatív érték csökkentő hatásra utal.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/logistic_regression_feature_importance.png}
+    \caption{A legfontosabb változók a logisztikus regresszió modell alapján}
+    \label{fig:feature_importance_logreg}
+\end{figure}
+
+Az eredmények alapján megfigyelhető, hogy a sikerességhez elsősorban nem
+technikai vagy árazási tényezők járulnak hozzá, hanem a játék (illetve szoftver)
+jellegére és használati módjára utaló attribútumok.
+Pozitív hatást mutat többek között az egyjátékos mód jelenléte,
+valamint a közösségi és kényelmi funkciókhoz kapcsolódó jellemzők
+(például Family Sharing, Steam Cloud vagy Steam Workshop).
+
+Ezzel szemben negatív irányú hatás figyelhető meg bizonyos üzleti modellek,
+például az ingyenes (Free to Play) játékok esetében, illetve egyes speciális
+szoftverkategóriákhoz kapcsolódó változóknál.
+Ez arra utalhat, hogy ezeknél a címeknél a felhasználói elégedettség
+és az értékelési szokások eltérő mintázatot követnek.
+
+Az elemzés rávilágít arra, hogy a logisztikus regresszió nem pusztán
+feketedobozos előrejelzőként használható, hanem lehetőséget ad a modell
+döntéseinek kvalitatív értelmezésére is.
+
+\Section{Domain 2: Multiplayer vs. singleplayer osztályozás}
+
+A második vizsgált osztályozási probléma a videojátékok multiplayer és
+singleplayer kategóriákba sorolására irányult.
+A bináris osztályozási feladat célja annak meghatározása volt,
+hogy egy adott játék rendelkezik-e többjátékos funkcionalitással,
+a játékok szöveges leírásai és strukturált metaadatai alapján.
+
+A feladat megoldására több különböző modellt is kipróbáltam,
+amelyek eltérő jellemzőkészletekre épültek.
+Az eredmények alapján a legjobb teljesítményt a
+TF--IDF\cite{tf-idf} alapú szöveges jellemzőket és a strukturált metaadatokat
+együttesen alkalmazó lineáris SVM (LinearSVC)\cite{svm} modell nyújtotta.
+Ez a megoldás nemcsak az összesített pontosság,
+hanem a kiegyensúlyozottabb osztályonkénti teljesítmény tekintetében is
+kedvezőbbnek bizonyult.
+
+A modell eredményeit a \ref{fig:confusion_multiplayer} ábra
+konfúziós mátrixa szemlélteti.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/confusion_matrix_tfidf_linearsvc_combined.png}
+    \caption{Konfúziós mátrix a multiplayer vs. singleplayer osztályozási feladatra (Combined LinearSVC)}
+    \label{fig:confusion_multiplayer}
+\end{figure}
+
+A konfúziós mátrix alapján megfigyelhető,
+hogy a modell mindkét osztályt magas pontossággal képes elkülöníteni,
+miközben a kisebb elemszámú multiplayer osztály esetében is
+megfelelő visszahívási arányt ér el.
+Ez különösen fontos az adathalmaz kiegyensúlyozatlansága miatt,
+mivel a singleplayer játékok jelentős többségben vannak.
+Az eredmények azt mutatják,
+hogy a strukturált jellemzőkkel kiegészített szöveges reprezentáció
+hatékonyan segíti a többjátékos mechanikák felismerését.
+
+\subsection{A multiplayer besorolást befolyásoló jellemzők értelmezése}
+
+A prediktív teljesítmény vizsgálata mellett
+kiemelt figyelmet fordítottam a modell döntéseinek értelmezhetőségére is.
+A lineáris SVM modell tanult súlyainak elemzése lehetőséget biztosított annak
+feltárására, hogy mely jellemzők járulnak hozzá legnagyobb mértékben
+a multiplayer, illetve a singleplayer besoroláshoz.
+
+Az elemzés alapján megállapítható,
+hogy a multiplayer irányba elsősorban olyan szöveges kifejezések
+és strukturált tagek tolódnak el,
+amelyek explicit módon többjátékos mechanikákra utalnak.
+Ilyenek például a \textit{multiplayer}, \textit{online},
+\textit{co-op}, \textit{pvp} vagy \textit{split screen} kifejezések,
+amelyek mind a játékok leírásaiban,
+mind a metaadatokban következetesen megjelennek.
+
+Ezzel szemben a singleplayer besorolást inkább narratív,
+tanulási vagy egyéni játékélményhez kötődő kifejezések támogatják,
+mint például a \textit{single player}, \textit{prologue},
+\textit{tutorial} vagy \textit{novel}.
+Ez arra utal, hogy a modell döntései nem véletlenszerű korrelációkon,
+hanem a játékmechanikákhoz és felhasználói élményhez
+szorosan kapcsolódó szemantikai mintázatokon alapulnak.
+
+Az eredmények összességében azt mutatják,
+hogy a szöveges leírások és a strukturált jellemzők kombinációja
+nemcsak a prediktív teljesítményt javítja,
+hanem a modell döntéseinek értelmezhetőségét is megőrzi,
+ami fontos szempont az elemzési és kutatási célú alkalmazások esetében.

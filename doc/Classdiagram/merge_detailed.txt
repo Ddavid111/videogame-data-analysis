@@ -1,0 +1,37 @@
+@startuml
+title Videogame Data Merge – részletes OOP osztálydiagram
+
+skinparam classAttributeIconSize 0
+
+class MergePipeline {
+  -sources : list<DataSource>
+  -merger : MergerService
+  -io : IOService
+
+  +run() : void
+}
+
+interface DataSource {
+  +load(path: str) : DataFrame
+}
+
+class SourceA {
+  -path : str
+  +load(path: str) : DataFrame
+}
+
+class MergerService {
+  +merge_sources(a: DataFrame, b: DataFrame, c: DataFrame) : DataFrame
+  +merge_and_finalize(a: DataFrame, b: DataFrame, c: DataFrame) : DataFrame
+}
+
+class IOService {
+  +save_merged(df: DataFrame, output_dir: str) : str
+}
+
+DataSource <|.. SourceA
+MergePipeline --> "1..*" DataSource : uses
+MergePipeline --> MergerService
+MergePipeline --> IOService
+
+@enduml

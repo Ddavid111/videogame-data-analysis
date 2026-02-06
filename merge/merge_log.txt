@@ -115,3 +115,119 @@
 [2026-01-27 09:40:04] INFO: Integrity check completed, saved to C:\Users\zalma\videogame-data-analysis\merge\integrity_report.csv
 [2026-01-27 09:40:04] INFO: === Generating histograms ===
 [2026-01-27 09:40:46] INFO: === Merge process successfully completed ===
+[2026-02-03 09:12:00] INFO: === Starting merge process ===
+[2026-02-03 09:12:36] INFO: Loaded: steam.csv (27075 rows)
+[2026-02-03 09:12:37] INFO: Loaded: steam_description_data_cleaned.csv (27334 rows)
+[2026-02-03 09:12:38] INFO: Loaded: steam_media_data.csv (27332 rows)
+[2026-02-03 09:12:38] INFO: Loaded: steam_support_info.csv (27136 rows)
+[2026-02-03 09:12:39] INFO: Loaded: steamspy_tag_data.csv (29022 rows)
+[2026-02-03 09:12:39] INFO: Loaded: steam_requirements_data.csv (27319 rows)
+[2026-02-03 09:12:41] INFO: SteamSpy tags converted → 28447 appid with tag data
+[2026-02-03 09:12:41] INFO: A source merged: 27075 rows
+[2026-02-03 09:12:45] INFO: A source saved: C:\Users\zalma\videogame-data-analysis\merge\A_merged.csv
+[2026-02-03 09:12:58] INFO: B source loaded from JSON: 111452 rows
+[2026-02-03 09:13:11] INFO: B source saved: C:\Users\zalma\videogame-data-analysis\merge\B_full.csv
+[2026-02-03 09:13:19] INFO: Loaded: games_march2025_cleaned.csv (89618 rows)
+[2026-02-03 09:13:25] INFO: Loaded: games_march2025_full.csv (94948 rows)
+[2026-02-03 09:13:31] INFO: Loaded: games_may2024_cleaned.csv (83646 rows)
+[2026-02-03 09:13:36] INFO: Loaded: games_may2024_full.csv (87806 rows)
+[2026-02-03 09:13:37] INFO: C source combined: 356018 rows
+[2026-02-03 09:14:14] INFO: C source saved: C:\Users\zalma\videogame-data-analysis\merge\C_full.csv
+[2026-02-03 09:14:16] INFO: Merging sources with C→B→A priority...
+[2026-02-03 09:14:36] INFO: Merge complete (112855 rows, 63 columns)
+[2026-02-03 09:14:41] INFO: Normalized thumbnail screenshots for source A (27075 items)
+[2026-02-03 09:14:41] INFO: Normalized thumbnail screenshots for source B (111452 items)
+[2026-02-03 09:14:45] INFO: Normalized thumbnail screenshots for source C (104490 items)
+[2026-02-03 09:14:47] INFO: Normalized movies for source A (25393 items)
+[2026-02-03 09:14:48] INFO: Normalized movies for source B (111452 items)
+[2026-02-03 09:14:51] INFO: Normalized movies for source C (104490 items)
+[2026-02-03 09:16:04] INFO: Combined duplicate tag columns: ['tags_x', 'tags_y'] → kept unified 'tags'
+[2026-02-03 09:16:15] INFO: Dropped redundant column: steamspy_tags
+[2026-02-03 09:16:23] INFO: Cleaned and normalized language field: supported_languages
+[2026-02-03 09:16:28] INFO: Cleaned and normalized language field: full_audio_languages
+[2026-02-03 09:16:37] INFO: Final language cleanup on supported_languages: 542206 → 542160 entries (after filtering).
+[2026-02-03 09:16:41] INFO: Final language cleanup on full_audio_languages: 212743 → 212736 entries (after filtering).
+[2026-02-03 09:16:41] INFO: 41830 rows have identical supported and audio language sets.
+[2026-02-03 09:17:16] INFO: Merged table saved: C:\Users\zalma\videogame-data-analysis\merge\merged_master.csv
+[2026-02-03 09:17:16] INFO: Merged master table saved to: C:\Users\zalma\videogame-data-analysis\merge\merged_master.csv
+[2026-02-03 09:17:17] INFO: Source summary saved: C:\Users\zalma\videogame-data-analysis\merge\source_summary.csv
+[2026-02-03 09:17:17] INFO: Integrity check completed, saved to C:\Users\zalma\videogame-data-analysis\merge\integrity_report.csv
+[2026-02-03 09:17:17] INFO: === Generating histograms ===
+[2026-02-03 09:18:00] INFO: === Merge process successfully completed ===
+[2026-02-03 09:20:27] INFO: === Starting merge process ===
+[2026-02-03 09:21:06] INFO: Loaded: steam.csv (27075 rows)
+[2026-02-03 09:21:06] INFO: Loaded: steam_description_data_cleaned.csv (27334 rows)
+[2026-02-03 09:21:07] INFO: Loaded: steam_media_data.csv (27332 rows)
+[2026-02-03 09:21:07] INFO: Loaded: steam_support_info.csv (27136 rows)
+[2026-02-03 09:21:08] INFO: Loaded: steamspy_tag_data.csv (29022 rows)
+[2026-02-03 09:21:08] INFO: Loaded: steam_requirements_data.csv (27319 rows)
+[2026-02-03 09:21:10] INFO: SteamSpy tags converted → 28447 appid with tag data
+[2026-02-03 09:21:11] INFO: A source merged: 27075 rows
+[2026-02-03 09:21:15] INFO: A source saved: C:\Users\zalma\videogame-data-analysis\merge\A_merged.csv
+[2026-02-03 09:21:25] INFO: B source loaded from JSON: 111452 rows
+[2026-02-03 09:21:38] INFO: B source saved: C:\Users\zalma\videogame-data-analysis\merge\B_full.csv
+[2026-02-03 09:21:43] INFO: Loaded: games_march2025_cleaned.csv (89618 rows)
+[2026-02-03 09:21:49] INFO: Loaded: games_march2025_full.csv (94948 rows)
+[2026-02-03 09:21:54] INFO: Loaded: games_may2024_cleaned.csv (83646 rows)
+[2026-02-03 09:21:59] INFO: Loaded: games_may2024_full.csv (87806 rows)
+[2026-02-03 09:22:00] INFO: C source combined: 356018 rows
+[2026-02-03 09:22:37] INFO: C source saved: C:\Users\zalma\videogame-data-analysis\merge\C_full.csv
+[2026-02-03 09:22:38] INFO: Merging sources with C→B→A priority...
+[2026-02-03 09:22:59] INFO: Merge complete (112855 rows, 63 columns)
+[2026-02-03 09:23:04] INFO: Normalized thumbnail screenshots for source A (27075 items)
+[2026-02-03 09:23:05] INFO: Normalized thumbnail screenshots for source B (111452 items)
+[2026-02-03 09:23:09] INFO: Normalized thumbnail screenshots for source C (104490 items)
+[2026-02-03 09:23:11] INFO: Normalized movies for source A (25393 items)
+[2026-02-03 09:23:12] INFO: Normalized movies for source B (111452 items)
+[2026-02-03 09:23:15] INFO: Normalized movies for source C (104490 items)
+[2026-02-03 09:24:30] INFO: Combined duplicate tag columns: ['tags_x', 'tags_y'] → kept unified 'tags'
+[2026-02-03 09:24:41] INFO: Dropped redundant column: steamspy_tags
+[2026-02-03 09:24:50] INFO: Cleaned and normalized language field: supported_languages
+[2026-02-03 09:24:55] INFO: Cleaned and normalized language field: full_audio_languages
+[2026-02-03 09:25:03] INFO: Final language cleanup on supported_languages: 542206 → 542160 entries (after filtering).
+[2026-02-03 09:25:07] INFO: Final language cleanup on full_audio_languages: 212743 → 212736 entries (after filtering).
+[2026-02-03 09:25:07] INFO: 41830 rows have identical supported and audio language sets.
+[2026-02-03 09:25:40] INFO: Merged table saved: C:\Users\zalma\videogame-data-analysis\merge\merged_master.csv
+[2026-02-03 09:25:40] INFO: Merged master table saved to: C:\Users\zalma\videogame-data-analysis\merge\merged_master.csv
+[2026-02-03 09:25:40] INFO: Source summary saved: C:\Users\zalma\videogame-data-analysis\merge\source_summary.csv
+[2026-02-03 09:25:40] INFO: Integrity check completed, saved to C:\Users\zalma\videogame-data-analysis\merge\integrity_report.csv
+[2026-02-03 09:25:40] INFO: === Generating histograms ===
+[2026-02-03 09:31:04] INFO: === Starting merge process ===
+[2026-02-03 09:31:41] INFO: Loaded: steam.csv (27075 rows)
+[2026-02-03 09:31:42] INFO: Loaded: steam_description_data_cleaned.csv (27334 rows)
+[2026-02-03 09:31:43] INFO: Loaded: steam_media_data.csv (27332 rows)
+[2026-02-03 09:31:43] INFO: Loaded: steam_support_info.csv (27136 rows)
+[2026-02-03 09:31:43] INFO: Loaded: steamspy_tag_data.csv (29022 rows)
+[2026-02-03 09:31:44] INFO: Loaded: steam_requirements_data.csv (27319 rows)
+[2026-02-03 09:31:46] INFO: SteamSpy tags converted → 28447 appid with tag data
+[2026-02-03 09:31:46] INFO: A source merged: 27075 rows
+[2026-02-03 09:31:50] INFO: A source saved: C:\Users\zalma\videogame-data-analysis\merge\A_merged.csv
+[2026-02-03 09:32:00] INFO: B source loaded from JSON: 111452 rows
+[2026-02-03 09:32:12] INFO: B source saved: C:\Users\zalma\videogame-data-analysis\merge\B_full.csv
+[2026-02-03 09:32:17] INFO: Loaded: games_march2025_cleaned.csv (89618 rows)
+[2026-02-03 09:32:23] INFO: Loaded: games_march2025_full.csv (94948 rows)
+[2026-02-03 09:32:27] INFO: Loaded: games_may2024_cleaned.csv (83646 rows)
+[2026-02-03 09:32:32] INFO: Loaded: games_may2024_full.csv (87806 rows)
+[2026-02-03 09:32:32] INFO: C source combined: 356018 rows
+[2026-02-03 09:33:08] INFO: C source saved: C:\Users\zalma\videogame-data-analysis\merge\C_full.csv
+[2026-02-03 09:33:09] INFO: Merging sources with C→B→A priority...
+[2026-02-03 09:33:30] INFO: Merge complete (112855 rows, 63 columns)
+[2026-02-03 09:33:34] INFO: Normalized thumbnail screenshots for source A (27075 items)
+[2026-02-03 09:33:35] INFO: Normalized thumbnail screenshots for source B (111452 items)
+[2026-02-03 09:33:39] INFO: Normalized thumbnail screenshots for source C (104490 items)
+[2026-02-03 09:33:41] INFO: Normalized movies for source A (25393 items)
+[2026-02-03 09:33:41] INFO: Normalized movies for source B (111452 items)
+[2026-02-03 09:33:44] INFO: Normalized movies for source C (104490 items)
+[2026-02-03 09:34:57] INFO: Combined duplicate tag columns: ['tags_x', 'tags_y'] → kept unified 'tags'
+[2026-02-03 09:35:08] INFO: Dropped redundant column: steamspy_tags
+[2026-02-03 09:35:16] INFO: Cleaned and normalized language field: supported_languages
+[2026-02-03 09:35:22] INFO: Cleaned and normalized language field: full_audio_languages
+[2026-02-03 09:35:30] INFO: Final language cleanup on supported_languages: 542206 → 542160 entries (after filtering).
+[2026-02-03 09:35:34] INFO: Final language cleanup on full_audio_languages: 212743 → 212736 entries (after filtering).
+[2026-02-03 09:35:34] INFO: 41830 rows have identical supported and audio language sets.
+[2026-02-03 09:36:07] INFO: Merged table saved: C:\Users\zalma\videogame-data-analysis\merge\merged_master.csv
+[2026-02-03 09:36:07] INFO: Merged master table saved to: C:\Users\zalma\videogame-data-analysis\merge\merged_master.csv
+[2026-02-03 09:36:07] INFO: Source summary saved: C:\Users\zalma\videogame-data-analysis\merge\source_summary.csv
+[2026-02-03 09:36:07] INFO: Integrity check completed, saved to C:\Users\zalma\videogame-data-analysis\merge\integrity_report.csv
+[2026-02-03 09:36:07] INFO: === Generating histograms ===
+[2026-02-03 09:36:51] INFO: === Merge process successfully completed ===

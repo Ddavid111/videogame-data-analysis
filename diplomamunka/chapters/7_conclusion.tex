@@ -1,1 +1,144 @@
 \Chapter{Módszerek/eredmények összehasonlítása}
+
+Ebben a fejezetben az előző fejezetekben bemutatott osztályozási feladatokra
+alkalmazott különböző gépi tanulási módszerek teljesítményét hasonlítom össze.
+A cél annak vizsgálata, hogy az eltérő modellek és jellemzőkészletek
+milyen mértékben befolyásolják a prediktív teljesítményt,
+különös tekintettel az osztályok közötti kiegyensúlyozottságra
+és a kisebbségi osztály felismerésére.
+
+\Section{Domain 1: Videójáték sikerességének elemzése}
+
+\subsection{Alternatív osztályozási módszerek összehasonlítása}
+
+A logisztikus regresszió\cite{logistic regression} mellett több további, gyakran alkalmazott osztályozási módszert is
+megvizsgáltam a videojátékok sikerességének becslésére.
+Mivel a jellemzőmátrix és a célváltozó már rendelkezésre állt, az összehasonlítás egységes
+adatfelosztás mellett, alapértelmezett paraméterezéssel történt.
+
+Az összehasonlítás során Random Forest\cite{random forest} és Gradient Boosting\cite{gradient boosting} modellek kerültek kipróbálásra.
+A modellek teljesítményét a ROC--AUC\cite{roc-auc} mutató alapján értékeltem, mivel ez a metrika
+küszöbfüggetlen módon méri a modellek rangsorolási képességét.
+Az eredményeket a \ref{tab:model_comparison} táblázat foglalja össze.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l c}
+        \hline
+        \textbf{Modell} & \textbf{ROC--AUC} \\
+        \hline
+        Logisztikus regresszió & 0.717 \\
+        Random Forest & 0.744 \\
+        Gradient Boosting & 0.754 \\
+        \hline
+    \end{tabular}
+    \caption{Különböző osztályozási modellek összehasonlítása ROC--AUC alapján}
+    \label{tab:model_comparison}
+\end{table}
+
+Az eredmények alapján megfigyelhető, hogy a nemlineáris modellek
+(Random Forest és Gradient Boosting) magasabb ROC--AUC értéket értek el,
+ami arra utal, hogy a játékok sikeressége és a bemeneti jellemzők közötti kapcsolat
+részben nemlineáris jellegű.
+Ugyanakkor a logisztikus regresszió továbbra is stabil és jól értelmezhető baseline modellt
+biztosít, amely megfelelő kiindulópontot jelent a további modellek értékeléséhez.
+
+\Section{Domain 2: Multiplayer vs. singleplayer osztályozás}
+
+\subsection{Az alkalmazott modellek áttekintése}
+
+A multiplayer vs. singleplayer osztályozási feladatra több különböző
+megközelítést alkalmaztam.
+Kiindulásként kizárólag a játékok szöveges leírásaira épülő
+baseline modelleket használtam,
+majd ezek teljesítményét strukturált metaadatok
+(bejegyzett \textit{tagek} és \textit{műfajok}) bevonásával is megvizsgáltam.
+
+Az összehasonlítás során az alábbi modellek kerültek alkalmazásra:
+\begin{itemize}
+    \item TF--IDF\cite{tf-idf} + logisztikus regresszió\cite{logistic regression} (csak szöveges jellemzők),
+    \item TF--IDF + lineáris SVM\cite{svm} (csak szöveges jellemzők),
+    \item TF--IDF + logisztikus regresszió strukturált jellemzőkkel,
+    \item TF--IDF + lineáris SVM strukturált jellemzőkkel.
+\end{itemize}
+
+A modellek egységes tanító--teszt felosztás mellett kerültek kiértékelésre,
+stratifikált mintavételezéssel,
+annak érdekében, hogy az osztályok torz eloszlása
+ne befolyásolja a teljesítménymérést.
+
+\subsection{Teljesítménybeli különbségek elemzése}
+
+Az egyes modellek teljesítményét több metrika mentén értékeltem,
+beleértve a pontosság, precízió, recall és F1-mérték\cite{metrics} értékeket.
+Az összehasonlítás során különös figyelmet kapott
+a kisebbségi multiplayer osztály felismerési képessége,
+mivel az adathalmaz jelentősen kiegyensúlyozatlan.
+
+Az eredmények alapján megállapítható,
+hogy a lineáris SVM\cite{svm} modellek következetesen jobb teljesítményt nyújtottak,
+különösen a recall és az F1-mérték tekintetében.
+Ez arra utal, hogy ezek a modellek hatékonyabban kezelik
+a nagy dimenziós, ritka TF--IDF\cite{tf-idf} reprezentációkat,
+mint a logisztikus regresszió.
+
+A kizárólag szöveges jellemzőkre épülő modellek
+már önmagukban is jó teljesítményt értek el,
+azonban a strukturált jellemzők bevonása
+minden esetben további javulást eredményezett.
+
+A \ref{tab:model_comparison} táblázat egyértelműen mutatja,
+hogy a strukturált jellemzők bevonása minden vizsgált modell esetében
+javulást eredményezett, különösen a kisebbségi multiplayer osztály
+visszahívási arányát és F1-mértékét tekintve.
+
+\begin{table}[H]
+\centering
+\caption{A különböző modellek teljesítményének összehasonlítása a multiplayer vs. singleplayer osztályozási feladatra}
+\label{tab:model_comparison}
+\begin{tabular}{lcccc}
+\hline
+\textbf{Modell} & \textbf{Jellemzők} & \textbf{Accuracy} & \textbf{Recall (MP)} & \textbf{F1 (MP)} \\
+\hline
+LogReg & TF--IDF (szöveg) & 0.933 & 0.852 & 0.829 \\
+LinearSVC & TF--IDF (szöveg) & 0.937 & 0.833 & 0.833 \\
+LogReg & Szöveg + tagek + műfajok & 0.955 & 0.893 & 0.883 \\
+LinearSVC & Szöveg + tagek + műfajok & \textbf{0.958} & \textbf{0.880} & \textbf{0.889} \\
+\hline
+\end{tabular}
+\end{table}
+
+A legjobb összteljesítményt a TF--IDF szöveges reprezentációt
+és a strukturált metaadatokat együttesen alkalmazó
+lineáris SVM modell érte el,
+ami alátámasztja a korábbi fejezetekben levont következtetéseket.
+
+\subsection{A strukturált jellemzők hatása}
+
+A tagek és műfajok bináris (multi-hot) reprezentációjának hozzáadása
+különösen a multiplayer osztály visszahívási arányát növelte.
+Ez azt jelzi, hogy a strukturált metaadatok
+explicit módon hordozzák a játékmechanikákra vonatkozó információkat,
+amelyek hatékonyan kiegészítik
+a természetes nyelvű leírásokból kinyerhető mintázatokat.
+
+A kombinált modellek esetében
+csökkent a hamis negatív besorolások száma,
+ami a kisebbségi osztály szempontjából
+kiemelten fontos javulást jelent.
+
+\subsection{Összegző értékelés}
+
+Az összehasonlító elemzés alapján megállapítható,
+hogy a TF--IDF\cite{tf-idf} alapú szöveges reprezentációt
+és a strukturált metaadatokat együttesen alkalmazó
+lineáris SVM\cite{svm} modell bizonyult a leghatékonyabb megoldásnak
+a multiplayer vs. singleplayer osztályozási feladatra.
+
+Ez a modell nemcsak magas összesített pontosságot ért el,
+hanem kiegyensúlyozott teljesítményt mutatott mindkét osztály esetében,
+miközben a döntési mechanizmusa
+értelmezhető és szakmailag indokolható maradt.
+Ez különösen fontos szempont
+elemzési és kutatási célú alkalmazásokban,
+valamint a későbbi továbbfejlesztések szempontjából is.
