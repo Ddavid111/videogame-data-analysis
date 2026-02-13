@@ -1,0 +1,558 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="hu" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hisztogramok és trendvizualizációk &mdash; Diplomamunka  dokumentáció</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.min.css?v=6e7d0de0" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/pointer.css?v=c97663ff" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=24d5f357"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=ea187aaa"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=f0ca4bb6"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Tárgymutató" href="../genindex.html" />
+    <link rel="search" title="Keresés" href="../search.html" />
+    <link rel="next" title="A merged tábla felosztása (splitting)" href="Split.html" />
+    <link rel="prev" title="Source Summary és Integritásvizsgálat" href="Summaries.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Diplomamunka
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tartalomjegyzék:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Bevezetés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_exploration.html">Adatvizsgálat és előkészítés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_preparation.html">A relációs séma normalizálás</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Merge.html">Adathalmazok összefésülése (merging)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Visualization.html">Elemzések a merged tábláról</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Venn_diagram.html">Venn-diagram – Források átfedésének vizsgálata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Summaries.html">Source Summary és Integritásvizsgálat</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Hisztogramok és trendvizualizációk</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#osszes-jatek-megjelenese-evente">Összes játék megjelenése évente</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jatekmegjelenesek-2010-elott">Játékmegjelenések 2010 előtt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jatekmegjelenesek-2010-utan">Játékmegjelenések 2010 után</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#forras-szerinti-bontas-a-b-c-kategoria">Forrás szerinti bontás (<strong>A, B, C kategória</strong>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#top-5-mufaj-idobeli-trendje">Top 5 műfaj időbeli trendje</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mufajok-kozotti-korrelaciok-20142024">Műfajok közötti korrelációk (2014–2024)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#eves-novekedesi-faktor-log-skala">Éves növekedési faktor (log-skála)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ev-nap-hoterkep">Év × nap hőtérkép</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ev-iso-het-het-napja-hoterkep">Év × (ISO hét × hét napja) hőtérkép</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#szezonalis-mintazatok-havi-heti-napi">Szezonális mintázatok – havi, heti, napi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#elorejelzes-log-linearis-trend-alapjan">2026 előrejelzés (log-lineáris trend alapján)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modellvalidacio-2024-visszateszt">Modellvalidáció – 2024 visszateszt</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Split.html">A merged tábla felosztása (splitting)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Game_stores.html">Konkurrens alkalmazásboltok és online játékkiadók</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Future_work.html">További fejlesztési és kutatási lehetőségek</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Diplomamunka</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Visualization.html">Elemzések a merged tábláról</a></li>
+      <li class="breadcrumb-item active">Hisztogramok és trendvizualizációk</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/chapters/Histograms.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="hisztogramok-es-trendvizualizaciok">
+<h1>Hisztogramok és trendvizualizációk<a class="headerlink" href="#hisztogramok-es-trendvizualizaciok" title="Link to this heading"></a></h1>
+<p>Ez a fejezet a videojáték-megjelenések időbeli dinamikáját mutatja be.
+Az ábrák a Steam teljes adatbázisából generált statisztikákra épülnek
+(1997–2025 májusáig).</p>
+<p>Az elemzésben megjelennek:</p>
+<ul class="simple">
+<li><p>éves megjelenésszámok (összesített, érák szerint)</p></li>
+<li><p>forráskategóriák szerinti bontások (<strong>A / B / C</strong>)</p></li>
+<li><p>műfaji trendek (Top 5)</p></li>
+<li><p>növekedési faktorok (log skálán)</p></li>
+<li><p>szezonális mintázatok (havi / heti / napi felbontásban)</p></li>
+<li><p>év × nap hőtérkép</p></li>
+<li><p>logaritmikus trendbecslés és 2026 előrejelzés</p></li>
+</ul>
+<p>Az ábrák minden esetben a következő könyvtárban találhatók:</p>
+<p><a class="reference external" href="https://github.com/Ddavid111/videogame-data-analysis/blob/main/merge/output">merge/output</a></p>
+<section id="osszes-jatek-megjelenese-evente">
+<h2>Összes játék megjelenése évente<a class="headerlink" href="#osszes-jatek-megjelenese-evente" title="Link to this heading"></a></h2>
+<a class="merge-diagram"
+               data-lightbox="group-5384f54a-b217-4f0b-a38f-cd146138e67b"
+               href="../_images/hist_all_years1.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/hist_all_years1.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="Összes játék megjelenése évente"/>
+                </a><p>Az ábra jól mutatja a 2014 utáni extrém gyors növekedést,
+melyet a Steam Direct modell és az indie fejlesztők tömeges megjelenése okozott.
+2024-ben érte el a csúcsot, 21 000 feletti megjelenésszámmal.</p>
+</section>
+<section id="jatekmegjelenesek-2010-elott">
+<h2>Játékmegjelenések 2010 előtt<a class="headerlink" href="#jatekmegjelenesek-2010-elott" title="Link to this heading"></a></h2>
+<a class="merge-diagram"
+               data-lightbox="group-65b4fbef-834b-4580-8b05-9d872256c359"
+               href="../_images/hist_pre20101.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/hist_pre20101.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="Megjelenések 2010 előtt"/>
+                </a><p>A 2010 előtti időszakban még nagyságrendekkel kevesebb cím érkezett:
+a kiadói modell dominált, indie fejlesztők alig voltak jelen.</p>
+</section>
+<section id="jatekmegjelenesek-2010-utan">
+<h2>Játékmegjelenések 2010 után<a class="headerlink" href="#jatekmegjelenesek-2010-utan" title="Link to this heading"></a></h2>
+<a class="merge-diagram"
+               data-lightbox="group-5d102630-aa3a-43fc-96c4-fa94acd335db"
+               href="../_images/hist_post20101.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/hist_post20101.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="Megjelenések 2010 után"/>
+                </a><p>A 2014-es váltás után ugrásszerű növekedés indult,
+és a 2020–2024 közötti években stabilan 10–20 ezer közötti cím érkezett évente.</p>
+</section>
+<section id="forras-szerinti-bontas-a-b-c-kategoria">
+<h2>Forrás szerinti bontás (<strong>A, B, C kategória</strong>)<a class="headerlink" href="#forras-szerinti-bontas-a-b-c-kategoria" title="Link to this heading"></a></h2>
+<p>A kategóriák:</p>
+<ul class="simple">
+<li><p><strong>A dataset</strong></p></li>
+<li><p><strong>B dataset</strong></p></li>
+<li><p><strong>C dataset</strong></p></li>
+</ul>
+<p>A három kategória külön grafikonon is megjelenik.</p>
+<p><strong>A kategória:</strong></p>
+<a class="merge-diagram"
+               data-lightbox="group-dac350c9-2b8e-49c2-af94-212229b532bb"
+               href="../_images/hist_sources_A1.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/hist_sources_A1.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="A kategória évenkénti megjelenései"/>
+                </a><p><strong>B kategória:</strong></p>
+<a class="merge-diagram"
+               data-lightbox="group-2b06ce0d-6e69-4ef4-9a34-78cc5ce20040"
+               href="../_images/hist_sources_B1.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/hist_sources_B1.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="B kategória évenkénti megjelenései"/>
+                </a><p><strong>C kategória:</strong></p>
+<a class="merge-diagram"
+               data-lightbox="group-dc41089c-38f1-47be-b7b8-e98dfd0039dc"
+               href="../_images/hist_sources_C1.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/hist_sources_C1.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="C kategória évenkénti megjelenései"/>
+                </a><p>A <strong>B</strong> és <strong>C</strong> kategória növekedése sokkal szignifikánsabb, mint az <strong>A</strong> kategóriáé.
+2025-ben már májusig 2300+ <strong>B</strong> kategóriás megjelenés történt.</p>
+</section>
+<section id="top-5-mufaj-idobeli-trendje">
+<h2>Top 5 műfaj időbeli trendje<a class="headerlink" href="#top-5-mufaj-idobeli-trendje" title="Link to this heading"></a></h2>
+<a class="merge-diagram"
+               data-lightbox="group-9d07abfd-8dfe-483e-b2c1-3b4d8f916736"
+               href="../_images/hist_genres_top51.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/hist_genres_top51.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="Top 5 műfaj trendje"/>
+                </a><p>A legnépszerűbb műfajok:</p>
+<ul class="simple">
+<li><p>Indie</p></li>
+<li><p>Casual</p></li>
+<li><p>Action</p></li>
+<li><p>Adventure</p></li>
+<li><p>Simulation</p></li>
+</ul>
+<p>Az Indie műfaj toronymagasan vezet, és a modern időszakban (2014 után)
+jó közelítéssel a teljes PC-s játékkínálat bővülésének indikátoraként
+értelmezhető.</p>
+<p>A műfajok idősorai között rendkívül erős együttmozgás figyelhető meg:
+a 2014–2024 közötti időszakban számított Pearson-korrelációs együtthatók
+minden műfajpár esetén 0,99 felettiek, míg a Spearman-féle rangkorrelációk
+szinte tökéletes monotón kapcsolatot jeleznek. Ez arra utal, hogy a
+különböző műfajok növekedése nem egymás rovására történik, hanem egy
+közös mögöttes piaci expanziót követ.</p>
+<p>A volumenek aránya hosszabb távon stabilnak mutatkozik: a Casual,
+Action és Adventure műfajok megjelenésszáma nagyságrendileg az Indie
+megjelenések 50–70%-a között alakul, míg a Simulation műfaj részesedése
+ennek körülbelül a fele. Ennek megfelelően a műfajok idősorai nem
+tekinthetők függetlennek, és a teljes kínálat növekedése jól közelíthető
+egy központi volumenindikátor (Indie) és közel konstans műfajarányok
+segítségével.</p>
+<section id="mufajok-kozotti-korrelaciok-20142024">
+<h3>Műfajok közötti korrelációk (2014–2024)<a class="headerlink" href="#mufajok-kozotti-korrelaciok-20142024" title="Link to this heading"></a></h3>
+<p>A Top 5 műfaj idősorai közötti együttmozgást kvantitatív módon is
+ellenőriztük. Az alábbi táblázatok a Pearson-féle lineáris korrelációt,
+illetve a Spearman-féle rangkorrelációt mutatják a teljes, 2014–2024
+közötti időszakra számítva.</p>
+<p>Pearson-korreláció:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Action</p></th>
+<th class="head"><p>Adventure</p></th>
+<th class="head"><p>Casual</p></th>
+<th class="head"><p>Indie</p></th>
+<th class="head"><p>Simulation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Action</p></td>
+<td><p>1.000</p></td>
+<td><p>0.997</p></td>
+<td><p>0.998</p></td>
+<td><p>0.997</p></td>
+<td><p>0.994</p></td>
+</tr>
+<tr class="row-odd"><td><p>Adventure</p></td>
+<td><p>0.997</p></td>
+<td><p>1.000</p></td>
+<td><p>0.998</p></td>
+<td><p>0.994</p></td>
+<td><p>0.996</p></td>
+</tr>
+<tr class="row-even"><td><p>Casual</p></td>
+<td><p>0.998</p></td>
+<td><p>0.998</p></td>
+<td><p>1.000</p></td>
+<td><p>0.997</p></td>
+<td><p>0.996</p></td>
+</tr>
+<tr class="row-odd"><td><p>Indie</p></td>
+<td><p>0.997</p></td>
+<td><p>0.994</p></td>
+<td><p>0.997</p></td>
+<td><p>1.000</p></td>
+<td><p>0.992</p></td>
+</tr>
+<tr class="row-even"><td><p>Simulation</p></td>
+<td><p>0.994</p></td>
+<td><p>0.996</p></td>
+<td><p>0.996</p></td>
+<td><p>0.992</p></td>
+<td><p>1.000</p></td>
+</tr>
+</tbody>
+</table>
+<p>Spearman-korreláció:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Action</p></th>
+<th class="head"><p>Adventure</p></th>
+<th class="head"><p>Casual</p></th>
+<th class="head"><p>Indie</p></th>
+<th class="head"><p>Simulation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Action</p></td>
+<td><p>1.000</p></td>
+<td><p>0.991</p></td>
+<td><p>1.000</p></td>
+<td><p>1.000</p></td>
+<td><p>1.000</p></td>
+</tr>
+<tr class="row-odd"><td><p>Adventure</p></td>
+<td><p>0.991</p></td>
+<td><p>1.000</p></td>
+<td><p>0.991</p></td>
+<td><p>0.991</p></td>
+<td><p>0.991</p></td>
+</tr>
+<tr class="row-even"><td><p>Casual</p></td>
+<td><p>1.000</p></td>
+<td><p>0.991</p></td>
+<td><p>1.000</p></td>
+<td><p>1.000</p></td>
+<td><p>1.000</p></td>
+</tr>
+<tr class="row-odd"><td><p>Indie</p></td>
+<td><p>1.000</p></td>
+<td><p>0.991</p></td>
+<td><p>1.000</p></td>
+<td><p>1.000</p></td>
+<td><p>1.000</p></td>
+</tr>
+<tr class="row-even"><td><p>Simulation</p></td>
+<td><p>1.000</p></td>
+<td><p>0.991</p></td>
+<td><p>1.000</p></td>
+<td><p>1.000</p></td>
+<td><p>1.000</p></td>
+</tr>
+</tbody>
+</table>
+<p>A kétféle korrelációs mérőszám egybehangzóan rendkívül erős
+együttmozgást jelez, ami alátámasztja, hogy a vizsgált műfajok
+idősorai nem tekinthetők egymástól függetlennek.</p>
+</section>
+</section>
+<section id="eves-novekedesi-faktor-log-skala">
+<h2>Éves növekedési faktor (log-skála)<a class="headerlink" href="#eves-novekedesi-faktor-log-skala" title="Link to this heading"></a></h2>
+<a class="merge-diagram"
+               data-lightbox="group-f4ea91d0-fb13-4322-bf77-d54e3d86cc19"
+               href="../_images/hist_growth_rates1.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/hist_growth_rates1.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="Éves növekedési faktor"/>
+                </a><p>A logaritmikus skála jól mutatja a kiugró éveket (2005, 2014),
+illetve a stagnáló vagy visszaeső periódusokat.</p>
+</section>
+<section id="ev-nap-hoterkep">
+<h2>Év × nap hőtérkép<a class="headerlink" href="#ev-nap-hoterkep" title="Link to this heading"></a></h2>
+<a class="merge-diagram"
+               data-lightbox="group-02f9ddc7-1bf4-4eeb-9f39-8d3c9a1f5fb2"
+               href="../_images/heatmap_year_day1.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/heatmap_year_day1.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="Év × Nap hőtérkép"/>
+                </a><p>A hőtérkép látványosan mutatja a publikálási intenzitás hosszú távú
+növekedését és a szezonalitás jelenlétét. A 2014 utáni időszakban a
+megjelenések sűrűsége folyamatosan emelkedik, 2023–2025 között pedig
+már szinte minden napra jut több tucat új játék.</p>
+<p>A mintázat alapján a publikálás nem egyenletes: bizonyos időszakokban
+és napokon koncentráltabb aktivitás figyelhető meg. Mivel azonban az
+év napjainak hétköznapra esése évről évre eltér, a hét napjaihoz
+kapcsolódó hatások ebben a nézetben részben elkenődnek.</p>
+</section>
+<section id="ev-iso-het-het-napja-hoterkep">
+<h2>Év × (ISO hét × hét napja) hőtérkép<a class="headerlink" href="#ev-iso-het-het-napja-hoterkep" title="Link to this heading"></a></h2>
+<a class="merge-diagram"
+               data-lightbox="group-e6155d68-c99a-4727-8373-374d271046ef"
+               href="../_images/heatmap_year_weekday_aligned1.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/heatmap_year_weekday_aligned1.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="Év × ISO hét × hét napja hőtérkép"/>
+                </a><p>A napokat ISO hét és hét napja szerint egymásra igazítva a publikálási
+mintázat letisztultabban értelmezhető. Ebben a nézetben a hét napjai
+szerint is kimutatható periodicitás jelenik meg, valamint a szezonális
+különbségek következetesebben rajzolódnak ki.</p>
+<p>A modern időszakban a megjelenések számának növekedése nem
+kampányszerű, hanem folyamatos, ami strukturális piaci bővülésre utal.</p>
+</section>
+<section id="szezonalis-mintazatok-havi-heti-napi">
+<h2>Szezonális mintázatok – havi, heti, napi<a class="headerlink" href="#szezonalis-mintazatok-havi-heti-napi" title="Link to this heading"></a></h2>
+<p>A játékmegjelenések időbeli szerkezetét több idősíkban vizsgáltuk,
+mivel az eltérő felbontások más-más jellegű mintázatokat emelnek ki.</p>
+<p><strong>Havi overlay:</strong></p>
+<a class="merge-diagram"
+               data-lightbox="group-d1576984-cdef-4250-97f2-8e4d016bd140"
+               href="../_images/seasonal_monthly_overlay1.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/seasonal_monthly_overlay1.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="Havi szezonális mintázatok"/>
+                </a><p>A havi bontás jól mutatja a hosszabb távú szezonalitást és az évről évre
+fokozódó volumen növekedést. A modern időszakban a megjelenések száma
+szinte minden hónapban emelkedő trendet követ, jelentősebb visszaesések nélkül.</p>
+<p><strong>Heti overlay:</strong></p>
+<a class="merge-diagram"
+               data-lightbox="group-1a427164-5e00-4d39-b8aa-dde60a9f49ab"
+               href="../_images/seasonal_weekly_overlay1.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/seasonal_weekly_overlay1.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="Heti szezonális mintázatok"/>
+                </a><p>A heti aggregálás csökkenti a napi fluktuációt, miközben megőrzi
+az éven belüli ciklikus mintázatokat. Az egyes évek görbéi erősen együtt mozognak,
+ami arra utal, hogy a publikálási dinamika időben stabil szerkezetet követ.</p>
+<p><strong>Napi (ISO-heti igazított) overlay:</strong></p>
+<a class="merge-diagram"
+               data-lightbox="group-5cb9d7d7-fd3a-4e8e-a4db-83a379d3976b"
+               href="../_images/seasonal_weekly_overlay_iso1.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/seasonal_weekly_overlay_iso1.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="Heti bontás – weekday-hatás csökkentése"/>
+                </a><p>A napi szintű adatok önmagukban rendkívül zajosak,
+elsősorban a hét napjának hatása miatt.
+Ezért a napi megjelenéseket ISO-heti bontásban aggregáltuk,
+amellyel a weekday-hatás jelentős része kiküszöbölhető.</p>
+<p>Az így kapott idősorok már jól összevethetők egymással:
+a csúcsok és visszaesések időben nagyrészt egybeesnek,
+ami erős együttmozgásra és ismétlődő publikálási mintázatokra utal.
+A 2020 utáni időszakban szinte minden héten tartósan magas
+megjelenésszám figyelhető meg.</p>
+</section>
+<section id="elorejelzes-log-linearis-trend-alapjan">
+<h2>2026 előrejelzés (log-lineáris trend alapján)<a class="headerlink" href="#elorejelzes-log-linearis-trend-alapjan" title="Link to this heading"></a></h2>
+<a class="merge-diagram"
+               data-lightbox="group-d606ac7a-4689-4747-a950-f9b981a56e57"
+               href="../_images/forecast_2026_log_modern1.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/forecast_2026_log_modern1.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="2026 előrejelzés log-lineáris trenddel"/>
+                </a><p>A modern évek (2014–2024) adataira illesztett log-lineáris
+(exponenciális) trend alapján a 2026-os évre
+<strong>~35 789 új játékmegjelenés</strong> adódik.</p>
+<p>A modell 2024-re visszatesztelve kb. <strong>10%-os túlbecslést</strong>
+mutatott, ezért a 2026-os érték <strong>optimista forgatókönyvként</strong>
+értelmezendő, és inkább felső becslésnek tekinthető.
+A növekedés üteme a piac telítődése vagy platformszabályozás
+miatt a következő években mérséklődhet.</p>
+</section>
+<section id="modellvalidacio-2024-visszateszt">
+<h2>Modellvalidáció – 2024 visszateszt<a class="headerlink" href="#modellvalidacio-2024-visszateszt" title="Link to this heading"></a></h2>
+<a class="merge-diagram"
+               data-lightbox="group-14a0ed32-7171-4455-a8a0-244371783ae9"
+               href="../_images/forecast_2024_log_modern1.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/forecast_2024_log_modern1.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="2024 előrejelzés visszateszt"/>
+                </a><p>A modell teljesítményének ellenőrzésére a 2014–2023 közötti
+adatokon tanított log-lineáris trenddel előrejeleztük a 2024-es
+évet. A becslés <strong>23 717</strong> megjelenést adott, míg a tényleges
+érték <strong>21 454</strong> volt, ami kb. <strong>10%-os eltérést</strong> jelent.</p>
+<p>Ez az eredmény arra utal, hogy a modell a közelmúltban enyhén
+optimista, ugyanakkor a növekedési trend irányát és nagyságrendjét
+helyesen ragadja meg, így extrapolációs alapként használható.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Summaries.html" class="btn btn-neutral float-left" title="Source Summary és Integritásvizsgálat" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Split.html" class="btn btn-neutral float-right" title="A merged tábla felosztása (splitting)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Dávid Drig.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

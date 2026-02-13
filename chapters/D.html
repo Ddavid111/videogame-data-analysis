@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="hu" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>„D” Egységes relációs séma normalizálás &mdash; Diplomamunka  dokumentáció</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.min.css?v=6e7d0de0" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/pointer.css?v=c97663ff" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=24d5f357"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=ea187aaa"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=f0ca4bb6"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Tárgymutató" href="../genindex.html" />
+    <link rel="search" title="Keresés" href="../search.html" />
+    <link rel="next" title="SQL séma – D adatmodell" href="SQL.html" />
+    <link rel="prev" title="„C” relációs séma normalizálás" href="C.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Diplomamunka
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tartalomjegyzék:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Bevezetés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_exploration.html">Adatvizsgálat és előkészítés</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Data_preparation.html">A relációs séma normalizálás</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="A.html">„A” relációs séma normalizálása</a></li>
+<li class="toctree-l2"><a class="reference internal" href="B.html">„B” relációs séma normalizálás</a></li>
+<li class="toctree-l2"><a class="reference internal" href="C.html">„C” relációs séma normalizálás</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">„D” Egységes relációs séma normalizálás</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bevezetes">Bevezetés</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#normalizalas-lepesei">Normalizálás lépései</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#elso-normalforma-1nf">Első normálforma (1NF)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#masodik-normalforma-2nf">Második normálforma (2NF)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#harmadik-normalforma-3nf">Harmadik normálforma (3NF)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#vegso-sema-d-relacio">Végső séma – „D” reláció</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#osszefoglalas">Összefoglalás</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#relacios-sema-diagram">Relációs séma diagram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dictionary">Dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="SQL.html">SQL séma – D adatmodell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Queries.html">Kisebb vizsgálható lekérdezések</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Merge.html">Adathalmazok összefésülése (merging)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html">Elemzések a merged tábláról</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Split.html">A merged tábla felosztása (splitting)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Game_stores.html">Konkurrens alkalmazásboltok és online játékkiadók</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Future_work.html">További fejlesztési és kutatási lehetőségek</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Diplomamunka</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Data_preparation.html">A relációs séma normalizálás</a></li>
+      <li class="breadcrumb-item active">„D” Egységes relációs séma normalizálás</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/chapters/D.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="d-egyseges-relacios-sema-normalizalas">
+<h1>„D” Egységes relációs séma normalizálás<a class="headerlink" href="#d-egyseges-relacios-sema-normalizalas" title="Link to this heading"></a></h1>
+<section id="bevezetes">
+<h2>Bevezetés<a class="headerlink" href="#bevezetes" title="Link to this heading"></a></h2>
+<p>A „D” séma a korábbi három (A, B, C) sémák összevonásával és egységesítésével jött létre.
+Kiindulási alapként több, különböző forrásból származó CSV-fájl szolgált, amelyek részben eltérő szerkezetűek voltak, illetve eltérő mezőket tartalmaztak.</p>
+<p>A 2024-es és 2025-ös adatfájlok közötti fő különbség, hogy a 2025-ös verzió tartalmazta a
+<code class="docutils literal notranslate"><span class="pre">discount</span></code> mezőt, míg a 2024-es verzió nem.
+A különböző forrásokból érkező táblák összehangolásával egy egységes, teljes és normalizált adatmodell jött létre.</p>
+</section>
+<section id="normalizalas-lepesei">
+<h2>Normalizálás lépései<a class="headerlink" href="#normalizalas-lepesei" title="Link to this heading"></a></h2>
+<section id="elso-normalforma-1nf">
+<h3>Első normálforma (1NF)<a class="headerlink" href="#elso-normalforma-1nf" title="Link to this heading"></a></h3>
+<ul>
+<li><p>Az eredeti CSV-fájlok több attribútuma nem atomi értékeket tartalmazott
+(pl. <code class="docutils literal notranslate"><span class="pre">tags</span></code>, <code class="docutils literal notranslate"><span class="pre">genres</span></code>, <code class="docutils literal notranslate"><span class="pre">categories</span></code>, <code class="docutils literal notranslate"><span class="pre">supported_languages</span></code>, <code class="docutils literal notranslate"><span class="pre">full_audio_languages</span></code>, <code class="docutils literal notranslate"><span class="pre">packages</span></code>, <code class="docutils literal notranslate"><span class="pre">requirements</span></code> JSON formában).</p></li>
+<li><p>Az 1NF megköveteli, hogy minden attribútum csak atomi értéket vehessen fel.</p></li>
+<li><p>Az ilyen mezők önálló táblákba kerültek, a kapcsolatok pedig asszociatív táblákban vannak tárolva.</p>
+<p>Példák:
+* <code class="docutils literal notranslate"><span class="pre">game_subtitles</span></code> + <code class="docutils literal notranslate"><span class="pre">languages</span></code> (felirat nyelvek)
+* <code class="docutils literal notranslate"><span class="pre">game_audio_language</span></code> + <code class="docutils literal notranslate"><span class="pre">languages</span></code> (hang nyelvek)
+* <code class="docutils literal notranslate"><span class="pre">requirements</span></code> – rendszerkövetelmények OS és típus (minimum/ajánlott) szerinti bontásban
+* <code class="docutils literal notranslate"><span class="pre">game_tag</span></code> + <code class="docutils literal notranslate"><span class="pre">tags</span></code> (címkék súlyozással)
+* <code class="docutils literal notranslate"><span class="pre">game_genre</span></code> + <code class="docutils literal notranslate"><span class="pre">genres</span></code>
+* <code class="docutils literal notranslate"><span class="pre">game_category</span></code> + <code class="docutils literal notranslate"><span class="pre">categories</span></code>
+* <code class="docutils literal notranslate"><span class="pre">game_platform</span></code> + <code class="docutils literal notranslate"><span class="pre">platforms</span></code>
+* <code class="docutils literal notranslate"><span class="pre">game_package</span></code> + <code class="docutils literal notranslate"><span class="pre">packages</span></code> + <code class="docutils literal notranslate"><span class="pre">sub_package</span></code> (többszintű csomagszerkezet)</p>
+</li>
+</ul>
+</section>
+<section id="masodik-normalforma-2nf">
+<h3>Második normálforma (2NF)<a class="headerlink" href="#masodik-normalforma-2nf" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">game</span></code> tábla elsődleges kulcsa az <code class="docutils literal notranslate"><span class="pre">appid</span></code>.</p></li>
+<li><p>A nem a játék alapadatait leíró, de az <code class="docutils literal notranslate"><span class="pre">appid</span></code>-tól függő adatok külön táblákba kerültek:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">description</span></code> – részletes, rövid és általános leírások</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">support</span></code> – támogatási információk (URL, email)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">media</span></code> – fejléckép és háttér</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">screenshots</span></code> – játékhoz tartozó képernyőképek</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">movies</span></code> – videók</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">requirements</span></code> – operációs rendszer és követelménytípus szerinti bontás</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">owners</span></code> – tulajdonosi tartomány szöveges formában</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">languages</span></code> – nyelvek (önálló entitás, amelyet a két asszociatív tábla kapcsol a játékokhoz)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">packages</span></code> – csomagok alapadatai (<code class="docutils literal notranslate"><span class="pre">packid</span></code>, <code class="docutils literal notranslate"><span class="pre">title</span></code>, <code class="docutils literal notranslate"><span class="pre">description</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sub_package</span></code> – csomag al-elemei (<code class="docutils literal notranslate"><span class="pre">packid</span></code>, <code class="docutils literal notranslate"><span class="pre">sub_text</span></code>, <code class="docutils literal notranslate"><span class="pre">price</span></code>)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="harmadik-normalforma-3nf">
+<h3>Harmadik normálforma (3NF)<a class="headerlink" href="#harmadik-normalforma-3nf" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>A tranzitív függőségek megszüntetésére az ismétlődő szöveges mezők önálló entitásokba kerültek.</p></li>
+<li><p>A sok-sok kapcsolatokat asszociatív táblák kezelik:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_subtitles</span> <span class="pre">(appid,</span> <span class="pre">languageid)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_audio_language</span> <span class="pre">(appid,</span> <span class="pre">languageid)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_tag</span> <span class="pre">(appid,</span> <span class="pre">tagid,</span> <span class="pre">weight)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_genre</span> <span class="pre">(appid,</span> <span class="pre">genreid)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_category</span> <span class="pre">(appid,</span> <span class="pre">catid)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_platform</span> <span class="pre">(appid,</span> <span class="pre">platid)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_developer</span> <span class="pre">(appid,</span> <span class="pre">devid)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_publisher</span> <span class="pre">(appid,</span> <span class="pre">pubid)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_package</span> <span class="pre">(appid,</span> <span class="pre">packid)</span></code></p></li>
+</ul>
+</li>
+<li><p>A csomagstruktúra három szinten valósul meg:
+* <code class="docutils literal notranslate"><span class="pre">game_package</span></code> – a játék és csomag kapcsolata (<code class="docutils literal notranslate"><span class="pre">appid</span></code>, <code class="docutils literal notranslate"><span class="pre">packid</span></code>)
+* <code class="docutils literal notranslate"><span class="pre">packages</span></code> – csomag alapadatai (<code class="docutils literal notranslate"><span class="pre">packid</span></code>, <code class="docutils literal notranslate"><span class="pre">title</span></code>, <code class="docutils literal notranslate"><span class="pre">description</span></code>)
+* <code class="docutils literal notranslate"><span class="pre">sub_package</span></code> – a csomag részletei és ára (<code class="docutils literal notranslate"><span class="pre">packid</span></code>, <code class="docutils literal notranslate"><span class="pre">sub_text</span></code>, <code class="docutils literal notranslate"><span class="pre">price</span></code>)</p></li>
+<li><p>Ez biztosítja az adatok konzisztenciáját, minimalizálja a redundanciát
+és lehetővé teszi az egyszerű bővíthetőséget.</p></li>
+</ul>
+</section>
+</section>
+<section id="vegso-sema-d-relacio">
+<h2>Végső séma – „D” reláció<a class="headerlink" href="#vegso-sema-d-relacio" title="Link to this heading"></a></h2>
+<p>A normalizálás eredményeként a <strong>„D” séma</strong> a következő fő relációkból áll:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">game</span></code> – játék alapadatai (név, megjelenési dátum, ár, értékelések, játszási idők, metacritic, tulajdonosok, statisztikák, és a 2025-ös verziókban a <code class="docutils literal notranslate"><span class="pre">discount</span></code> mező)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">media</span></code> – médiatartalmak</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">screenshots</span></code> – képernyőképek</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">movies</span></code> – játékhoz tartozó videók</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">support</span></code> – támogatási információk</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">requirements</span></code> – rendszerkövetelmények</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">description</span></code> – leírások</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tags</span></code> – címkék (súlyozással)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">genres</span></code> – műfajok</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">platforms</span></code> – platformok</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">categories</span></code> – kategóriák</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">publishers</span></code> – kiadók</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">developers</span></code> – fejlesztők</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">languages</span></code> – nyelvek (önálló lista, minden nyelv egyedi sorban)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">packages</span></code> – csomagok alapadatai</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sub_package</span></code> – csomag al-elemei (leírás és ár)</p></li>
+</ul>
+<p>Kapcsolótáblák:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">game_tag</span></code> – játék–címke kapcsolat</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_genre</span></code> – játék–műfaj kapcsolat</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_platform</span></code> – játék–platform kapcsolat</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_category</span></code> – játék–kategória kapcsolat</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_publisher</span></code> – játék–kiadó kapcsolat</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_developer</span></code> – játék–fejlesztő kapcsolat</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_audio_language</span></code> – játék–hangnyelv kapcsolat</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_subtitles</span></code> – játék–felirat kapcsolat</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_package</span></code> – játék–csomag kapcsolat</p></li>
+</ul>
+</section>
+<section id="osszefoglalas">
+<h2>Összefoglalás<a class="headerlink" href="#osszefoglalas" title="Link to this heading"></a></h2>
+<p>A <strong>D relációs séma</strong> az előző A, B és C sémák összevonásából született meg.
+Fő előnyei:</p>
+<ul class="simple">
+<li><p>Egységesítette a különböző CSV-forrásokból származó adatokat</p></li>
+<li><p>Biztosítja az 1NF, 2NF és 3NF követelményeit</p></li>
+<li><p>Megszüntette a redundáns és nem atomi mezőket</p></li>
+<li><p>Külön kezeli a feliratokat (<code class="docutils literal notranslate"><span class="pre">game_subtitles</span></code>) és a hangnyelveket (<code class="docutils literal notranslate"><span class="pre">game_audio_language</span></code>)</p></li>
+<li><p>A csomagokat háromszintű struktúrában kezeli (<code class="docutils literal notranslate"><span class="pre">game_package</span></code> → <code class="docutils literal notranslate"><span class="pre">packages</span></code> → <code class="docutils literal notranslate"><span class="pre">sub_package</span></code>)</p></li>
+<li><p>Kezeli a sok-sok kapcsolatokat asszociatív táblákon keresztül</p></li>
+<li><p>Tartalmaz minden fontos információt a játékokról, bővíthető módon</p></li>
+<li><p>Megkülönbözteti a források közti eltéréseket (pl. <code class="docutils literal notranslate"><span class="pre">discount</span></code> csak a 2025-ös adatokban szerepelt)</p></li>
+<li><p>Az adatok konzisztens, redundanciamentes és bővíthető adatmodellbe szerveződnek</p></li>
+</ul>
+</section>
+<section id="relacios-sema-diagram">
+<h2>Relációs séma diagram<a class="headerlink" href="#relacios-sema-diagram" title="Link to this heading"></a></h2>
+<a class="image-group"
+               data-lightbox="group-11443fbe-edc6-4193-9a4f-7c1ae28ee34f"
+               href="../_images/D1.svg"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/D1.svg"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="D relációs séma diagram"/>
+                </a></section>
+<section id="dictionary">
+<h2>Dictionary<a class="headerlink" href="#dictionary" title="Link to this heading"></a></h2>
+<p>Az <strong>„D” adathalmaz dictionary-je</strong> az alábbi linken érhető el:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/Ddavid111/videogame-data-analysis/blob/main/doc/Dictionaries/D_schema_data_dictionary.xlsx">D dataset dictionary</a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="C.html" class="btn btn-neutral float-left" title="„C” relációs séma normalizálás" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="SQL.html" class="btn btn-neutral float-right" title="SQL séma – D adatmodell" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Dávid Drig.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

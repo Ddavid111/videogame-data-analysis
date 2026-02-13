@@ -1,0 +1,205 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="hu" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kisebb vizsgálható lekérdezések &mdash; Diplomamunka  dokumentáció</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.min.css?v=6e7d0de0" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/pointer.css?v=c97663ff" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=24d5f357"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=ea187aaa"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=f0ca4bb6"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Tárgymutató" href="../genindex.html" />
+    <link rel="search" title="Keresés" href="../search.html" />
+    <link rel="next" title="Adathalmazok összefésülése (merging)" href="Merge.html" />
+    <link rel="prev" title="SQL séma – D adatmodell" href="SQL.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Diplomamunka
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tartalomjegyzék:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Bevezetés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_exploration.html">Adatvizsgálat és előkészítés</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Data_preparation.html">A relációs séma normalizálás</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="A.html">„A” relációs séma normalizálása</a></li>
+<li class="toctree-l2"><a class="reference internal" href="B.html">„B” relációs séma normalizálás</a></li>
+<li class="toctree-l2"><a class="reference internal" href="C.html">„C” relációs séma normalizálás</a></li>
+<li class="toctree-l2"><a class="reference internal" href="D.html">„D” Egységes relációs séma normalizálás</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SQL.html">SQL séma – D adatmodell</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Kisebb vizsgálható lekérdezések</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#alap-statisztikai-lekerdezesek">Alap statisztikai lekérdezések</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kapcsolatok-es-metaadatok-vizsgalata">Kapcsolatok és metaadatok vizsgálata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#platformok-es-elerhetoseg">Platformok és elérhetőség</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fejlesztok-es-kiadok">Fejlesztők és kiadók</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ertekelesek-es-velemenyek">Értékelések és vélemények</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rendszerkovetelmenyek-es-technikai-adatok">Rendszerkövetelmények és technikai adatok</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#egyeb-vizsgalati-otletek">Egyéb vizsgálati ötletek</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Merge.html">Adathalmazok összefésülése (merging)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html">Elemzések a merged tábláról</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Split.html">A merged tábla felosztása (splitting)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Game_stores.html">Konkurrens alkalmazásboltok és online játékkiadók</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Future_work.html">További fejlesztési és kutatási lehetőségek</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Diplomamunka</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Data_preparation.html">A relációs séma normalizálás</a></li>
+      <li class="breadcrumb-item active">Kisebb vizsgálható lekérdezések</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/chapters/Queries.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="kisebb-vizsgalhato-lekerdezesek">
+<h1>Kisebb vizsgálható lekérdezések<a class="headerlink" href="#kisebb-vizsgalhato-lekerdezesek" title="Link to this heading"></a></h1>
+<p>A D adatmodellhez kapcsolódóan az alábbi lekérdezési ötleteket gyűjtöttem össze.</p>
+<section id="alap-statisztikai-lekerdezesek">
+<h2>Alap statisztikai lekérdezések<a class="headerlink" href="#alap-statisztikai-lekerdezesek" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Játékok számának meghatározása</p></li>
+<li><p>Átlagos ár kiszámítása</p></li>
+<li><p>Legdrágább játékok listázása</p></li>
+<li><p>Legkorábban megjelent játékok</p></li>
+<li><p>Kiadási évek szerinti játékmegoszlás</p></li>
+</ul>
+</section>
+<section id="kapcsolatok-es-metaadatok-vizsgalata">
+<h2>Kapcsolatok és metaadatok vizsgálata<a class="headerlink" href="#kapcsolatok-es-metaadatok-vizsgalata" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Hány címke tartozik átlagosan egy játékhoz</p></li>
+<li><p>Leggyakrabban előforduló címkék</p></li>
+<li><p>Kategóriák eloszlása</p></li>
+<li><p>Műfajok szerinti játékmegoszlás</p></li>
+<li><p>Egy játékhoz hány kategória, címke és platform tartozik</p></li>
+</ul>
+</section>
+<section id="platformok-es-elerhetoseg">
+<h2>Platformok és elérhetőség<a class="headerlink" href="#platformok-es-elerhetoseg" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Platformonkénti játékmegoszlás (Windows, macOS, Linux stb.)</p></li>
+<li><p>Több platformon is elérhető játékok azonosítása</p></li>
+<li><p>Platformonkénti átlagár vagy játszási idő összevetése</p></li>
+</ul>
+</section>
+<section id="fejlesztok-es-kiadok">
+<h2>Fejlesztők és kiadók<a class="headerlink" href="#fejlesztok-es-kiadok" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Legaktívabb fejlesztők (legtöbb játék)</p></li>
+<li><p>Legaktívabb kiadók</p></li>
+<li><p>Fejlesztő–kiadó együttműködések száma</p></li>
+<li><p>Átlagos értékelések fejlesztőnként vagy kiadónként</p></li>
+</ul>
+</section>
+<section id="ertekelesek-es-velemenyek">
+<h2>Értékelések és vélemények<a class="headerlink" href="#ertekelesek-es-velemenyek" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Legpozitívabb játékok (pozitív értékelések aránya alapján)</p></li>
+<li><p>Legtöbb értékeléssel rendelkező játékok</p></li>
+<li><p>Átlagos értékelési arányok különböző műfajokban</p></li>
+<li><p>Játszási idő és értékelések közötti összefüggések</p></li>
+</ul>
+</section>
+<section id="rendszerkovetelmenyek-es-technikai-adatok">
+<h2>Rendszerkövetelmények és technikai adatok<a class="headerlink" href="#rendszerkovetelmenyek-es-technikai-adatok" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Hány játéknak van megadott rendszerkövetelménye</p></li>
+<li><p>Operációs rendszerek szerinti eloszlás (Windows, macOS, Linux)</p></li>
+<li><p>Minimum és ajánlott konfigurációk előfordulásának vizsgálata</p></li>
+<li><p>Átlagos követelmény leírás hossza</p></li>
+</ul>
+</section>
+<section id="egyeb-vizsgalati-otletek">
+<h2>Egyéb vizsgálati ötletek<a class="headerlink" href="#egyeb-vizsgalati-otletek" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Ár és értékelések korrelációja</p></li>
+<li><p>Ár és játszási idő kapcsolata</p></li>
+<li><p>Nyelvek száma játékok szerint</p></li>
+<li><p>Legtöbb nyelvet támogató játékok</p></li>
+<li><p>Árkedvezményt tartalmazó (discount) játékok aránya</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="SQL.html" class="btn btn-neutral float-left" title="SQL séma – D adatmodell" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Merge.html" class="btn btn-neutral float-right" title="Adathalmazok összefésülése (merging)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Dávid Drig.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

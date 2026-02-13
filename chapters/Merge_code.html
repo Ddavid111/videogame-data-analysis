@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="hu" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merge Code &mdash; Diplomamunka  dokumentáció</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.min.css?v=6e7d0de0" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/pointer.css?v=c97663ff" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=24d5f357"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=ea187aaa"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=f0ca4bb6"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Tárgymutató" href="../genindex.html" />
+    <link rel="search" title="Keresés" href="../search.html" />
+    <link rel="next" title="Elemzések a merged tábláról" href="Visualization.html" />
+    <link rel="prev" title="Merge Process" href="Merge_process.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Diplomamunka
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tartalomjegyzék:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Bevezetés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_exploration.html">Adatvizsgálat és előkészítés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_preparation.html">A relációs séma normalizálás</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Merge.html">Adathalmazok összefésülése (merging)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Merge_process.html">Merge Process</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Merge Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a-merge-kod-felepitese">A merge-kód felépítése</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kiemelt-kodreszletek">Kiemelt kódrészletek</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hianyzo-adatok-kitoltese-forrasprioritassal">1. Hiányzó adatok kitöltése forrásprioritással</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tobb-forrasbol-szarmazo-listak-osszevonasa">2. Több forrásból származó listák összevonása</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kepernyokepek-tobb-forrasbol-index-alapu-kombinalas">3. Képernyőképek több forrásból – index-alapú kombinálás</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nyelvi-mezok-tisztitasa-tobb-lepesben">4. Nyelvi mezők tisztítása több lépésben</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#b-forras-betoltese-es-elofeldolgozasa">5. B Forrás betöltése és előfeldolgozása</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#logolas-a-merge-folyamat-soran">Logolás a merge folyamat során</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html">Elemzések a merged tábláról</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Split.html">A merged tábla felosztása (splitting)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Game_stores.html">Konkurrens alkalmazásboltok és online játékkiadók</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Future_work.html">További fejlesztési és kutatási lehetőségek</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Diplomamunka</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Merge.html">Adathalmazok összefésülése (merging)</a></li>
+      <li class="breadcrumb-item active">Merge Code</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/chapters/Merge_code.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="merge-code">
+<h1>Merge Code<a class="headerlink" href="#merge-code" title="Link to this heading"></a></h1>
+<section id="a-merge-kod-felepitese">
+<h2>A merge-kód felépítése<a class="headerlink" href="#a-merge-kod-felepitese" title="Link to this heading"></a></h2>
+<p>Az alábbi jegyzékek vesznek részt az adathalmazok összefésülésében:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/Ddavid111/videogame-data-analysis/tree/main/merge/sources">merge/sources/</a>
+– Az A, B és C forrásadatok beolvasásáért és előtisztításáért felelős modulok.</p></li>
+<li><p><a class="reference external" href="https://github.com/Ddavid111/videogame-data-analysis/tree/main/merge/utils">merge/utils/</a>
+– Általános segédfüggvények az I/O műveletekhez, tisztításhoz, normalizáláshoz és a merge-lépések támogatásához.</p></li>
+<li><p><a class="reference external" href="https://github.com/Ddavid111/videogame-data-analysis/tree/main/merge/visualization">merge/visualization/</a>
+– A mergelt adathalmazra épülő hisztogramok, Venn-diagram és összefoglaló ábrák generálása.</p></li>
+<li><p><a class="reference external" href="https://github.com/Ddavid111/videogame-data-analysis/tree/main/merge/output">merge/output/</a>
+– A futtatás során keletkező kimeneti ábrák (PNG fájlok) gyűjtőmappája.</p></li>
+</ul>
+<p>A merge folyamatot a
+<a class="reference external" href="https://github.com/Ddavid111/videogame-data-analysis/blob/main/merge/main.ipynb">merge/main.ipynb</a>
+notebook vezérli,
+a közös beállításokat pedig a
+<a class="reference external" href="https://github.com/Ddavid111/videogame-data-analysis/blob/main/merge/config.py">merge/config.py</a>
+tartalmazza.</p>
+</section>
+<section id="kiemelt-kodreszletek">
+<h2>Kiemelt kódrészletek<a class="headerlink" href="#kiemelt-kodreszletek" title="Link to this heading"></a></h2>
+<p>A teljes kódbázis részletes ismertetése nem szükséges, ezért itt csak
+néhány érdekesebb és nem triviális megoldást emelek ki. A forráskód
+minden modulja és függvénye részletes docstringgel van ellátva, amelyek
+leírják a funkciók célját és működését.</p>
+<p>Az alábbi példák közvetlenül a <code class="docutils literal notranslate"><span class="pre">merge/utils</span></code> és <code class="docutils literal notranslate"><span class="pre">merge/sources</span></code> modulokból
+származnak, és jól bemutatják a merging folyamat összetettebb elemeit.</p>
+<section id="hianyzo-adatok-kitoltese-forrasprioritassal">
+<h3>1. Hiányzó adatok kitöltése forrásprioritással<a class="headerlink" href="#hianyzo-adatok-kitoltese-forrasprioritassal" title="Link to this heading"></a></h3>
+<p>A <code class="docutils literal notranslate"><span class="pre">fill_missing_from_source</span></code> függvény a merge egyik kulcseleme:
+feladata, hogy a cél-DataFrame (<code class="docutils literal notranslate"><span class="pre">d</span></code>) hiányzó mezőit feltöltse egy
+másik forrás (<code class="docutils literal notranslate"><span class="pre">src</span></code>) értékeivel. A kitöltés az <code class="docutils literal notranslate"><span class="pre">appid</span></code> alapján történik,
+és csak azokat az oszlopokat másolja át, amelyek a két DataFrame-ben
+közösek.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fill_missing_from_source</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+                             <span class="n">src</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">src</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">src</span><span class="p">[</span><span class="s2">&quot;appid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">src</span><span class="p">[</span><span class="s2">&quot;appid&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+    <span class="n">common_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">src</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+        <span class="n">src</span><span class="p">[</span><span class="n">common_cols</span><span class="p">],</span>
+        <span class="n">on</span><span class="o">=</span><span class="s2">&quot;appid&quot;</span><span class="p">,</span>
+        <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
+        <span class="n">suffixes</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;_src&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">common_cols</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="s2">&quot;appid&quot;</span><span class="p">:</span>
+            <span class="n">merged</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">combine_first</span><span class="p">(</span><span class="n">merged</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">_src&quot;</span><span class="p">])</span>
+            <span class="n">merged</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">_src&quot;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">merged</span>
+</pre></div>
+</div>
+<p>Ez a megoldás biztosítja, hogy a források (C → B → A sorrendben)
+hiányzó mezői fokozatosan és ütközésmentesen kerüljenek kitöltésre
+a végső D adatmodellben.</p>
+</section>
+<section id="tobb-forrasbol-szarmazo-listak-osszevonasa">
+<h3>2. Több forrásból származó listák összevonása<a class="headerlink" href="#tobb-forrasbol-szarmazo-listak-osszevonasa" title="Link to this heading"></a></h3>
+<p>A <code class="docutils literal notranslate"><span class="pre">dedup_join</span></code> függvény egyike a merge során használt legfontosabb
+segédfüggvényeknek: több listás oszlopot képes duplikátummentesen
+összefűzni.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">dedup_join</span><span class="p">(</span><span class="o">*</span><span class="n">lists</span><span class="p">):</span>
+    <span class="n">combined</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">lst</span> <span class="ow">in</span> <span class="n">lists</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">combined</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">combined</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Ezt a függvényt például címkék, műfajok, kategóriák, platformok
+összefésülésére használtam.</p>
+</section>
+<section id="kepernyokepek-tobb-forrasbol-index-alapu-kombinalas">
+<h3>3. Képernyőképek több forrásból – index-alapú kombinálás<a class="headerlink" href="#kepernyokepek-tobb-forrasbol-index-alapu-kombinalas" title="Link to this heading"></a></h3>
+<p>A <code class="docutils literal notranslate"><span class="pre">process_screenshots</span></code> segédfüggvény mindhárom forrásból (A, B, C)
+összegyűjti az elérhető képernyőképeket, majd összeállítja a
+közös „full” és „thumbnail” oszlopokat.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">process_screenshots</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">a_thumb</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;appid&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">screenshots_thumbs</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+    <span class="n">b_thumb</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;appid&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">screenshots_thumbs</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+    <span class="n">c_thumb</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;appid&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">screenshots_thumbs</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">a_thumb</span><span class="p">,</span> <span class="n">b_thumb</span><span class="p">,</span> <span class="n">c_thumb</span>
+</pre></div>
+</div>
+<p>A merge során a thumbnail-ek összefésülése így történik:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;screenshots_thumb&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;appid&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">c_thumb</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[])</span> <span class="o">+</span> <span class="n">b_thumb</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[])</span> <span class="o">+</span> <span class="n">a_thumb</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[])</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Ez tökéletesen mutatja, hogyan kerül érvényesítésre a C → B → A prioritás.</p>
+</section>
+<section id="nyelvi-mezok-tisztitasa-tobb-lepesben">
+<h3>4. Nyelvi mezők tisztítása több lépésben<a class="headerlink" href="#nyelvi-mezok-tisztitasa-tobb-lepesben" title="Link to this heading"></a></h3>
+<p>Az A, B és C forrásokban szereplő nyelvi mezők (<code class="docutils literal notranslate"><span class="pre">supported_languages</span></code> és
+<code class="docutils literal notranslate"><span class="pre">full_audio_languages</span></code>) rendkívül eltérő formában jelennek meg.
+Előfordulnak:</p>
+<ul class="simple">
+<li><p>HTML tagek (<code class="docutils literal notranslate"><span class="pre">&lt;br&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;strong&gt;</span></code> stb.),</p></li>
+<li><p>BBCode maradványok (<code class="docutils literal notranslate"><span class="pre">[img]</span></code>, <code class="docutils literal notranslate"><span class="pre">[b]</span></code> stb.),</p></li>
+<li><p>Steam-specifikus kódok (<code class="docutils literal notranslate"><span class="pre">#lang_xx</span></code>),</p></li>
+<li><p>egyszerű szöveges felsorolások (vesszővel, pontosvesszővel, perjellel tagolva),</p></li>
+<li><p>beágyazott JSON-listák,</p></li>
+<li><p>teljesen vegyes, zajos, duplikált formák.</p></li>
+</ul>
+<p>A normalizálási folyamat ezért két külön függvényre épülő tisztítási pipeline-t
+alkalmaz: <code class="docutils literal notranslate"><span class="pre">clean_language_field_merged</span></code> → <code class="docutils literal notranslate"><span class="pre">final_clean_language_list</span></code>.</p>
+<section id="elso-lepes-nyers-mezok-egysegesitese">
+<h4>Első lépés: nyers mezők egységesítése<a class="headerlink" href="#elso-lepes-nyers-mezok-egysegesitese" title="Link to this heading"></a></h4>
+<p>A <code class="docutils literal notranslate"><span class="pre">clean_language_field_merged</span></code> a nyers bemenetet egy rendezett és
+duplikátummentes listává alakítja. A funkció:</p>
+<ul class="simple">
+<li><p>kezeli, ha a mező lista, string vagy JSON-szerű struktúra,</p></li>
+<li><p>eltávolítja a HTML- és BBCode-elemeket (<code class="docutils literal notranslate"><span class="pre">&lt;br&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">[img]</span></code> stb.),</p></li>
+<li><p>kifejti a több nyelvet tartalmazó sorokat (vessző, pontosvessző, <code class="docutils literal notranslate"><span class="pre">/</span></code> alapján),</p></li>
+<li><p>eltávolítja a technikai maradványokat (pl. <code class="docutils literal notranslate"><span class="pre">#lang_en</span></code>),</p></li>
+<li><p>kiszűri a teljesen üres vagy zajos elemeket,</p></li>
+<li><p>megőrzi az eredeti nyelvneveket, de konzisztens formára hozza azokat.</p></li>
+</ul>
+<p>Példa:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">languages</span> <span class="o">=</span> <span class="n">clean_language_field_merged</span><span class="p">(</span><span class="n">raw_languages</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Ha a nyers adat így néz ki:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;&lt;br&gt;English; Spanish (Latin America); [b]Portuguese[/b]&quot;</span>
+</pre></div>
+</div>
+<p>akkor a megtisztított lista:</p>
+<p><code class="docutils literal notranslate"><span class="pre">[&quot;English&quot;,</span> <span class="pre">&quot;Spanish&quot;,</span> <span class="pre">&quot;Latin</span> <span class="pre">America&quot;,</span> <span class="pre">&quot;Portuguese&quot;]</span></code></p>
+</section>
+<section id="masodik-lepes-szabvanyositas-es-finomhangolt-tisztitas">
+<h4>Második lépés: szabványosítás és finomhangolt tisztítás<a class="headerlink" href="#masodik-lepes-szabvanyositas-es-finomhangolt-tisztitas" title="Link to this heading"></a></h4>
+<p>A <code class="docutils literal notranslate"><span class="pre">final_clean_language_list</span></code> végzi a mélyebb, kontextusfüggő
+normalizálást. A függvény:</p>
+<ul class="simple">
+<li><p>eltávolítja a visszamaradt HTML/BBCode fragmentumokat,</p></li>
+<li><p>felismeri és egyesíti a több szóból álló nyelvi kifejezéseket
+(pl. <code class="docutils literal notranslate"><span class="pre">Spanish</span></code> + <code class="docutils literal notranslate"><span class="pre">Latin</span> <span class="pre">America</span></code> → <code class="docutils literal notranslate"><span class="pre">Spanish</span> <span class="pre">-</span> <span class="pre">Latin</span> <span class="pre">America</span></code>),</p></li>
+<li><p>javítja a gyakori elgépeléseket (pl. <code class="docutils literal notranslate"><span class="pre">he</span> <span class="pre">ew</span></code> → <code class="docutils literal notranslate"><span class="pre">Hebrew</span></code>),</p></li>
+<li><p>eltávolítja a nem nyelv jellegű szemétértékeket,</p></li>
+<li><p>lazább, de következetes validációt alkalmaz: csak emberi nyelvre
+hasonlító kifejezéseket hagy meg (legalább 2 karakter, engedélyezett
+írásjelek),</p></li>
+<li><p>a végeredményt duplikátummentes listává alakítja.</p></li>
+</ul>
+<p>A pipeline második hívása:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">languages</span> <span class="o">=</span> <span class="n">final_clean_language_list</span><span class="p">(</span><span class="n">languages</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A két lépés eredménye egy olyan lista, amely:</p>
+<ul class="simple">
+<li><p>tiszta és egységes nyelvneveket tartalmaz,</p></li>
+<li><p>mentes minden technikai és formázási zajtól,</p></li>
+<li><p>alkalmas relációs adatbázisba való betöltésre,</p></li>
+<li><p>konzisztens az A, B és C források között.</p></li>
+</ul>
+</section>
+</section>
+<section id="b-forras-betoltese-es-elofeldolgozasa">
+<h3>5. B Forrás betöltése és előfeldolgozása<a class="headerlink" href="#b-forras-betoltese-es-elofeldolgozasa" title="Link to this heading"></a></h3>
+<p>A <strong>B</strong> forrás (SteamSpy) JSON állományból épül fel, amely egy komplex,
+beágyazott szerkezetű objektumgyűjtemény. A betöltéshez egy olyan
+függvény készült, amely:</p>
+<ul class="simple">
+<li><p>ellenőrzi a fájl létezését,</p></li>
+<li><p>beolvassa a <cite>games.json</cite> tartalmát,</p></li>
+<li><p>az egyes játékokhoz tartozó mezőket strukturált rekordokká alakítja,</p></li>
+<li><p>külön kezeli a listás mezőket (pl. <em>packages</em>, <em>genres</em>, <em>publishers</em>),</p></li>
+<li><p>a <em>tags</em> mezőt dict formában normalizálja,</p></li>
+<li><p>végül Pandas DataFrame-be rendezi az adatokat.</p></li>
+</ul>
+<p>Az alábbi részlet jól mutatja a JSON → táblás forma átalakításának
+lényegét:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">load_source_b</span><span class="p">(</span><span class="n">base_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="s2">&quot;games.json&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">appID</span><span class="p">,</span> <span class="n">game</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;release_date&quot;</span><span class="p">,</span> <span class="s2">&quot;estimated_owners&quot;</span><span class="p">,</span> <span class="s2">&quot;price&quot;</span><span class="p">]</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">game</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">}</span>
+        <span class="n">record</span><span class="p">[</span><span class="s2">&quot;appid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">appID</span><span class="p">)</span>
+
+        <span class="n">list_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;packages&quot;</span><span class="p">,</span> <span class="s2">&quot;developers&quot;</span><span class="p">,</span> <span class="s2">&quot;publishers&quot;</span><span class="p">,</span> <span class="s2">&quot;genres&quot;</span><span class="p">]</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">f</span><span class="p">:</span> <span class="n">game</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">[])</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">list_fields</span><span class="p">})</span>
+
+        <span class="n">tags</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tags&quot;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">record</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tags</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="p">{}</span>
+
+        <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+
+    <span class="n">df_b</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+    <span class="n">df_b</span><span class="p">[</span><span class="s2">&quot;release_date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_b</span><span class="p">[</span><span class="s2">&quot;release_date&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A funkció a későbbi merge-lépésekhez egységes, tisztított és
+normalizált struktúrájú DataFrame-et állít elő. A teljes kód a
+projektben részletes docstringekkel van ellátva, így minden
+függvénynél megtalálható a pontos szerep és működés magyarázata.</p>
+</section>
+</section>
+<section id="logolas-a-merge-folyamat-soran">
+<h2>Logolás a merge folyamat során<a class="headerlink" href="#logolas-a-merge-folyamat-soran" title="Link to this heading"></a></h2>
+<p>A merge rendszer részletes naplózást (logging) használ annak érdekében,
+hogy minden fontosabb lépés és esemény visszakövethető legyen.
+A naplózás segítségével könnyen ellenőrizhető:</p>
+<ul class="simple">
+<li><p>mely forrásfájlok kerültek betöltésre,</p></li>
+<li><p>hány rekordot tartalmaztak,</p></li>
+<li><p>mely tisztítási és normalizálási lépések futottak le,</p></li>
+<li><p>milyen módosítások történtek a merge során (pl. duplikátumok összevonása),</p></li>
+<li><p>a teljes folyamat sikeresen lefutott-e.</p></li>
+</ul>
+<p>Az alábbi részlet egy valós futtatás logkimenetéből származik:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[2025-11-17 20:57:10] INFO: === Starting merge process ===
+[2025-11-17 20:57:50] INFO: Loaded: steam.csv (27075 rows)
+[2025-11-17 20:57:51] INFO: Loaded: steam_description_data_cleaned.csv (27334 rows)
+[2025-11-17 20:57:52] INFO: Loaded: steam_media_data.csv (27332 rows)
+[2025-11-17 20:57:52] INFO: Loaded: steam_support_info.csv (27136 rows)
+[2025-11-17 20:57:53] INFO: Loaded: steamspy_tag_data.csv (29022 rows)
+[2025-11-17 20:57:53] INFO: Loaded: steam_requirements_data.csv (27319 rows)
+[2025-11-17 20:57:55] INFO: SteamSpy tags converted → 28447 appid with tag data
+[2025-11-17 20:57:55] INFO: A source merged: 27075 rows
+[2025-11-17 20:58:00] INFO: A source saved: C:\Users\zalma\merge\A_merged.csv
+[2025-11-17 20:58:12] INFO: B source loaded from JSON: 111452 rows
+[2025-11-17 20:58:25] INFO: B source saved: C:\Users\zalma\merge\B_full.csv
+[2025-11-17 20:58:32] INFO: Loaded: games_march2025_cleaned.csv (89618 rows)
+[2025-11-17 20:58:38] INFO: Loaded: games_march2025_full.csv (94948 rows)
+[2025-11-17 20:58:44] INFO: Loaded: games_may2024_cleaned.csv (83646 rows)
+[2025-11-17 20:58:49] INFO: Loaded: games_may2024_full.csv (87806 rows)
+[2025-11-17 20:58:49] INFO: C source combined: 356018 rows
+[2025-11-17 20:59:27] INFO: C source saved: C:\Users\zalma\merge\C_full.csv
+[2025-11-17 20:59:28] INFO: Merging sources with C→B→A priority...
+[2025-11-17 20:59:52] INFO: Merge complete (112855 rows, 63 columns)
+[2025-11-17 20:59:57] INFO: Normalized thumbnail screenshots for source A (27075 items)
+[2025-11-17 20:59:57] INFO: Normalized thumbnail screenshots for source B (111452 items)
+[2025-11-17 21:00:03] INFO: Normalized thumbnail screenshots for source C (104490 items)
+[2025-11-17 21:00:05] INFO: Normalized movies for source A (25393 items)
+[2025-11-17 21:00:06] INFO: Normalized movies for source B (111452 items)
+[2025-11-17 21:00:10] INFO: Normalized movies for source C (104490 items)
+[2025-11-17 21:01:44] INFO: Combined duplicate tag columns: [&#39;tags_x&#39;, &#39;tags_y&#39;] → kept unified &#39;tags&#39;
+[2025-11-17 21:01:57] INFO: Dropped redundant column: steamspy_tags
+[2025-11-17 21:02:06] INFO: Cleaned and normalized language field: supported_languages
+[2025-11-17 21:02:14] INFO: Cleaned and normalized language field: full_audio_languages
+[2025-11-17 21:02:25] INFO: Final language cleanup on supported_languages: 542206 → 542160 entries (after filtering).
+[2025-11-17 21:02:29] INFO: Final language cleanup on full_audio_languages: 212743 → 212736 entries (after filtering).
+[2025-11-17 21:02:29] INFO: 41830 rows have identical supported and audio language sets.
+[2025-11-17 21:02:48] INFO: Merged table saved: C:\Users\zalma\merge\merged_master.csv
+[2025-11-17 21:02:48] INFO: Merged master table saved to: C:\Users\zalma\merge\merged_master.csv
+[2025-11-17 21:02:48] INFO: Source summary saved: C:\Users\zalma\merge\source_summary.csv
+[2025-11-17 21:02:48] INFO: Integrity check completed, saved to C:\Users\zalma\merge\integrity_report.csv
+[2025-11-17 21:02:48] INFO: === Generating histograms ===
+[2025-11-17 21:03:11] INFO: === Merge process successfully completed ===
+</pre></div>
+</div>
+<p>A logolás végigkíséri az egész merge pipeline-t, így a teljes folyamat
+átlátható, hibák esetén pedig gyorsan visszakövethető.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Merge_process.html" class="btn btn-neutral float-left" title="Merge Process" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Visualization.html" class="btn btn-neutral float-right" title="Elemzések a merged tábláról" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Dávid Drig.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

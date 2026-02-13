@@ -1,0 +1,168 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="hu" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merge Process &mdash; Diplomamunka  dokumentáció</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.min.css?v=6e7d0de0" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/pointer.css?v=c97663ff" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=24d5f357"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=ea187aaa"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=f0ca4bb6"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Tárgymutató" href="../genindex.html" />
+    <link rel="search" title="Keresés" href="../search.html" />
+    <link rel="next" title="Merge Code" href="Merge_code.html" />
+    <link rel="prev" title="Adathalmazok összefésülése (merging)" href="Merge.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Diplomamunka
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tartalomjegyzék:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Bevezetés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_exploration.html">Adatvizsgálat és előkészítés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_preparation.html">A relációs séma normalizálás</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Merge.html">Adathalmazok összefésülése (merging)</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Merge Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lepesek">Lépések</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Merge_code.html">Merge Code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html">Elemzések a merged tábláról</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Split.html">A merged tábla felosztása (splitting)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Game_stores.html">Konkurrens alkalmazásboltok és online játékkiadók</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Future_work.html">További fejlesztési és kutatási lehetőségek</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Diplomamunka</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Merge.html">Adathalmazok összefésülése (merging)</a></li>
+      <li class="breadcrumb-item active">Merge Process</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/chapters/Merge_process.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="merge-process">
+<h1>Merge Process<a class="headerlink" href="#merge-process" title="Link to this heading"></a></h1>
+<a class="merge-diagram"
+               data-lightbox="group-22d12743-711a-4dd9-8971-4be9b7fc7125"
+               href="../_images/merge_folyamat1.svg"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/merge_folyamat1.svg"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="Merge folyamat ábrája"/>
+                </a><p><em>A fenti ábra PlantUML forráskódja külön fájlban is elérhető:</em>
+<a class="reference external" href="https://github.com/Ddavid111/videogame-data-analysis/blob/main/merge/merge.puml">merge_process.puml</a></p>
+<section id="lepesek">
+<h2>Lépések<a class="headerlink" href="#lepesek" title="Link to this heading"></a></h2>
+<p>A fenti ábra a teljes összefésülési (merging) folyamatot mutatja be,
+amely során az <strong>A</strong>, <strong>B</strong> és <strong>C</strong> forrásadatokból egy egységesített
+<strong>D adatmodell</strong> jön létre.</p>
+<p>A merge három fő lépésből áll:</p>
+<ol class="arabic">
+<li><p><strong>Forrás C feldolgozása</strong> → <cite>C_combined.csv</cite></p>
+<p>A 2024–2025-ös CSV-fájlok összevonása és előtisztítása.</p>
+</li>
+<li><p><strong>Forrás B feldolgozása</strong> → <cite>B_full.csv</cite></p>
+<p>A JSON formátumú SteamSpy adatok normalizálása és táblásítása.</p>
+</li>
+<li><p><strong>Forrás A feldolgozása</strong> → <cite>A_merged.csv</cite></p>
+<p>A több CSV-ből álló Steam-metaadatok belső összevonása.</p>
+</li>
+</ol>
+<p>Ezt követően a három rész-adathalmaz <strong>prioritás alapján</strong> kerül egyesítésre:</p>
+<ul class="simple">
+<li><p><strong>C = elsődleges forrás</strong></p></li>
+<li><p><strong>B = másodlagos forrás</strong></p></li>
+<li><p><strong>A = kitöltő/harmadlagos forrás</strong></p></li>
+</ul>
+<p>Az eredmény egy egységes relációs struktúra (<cite>merged_master.csv</cite>), amely már
+alkalmas a normalizálásra és az SQL alapú adatbázis felépítésére.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Merge.html" class="btn btn-neutral float-left" title="Adathalmazok összefésülése (merging)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Merge_code.html" class="btn btn-neutral float-right" title="Merge Code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Dávid Drig.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

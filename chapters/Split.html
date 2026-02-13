@@ -1,0 +1,178 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="hu" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A merged tábla felosztása (splitting) &mdash; Diplomamunka  dokumentáció</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.min.css?v=6e7d0de0" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/pointer.css?v=c97663ff" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=24d5f357"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=ea187aaa"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=f0ca4bb6"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Tárgymutató" href="../genindex.html" />
+    <link rel="search" title="Keresés" href="../search.html" />
+    <link rel="next" title="Konkurrens alkalmazásboltok és online játékkiadók" href="Game_stores.html" />
+    <link rel="prev" title="Hisztogramok és trendvizualizációk" href="Histograms.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Diplomamunka
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tartalomjegyzék:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Bevezetés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_exploration.html">Adatvizsgálat és előkészítés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_preparation.html">A relációs séma normalizálás</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Merge.html">Adathalmazok összefésülése (merging)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html">Elemzések a merged tábláról</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">A merged tábla felosztása (splitting)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#a-folyamat-lepesei-roviden">A folyamat lépései röviden</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#letrehozott-tablak">Létrehozott táblák</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-split-kod-mukodesenek-lenyege">A split kód működésének lényege</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Game_stores.html">Konkurrens alkalmazásboltok és online játékkiadók</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Future_work.html">További fejlesztési és kutatási lehetőségek</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Diplomamunka</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">A merged tábla felosztása (splitting)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/chapters/Split.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="a-merged-tabla-felosztasa-splitting">
+<h1>A merged tábla felosztása (splitting)<a class="headerlink" href="#a-merged-tabla-felosztasa-splitting" title="Link to this heading"></a></h1>
+<p>A split folyamat célja, hogy a <code class="docutils literal notranslate"><span class="pre">merged_master.csv</span></code> egyetlen, nagy
+táblájából <strong>tematikus, normalizált CSV-fájlokat</strong> hozzon létre.
+Minden táblát külön függvény épít fel, és a fájlok a <a class="reference external" href="https://github.com/Ddavid111/videogame-data-analysis/blob/main/split">split/</a>  könyvtárba
+kerülnek mentésre. A kód futása során részletes log készül
+(<a class="reference external" href="https://github.com/Ddavid111/videogame-data-analysis/blob/main/split/split_log.txt">split_log.txt</a> ), amelyben minden művelet nyomon követhető.</p>
+<section id="a-folyamat-lepesei-roviden">
+<h2>A folyamat lépései röviden<a class="headerlink" href="#a-folyamat-lepesei-roviden" title="Link to this heading"></a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">main()</span></code> függvény a teljes feldolgozást automatizálja:</p>
+<ol class="arabic simple">
+<li><p><strong>A merged_master.csv betöltése</strong></p></li>
+<li><p><strong>Minden rész-tábla létrehozása</strong></p></li>
+<li><p><strong>CSV-fájlok mentése</strong></p></li>
+<li><p><strong>Naplózás (logging)</strong></p></li>
+</ol>
+</section>
+<section id="letrehozott-tablak">
+<h2>Létrehozott táblák<a class="headerlink" href="#letrehozott-tablak" title="Link to this heading"></a></h2>
+<p>Az alábbi CSV-fájlok készülnek el a split folyamat során:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">game.csv</span></code> – a játékok alapadatai</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">description.csv</span></code> – hosszú, rövid leírások, „about” mezők</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">media.csv</span></code> – header image + háttérképek</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">screenshots.csv</span></code> – teljes és thumbnail képek</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">movies.csv</span></code> – max/480p/thumbnail videók</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">support.csv</span></code> – support URL + email</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">requirements.csv</span></code> – minimum és ajánlott rendszerkövetelmények OS-enként</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">platforms.csv</span></code> és <code class="docutils literal notranslate"><span class="pre">game_platform.csv</span></code> – Windows/Mac/Linux támogatás</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">genres.csv</span></code> és <code class="docutils literal notranslate"><span class="pre">game_genre.csv</span></code> – műfajok és kapcsolótábla</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">categories.csv</span></code> és <code class="docutils literal notranslate"><span class="pre">game_category.csv</span></code> – kategóriák és kapcsolótábla</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">packages.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">sub_package.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">game_package.csv</span></code> – Steam csomagok</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">developers.csv</span></code> és <code class="docutils literal notranslate"><span class="pre">game_developer.csv</span></code> – fejlesztők</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">publishers.csv</span></code> és <code class="docutils literal notranslate"><span class="pre">game_publisher.csv</span></code> – kiadók</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tags.csv</span></code> és <code class="docutils literal notranslate"><span class="pre">game_tag.csv</span></code> – címkék súlyokkal</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">languages.csv</span></code> – normalizált nyelvlista</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">game_subtitles.csv</span></code> és <code class="docutils literal notranslate"><span class="pre">game_audio_language.csv</span></code> – felirat + audio nyelvek</p></li>
+</ul>
+</section>
+<section id="a-split-kod-mukodesenek-lenyege">
+<h2>A split kód működésének lényege<a class="headerlink" href="#a-split-kod-mukodesenek-lenyege" title="Link to this heading"></a></h2>
+<p>A feldolgozás minden résztáblánál ugyanazt az alapelveket követi:</p>
+<ul class="simple">
+<li><p><strong>csak a releváns oszlopok kiválasztása a master táblából</strong>,</p></li>
+<li><p><strong>listás mezők normalizálása</strong> (pl. screenshotok, címkék, nyelvek),</p></li>
+<li><p><strong>szükség esetén ID-k generálása</strong> (pl. <code class="docutils literal notranslate"><span class="pre">genreid</span></code>, <code class="docutils literal notranslate"><span class="pre">tagid</span></code>),</p></li>
+<li><p><strong>kapcsolótáblák létrehozása</strong> many-to-many kapcsolatokhoz,</p></li>
+<li><p><strong>mentés CSV-be</strong> a <code class="docutils literal notranslate"><span class="pre">split/</span></code> mappába.</p></li>
+</ul>
+<p>Ez a struktúra biztosítja, hogy a korábban egyetlen táblában szereplő,
+összevont adatállomány teljes mértékben megfeleljen a relációs
+adatbázis-normalizálási elveknek és későbbi SQL importálásra alkalmas
+legyen.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Histograms.html" class="btn btn-neutral float-left" title="Hisztogramok és trendvizualizációk" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Game_stores.html" class="btn btn-neutral float-right" title="Konkurrens alkalmazásboltok és online játékkiadók" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Dávid Drig.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

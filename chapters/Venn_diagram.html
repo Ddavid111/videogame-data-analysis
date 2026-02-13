@@ -1,0 +1,201 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="hu" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Venn-diagram – Források átfedésének vizsgálata &mdash; Diplomamunka  dokumentáció</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.min.css?v=6e7d0de0" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/pointer.css?v=c97663ff" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=24d5f357"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=ea187aaa"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=f0ca4bb6"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Tárgymutató" href="../genindex.html" />
+    <link rel="search" title="Keresés" href="../search.html" />
+    <link rel="next" title="Source Summary és Integritásvizsgálat" href="Summaries.html" />
+    <link rel="prev" title="Elemzések a merged tábláról" href="Visualization.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Diplomamunka
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tartalomjegyzék:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Bevezetés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_exploration.html">Adatvizsgálat és előkészítés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_preparation.html">A relációs séma normalizálás</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Merge.html">Adathalmazok összefésülése (merging)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Visualization.html">Elemzések a merged tábláról</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Venn-diagram – Források átfedésének vizsgálata</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mukodes">Működés</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Summaries.html">Source Summary és Integritásvizsgálat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Histograms.html">Hisztogramok és trendvizualizációk</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Split.html">A merged tábla felosztása (splitting)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Game_stores.html">Konkurrens alkalmazásboltok és online játékkiadók</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Future_work.html">További fejlesztési és kutatási lehetőségek</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Diplomamunka</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Visualization.html">Elemzések a merged tábláról</a></li>
+      <li class="breadcrumb-item active">Venn-diagram – Források átfedésének vizsgálata</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/chapters/Venn_diagram.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="venn-diagram-forrasok-atfedesenek-vizsgalata">
+<h1>Venn-diagram – Források átfedésének vizsgálata<a class="headerlink" href="#venn-diagram-forrasok-atfedesenek-vizsgalata" title="Link to this heading"></a></h1>
+<p>A három forrásadat (A, B, C) közötti átfedést egy <strong>Venn-diagram</strong> szemlélteti,
+amely megmutatja, hogy mely appID-k találhatók meg kizárólag egy adott
+adatforrásban, illetve melyek vannak jelen több forrás metszetében is.</p>
+<a class="merge-diagram"
+               data-lightbox="group-b48a8b0a-c014-4cdd-9d46-9d6f9b8d2455"
+               href="../_images/venn_diagram1.png"
+               title=""
+               data-title=""
+               
+               ><img src="../_images/venn_diagram1.png"
+                     class="align-center"
+                     width="90%"
+                     height="90%"
+                     alt="Források átfedése – Venn-diagram"/>
+                </a><section id="mukodes">
+<h2>Működés<a class="headerlink" href="#mukodes" title="Link to this heading"></a></h2>
+<p>A Venn-diagram létrehozását az alábbi három lépés valósítja meg:</p>
+<ol class="arabic">
+<li><p><strong>Halmazok kiszámítása appid alapján</strong></p>
+<p>A <code class="docutils literal notranslate"><span class="pre">compute_venn_sets</span></code> függvény mindhárom forráshoz (A, B, C) külön
+appID-halmazt készít, majd ezek alapján meghatározza:</p>
+<ul class="simple">
+<li><p>csak A-ban szereplő ID-ket,</p></li>
+<li><p>csak B-ben szereplő ID-ket,</p></li>
+<li><p>csak C-ben szereplő ID-ket,</p></li>
+<li><p>a páronkénti metszeteket (A∩B, A∩C, B∩C),</p></li>
+<li><p>valamint a mindhárom forrásban megtalálható rekordokat.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">set_a</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="s2">&quot;appid&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
+<span class="n">set_b</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="s2">&quot;appid&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
+<span class="n">set_c</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="s2">&quot;appid&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
+
+<span class="n">only_a</span> <span class="o">=</span> <span class="n">set_a</span> <span class="o">-</span> <span class="n">set_b</span> <span class="o">-</span> <span class="n">set_c</span>
+<span class="n">a_and_b</span> <span class="o">=</span> <span class="p">(</span><span class="n">set_a</span> <span class="o">&amp;</span> <span class="n">set_b</span><span class="p">)</span> <span class="o">-</span> <span class="n">set_c</span>
+<span class="n">all_three</span> <span class="o">=</span> <span class="n">set_a</span> <span class="o">&amp;</span> <span class="n">set_b</span> <span class="o">&amp;</span> <span class="n">set_c</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Elemszámok táblázatos előállítása</strong></p>
+<p>A <code class="docutils literal notranslate"><span class="pre">compute_venn_table</span></code> a fenti halmazok elemszámaiból egy jól áttekinthető
+Pandas DataFrame-et készít, amely CSV-formátumban is elmentésre kerül:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;csak A&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;only_a&quot;</span><span class="p">])],</span>
+    <span class="s2">&quot;csak B&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;only_b&quot;</span><span class="p">])],</span>
+    <span class="s2">&quot;csak C&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;only_c&quot;</span><span class="p">])],</span>
+    <span class="s2">&quot;A ∩ B&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;a_and_b&quot;</span><span class="p">])],</span>
+    <span class="s2">&quot;A ∩ C&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;a_and_c&quot;</span><span class="p">])],</span>
+    <span class="s2">&quot;B ∩ C&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;b_and_c&quot;</span><span class="p">])],</span>
+    <span class="s2">&quot;A ∩ B ∩ C&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;all_three&quot;</span><span class="p">])]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>A Venn-diagram megrajzolása és mentése</strong></p>
+<p>A <code class="docutils literal notranslate"><span class="pre">plot_and_save_venn</span></code> függvény a <em>matplotlib_venn</em> csomaggal rajzolja meg a diagramot,
+az elemszámokat pedig a megfelelő körökben jeleníti meg.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">venn3</span><span class="p">(</span>
+    <span class="n">subsets</span><span class="o">=</span><span class="p">(</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;only_a&quot;</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;only_b&quot;</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;a_and_b&quot;</span><span class="p">]),</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;only_c&quot;</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;a_and_c&quot;</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;b_and_c&quot;</span><span class="p">]),</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;all_three&quot;</span><span class="p">])</span>
+    <span class="p">),</span>
+    <span class="n">set_labels</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Forrás A&quot;</span><span class="p">,</span> <span class="s2">&quot;Forrás B&quot;</span><span class="p">,</span> <span class="s2">&quot;Forrás C&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>A diagram a <code class="docutils literal notranslate"><span class="pre">merge/venn_diagram.png</span></code> fájlba kerül mentésre,
+míg az elemszámos táblázat <a class="reference external" href="https://github.com/Ddavid111/videogame-data-analysis/blob/main/merge/venn_table.csv">venn_table.csv</a> formában is elérhető.</p>
+</li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Visualization.html" class="btn btn-neutral float-left" title="Elemzések a merged tábláról" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Summaries.html" class="btn btn-neutral float-right" title="Source Summary és Integritásvizsgálat" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Dávid Drig.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

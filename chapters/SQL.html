@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="hu" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SQL séma – D adatmodell &mdash; Diplomamunka  dokumentáció</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.min.css?v=6e7d0de0" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/pointer.css?v=c97663ff" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=24d5f357"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=ea187aaa"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=f0ca4bb6"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Tárgymutató" href="../genindex.html" />
+    <link rel="search" title="Keresés" href="../search.html" />
+    <link rel="next" title="Kisebb vizsgálható lekérdezések" href="Queries.html" />
+    <link rel="prev" title="„D” Egységes relációs séma normalizálás" href="D.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Diplomamunka
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tartalomjegyzék:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Bevezetés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_exploration.html">Adatvizsgálat és előkészítés</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Data_preparation.html">A relációs séma normalizálás</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="A.html">„A” relációs séma normalizálása</a></li>
+<li class="toctree-l2"><a class="reference internal" href="B.html">„B” relációs séma normalizálás</a></li>
+<li class="toctree-l2"><a class="reference internal" href="C.html">„C” relációs séma normalizálás</a></li>
+<li class="toctree-l2"><a class="reference internal" href="D.html">„D” Egységes relációs séma normalizálás</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SQL séma – D adatmodell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Queries.html">Kisebb vizsgálható lekérdezések</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Merge.html">Adathalmazok összefésülése (merging)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html">Elemzések a merged tábláról</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Split.html">A merged tábla felosztása (splitting)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Game_stores.html">Konkurrens alkalmazásboltok és online játékkiadók</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Future_work.html">További fejlesztési és kutatási lehetőségek</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Diplomamunka</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Data_preparation.html">A relációs séma normalizálás</a></li>
+      <li class="breadcrumb-item active">SQL séma – D adatmodell</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/chapters/SQL.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sql-sema-d-adatmodell">
+<h1>SQL séma – D adatmodell<a class="headerlink" href="#sql-sema-d-adatmodell" title="Link to this heading"></a></h1>
+<p>A teljes normalizált <strong>D adatbázis struktúrája</strong> a következő linken is elérhető:</p>
+<p><a class="reference external" href="https://dbdiagram.io/d/D-690c75716735e111708983ee">D adatmodell – SQL adatbázis</a></p>
+<p>Az alábbi SQL kód a végső D adatmodellt definiálja, amely az A, B és C
+adatmodelljeinek egyesítésével készült. A kommentek (<cite>– [A]</cite>, <cite>– [B]</cite>, <cite>– [C]</cite>)
+jelölik, hogy az adott mező vagy tábla melyik forrásból származik.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">-- ================================</span>
+<span class="c1">-- Központi tábla: game</span>
+<span class="c1">-- ================================</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">game</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                           </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">release_date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span><span class="w">                               </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">estimated_owners</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                            </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">required_age</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">price</span><span class="w"> </span><span class="nb">FLOAT</span><span class="p">,</span><span class="w">                                     </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">DLC_count</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                   </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">num_recommendations</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                         </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">notes</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                                      </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">website</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                                    </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">metacritic_score</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                            </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">metacritic_url</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                             </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">num_achievements</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                            </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">user_score</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                  </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">score_rank</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                  </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">positive</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                    </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">negative</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                    </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">average_playtime_forever</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                    </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">average_playtime_2weeks</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                     </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">median_playtime_forever</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                     </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">median_playtime_2weeks</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                      </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">peak_ccu</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                    </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">discount</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                    </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">pct_pos_total</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                               </span><span class="c1">-- [C]</span>
+<span class="w">    </span><span class="n">pct_pos_recent</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                              </span><span class="c1">-- [C]</span>
+<span class="w">    </span><span class="n">num_reviews_total</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                           </span><span class="c1">-- [C]</span>
+<span class="w">    </span><span class="n">num_reviews_recent</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                          </span><span class="c1">-- [C]</span>
+<span class="w">    </span><span class="n">reviews</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                                    </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">english</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w">                                  </span><span class="c1">-- [A]</span>
+<span class="p">);</span>
+
+<span class="c1">-- ================================</span>
+<span class="c1">-- Támogatás, leírás, követelmények</span>
+<span class="c1">-- ================================</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">support</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">supportid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                       </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">support_url</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                                </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">support_email</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                              </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">requirements</span><span class="w"> </span><span class="p">(</span><span class="w">                          </span><span class="c1">-- [A]</span>
+<span class="w">    </span><span class="n">reqid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">os</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
+<span class="w">    </span><span class="k">type</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">requirements</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">descriptionid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                   </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">detailed_description</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                       </span><span class="c1">-- [A][C]</span>
+<span class="w">    </span><span class="n">about_the_game</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                             </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">short_description</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                          </span><span class="c1">-- [A][C]</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">-- ================================</span>
+<span class="c1">-- Média (képek, videók)</span>
+<span class="c1">-- ================================</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">media</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">mediaid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                         </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">header_image</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                               </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">background</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                                 </span><span class="c1">-- [A]</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">screenshots</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">screenshotid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                    </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">screenshots_full</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                           </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">screenshots_thumbs</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                         </span><span class="c1">-- [A]</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">movies</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">movieid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                         </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">movies_thumbnail</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                           </span><span class="c1">-- [A]</span>
+<span class="w">    </span><span class="n">movies_max</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                                 </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">movies_480</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                                 </span><span class="c1">-- [A]</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">-- ================================</span>
+<span class="c1">-- Nyelvek és audio támogatás</span>
+<span class="c1">-- ================================</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">languages</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                              </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">TEXT</span><span class="w">                                        </span><span class="c1">-- [B][C]</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">game_audio_language</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">languageid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                  </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">,</span><span class="w"> </span><span class="n">languageid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">languageid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">languages</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">game_subtitles</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">languageid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                  </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">,</span><span class="w"> </span><span class="n">languageid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">languageid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">languages</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">-- ================================</span>
+<span class="c1">-- Címkék, műfajok, kategóriák</span>
+<span class="c1">-- ================================</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">tags</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">tagid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                           </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="n">tag_name</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                                   </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">weight</span><span class="w"> </span><span class="nb">FLOAT</span><span class="w">                                     </span><span class="c1">-- [A][B][C]</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">game_tag</span><span class="w"> </span><span class="p">(</span><span class="w">                              </span><span class="c1">-- [A]</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">tagid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">,</span><span class="w"> </span><span class="n">tagid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">tagid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">tags</span><span class="p">(</span><span class="n">tagid</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">genres</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">genreid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                         </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="n">genre_name</span><span class="w"> </span><span class="nb">TEXT</span><span class="w">                                  </span><span class="c1">-- [A][B][C]</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">game_genre</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">genreid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                     </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">,</span><span class="w"> </span><span class="n">genreid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">genreid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">genres</span><span class="p">(</span><span class="n">genreid</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">categories</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">catid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                           </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">TEXT</span><span class="w">                                        </span><span class="c1">-- [A][B][C]</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">game_category</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">catid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">,</span><span class="w"> </span><span class="n">catid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">catid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">categories</span><span class="p">(</span><span class="n">catid</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">-- ================================</span>
+<span class="c1">-- Fejlesztők, kiadók, platformok, csomagok</span>
+<span class="c1">-- ================================</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">developers</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">devid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                           </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="n">dev_name</span><span class="w"> </span><span class="nb">TEXT</span><span class="w">                                    </span><span class="c1">-- [A][B][C]</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">game_developer</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">devid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">,</span><span class="w"> </span><span class="n">devid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">devid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">developers</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">publishers</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">pubid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                           </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="n">pub_name</span><span class="w"> </span><span class="nb">TEXT</span><span class="w">                                    </span><span class="c1">-- [A][B][C]</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">game_publisher</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">pubid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">,</span><span class="w"> </span><span class="n">pubid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">pubid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">publishers</span><span class="p">(</span><span class="n">pubid</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">platforms</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">platid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                          </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">TEXT</span><span class="w">                                        </span><span class="c1">-- [A][B][C]</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">game_platform</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [A][B][C]</span>
+<span class="w">    </span><span class="n">platid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                      </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">,</span><span class="w"> </span><span class="n">platid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">platid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">platforms</span><span class="p">(</span><span class="n">platid</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">packages</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">packid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                          </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="n">title</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                                      </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">description</span><span class="w"> </span><span class="nb">TEXT</span><span class="w">                                 </span><span class="c1">-- [B][C]</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">sub_package</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">packid</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">                          </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="n">sub_text</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w">                                   </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">price</span><span class="w"> </span><span class="nb">FLOAT</span><span class="p">,</span><span class="w">                                     </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">packid</span><span class="p">,</span><span class="w"> </span><span class="n">sub_text</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">packid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">packages</span><span class="p">(</span><span class="n">packid</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">game_package</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">appid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                       </span><span class="c1">-- [B][C]</span>
+<span class="w">    </span><span class="n">packid</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w">                                      </span><span class="c1">-- [D]</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">,</span><span class="w"> </span><span class="n">packid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">appid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">game</span><span class="p">(</span><span class="n">appid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">packid</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">packages</span><span class="p">(</span><span class="n">packid</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="D.html" class="btn btn-neutral float-left" title="„D” Egységes relációs séma normalizálás" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Queries.html" class="btn btn-neutral float-right" title="Kisebb vizsgálható lekérdezések" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Dávid Drig.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
