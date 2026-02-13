@@ -97,6 +97,30 @@ Az elemzés rávilágít arra, hogy a logisztikus regresszió nem pusztán
 feketedobozos előrejelzőként használható, hanem lehetőséget ad a modell
 döntéseinek kvalitatív értelmezésére is.
 
+\subsection{A jellemzők számának hatása a prediktív teljesítményre}
+
+A jellemzők fontossági sorrendje alapján megvizsgáltam,
+hogyan változik a modell teljesítménye a felhasznált jellemzők számának csökkentésével.
+
+Az eredmények azt mutatják, hogy már kis számú jellemző esetén is viszonylag jó
+prediktív teljesítmény érhető el.
+Például az öt legfontosabb jellemző használatával a modell pontossága 62.8\%,
+míg az összes jellemző felhasználásával 65.3\%-ot ér el.
+
+Ez arra utal, hogy a sikeresség előrejelzéséhez szükséges információ jelentős része
+néhány kulcsjellemzőben koncentrálódik,
+és a további jellemzők csak mérsékelt mértékben javítják a prediktív teljesítményt.
+
+A jellemzők számának és a modell teljesítményének kapcsolatát a
+\ref{fig:feature_count_vs_performance} ábra szemlélteti.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/feature_count_vs_performance.png}
+\caption{A jellemzők számának hatása a modell teljesítményére}
+\label{fig:feature_count_vs_performance}
+\end{figure}
+
 \Section{Domain 2: Multiplayer vs. singleplayer osztályozás}
 
 A második vizsgált osztályozási probléma a videojátékok multiplayer és
@@ -107,8 +131,19 @@ a játékok szöveges leírásai és strukturált metaadatai alapján.
 
 A feladat megoldására több különböző modellt is kipróbáltam,
 amelyek eltérő jellemzőkészletekre épültek.
+A szöveges leírások feldolgozásához TF--IDF\cite{tf-idf} alapú
+vektorizálást alkalmaztam, amely a szavak relatív fontosságát
+számszerűsíti a dokumentumok között, és hatékony bemeneti
+reprezentációt biztosít lineáris osztályozási modellek számára.
+Alternatív megközelítésként lehetőség lett volna fejlettebb
+természetes nyelvfeldolgozó eszközök, például a spaCy\cite{spacy}
+könyvtár alkalmazására is, amely támogatja a tokenizálást,
+lemmatizálást és egyéb nyelvi elemzési lépéseket.
+A jelen vizsgálatban azonban a TF--IDF reprezentáció önmagában is
+megfelelő teljesítményt biztosított a feladat megoldásához.
+
 Az eredmények alapján a legjobb teljesítményt a
-TF--IDF\cite{tf-idf} alapú szöveges jellemzőket és a strukturált metaadatokat
+TF--IDF alapú szöveges jellemzőket és a strukturált metaadatokat
 együttesen alkalmazó lineáris SVM (LinearSVC)\cite{svm} modell nyújtotta.
 Ez a megoldás nemcsak az összesített pontosság,
 hanem a kiegyensúlyozottabb osztályonkénti teljesítmény tekintetében is

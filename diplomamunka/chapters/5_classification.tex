@@ -39,7 +39,42 @@ Mindkét osztályozási feladatnál az alábbi feldolgozási folyamatot alkalmaz
 A módszertan előnye, hogy a két külön feladatra ugyanaz a \textit{logikai szerkezet} alkalmazható,
 miközben a célváltozó és a felhasznált jellemzők a feladat sajátosságaihoz igazodnak.
 
-\Section{Domain 1: Videójáték sikerességének becslése}
+\subsubsection{Alkalmazott teljesítménymérő metrikák}
+
+Az osztályozási modellek teljesítményének értékelésére több különböző
+metrikát alkalmaztam, amelyek a predikciók különböző aspektusait
+ragadják meg.
+
+Az alapvető mutatók közé tartozik a pontosság (accuracy),
+a precízió (precision), a visszahívás (recall) és az F1-mérték\cite{metrics}.
+Ezek a metrikák a konfúziós mátrix elemein alapulnak,
+és információt adnak a modell tévesztéseinek jellegéről.
+
+A modellek rangsorolási képességének értékelésére a
+ROC--AUC (Receiver Operating Characteristic – Area Under Curve)\cite{roc-auc}
+mutatót is alkalmaztam.
+A ROC görbe a valódi pozitív arány (true positive rate)
+és a hamis pozitív arány (false positive rate) kapcsolatát ábrázolja
+különböző döntési küszöbértékek mellett.
+
+A ROC--AUC érték a görbe alatti területet méri,
+amely 0 és 1 közötti értéket vehet fel.
+Az 1 érték tökéletes osztályozást,
+a 0.5 érték pedig véletlenszerű besorolást jelent.
+Ez a metrika küszöbfüggetlen módon értékeli a modell teljesítményét,
+ezért különösen alkalmas kiegyensúlyozatlan osztályeloszlás esetén is.
+
+A ROC--AUC mutató értelmezhető annak valószínűségeként,
+hogy a modell egy véletlenszerűen kiválasztott pozitív példát
+magasabb valószínűséggel sorol a pozitív osztályba,
+mint egy véletlenszerűen kiválasztott negatív példát.
+Ez különösen hasznos a videojátékok sikerességének becslése során,
+ahol a cél nemcsak a bináris döntés,
+hanem a játékok relatív rangsorolása is.
+
+
+
+\Section{Vizsgálat 1: Videójáték sikerességének becslése}
 
 \subsection{A probléma specifikációja (cél)}
 A feladat célja annak előrejelzése, hogy egy játék \textit{sikeresnek} tekinthető-e.
@@ -56,23 +91,62 @@ A sikeresség-becsléshez olyan változókat választottam, amelyek a piaci telj
     \item \textbf{Numerikus alapjellemzők:} például ár (\textit{price}), korhatár
     (\textit{required\_age}), megjelenési év (\textit{release\_date}), és további, adathalmazban elérhető számszerű mutatók.
     \item \textbf{Kategória jellegű változók:} műfajok és kategóriák bináris indikátorváltozókká alakítva
-    (multi-hot reprezentáció), hogy a többértékű mezők is használhatók legyenek klasszikus modellekben.
+    (multi-hot\cite{multi-hot} reprezentáció), hogy a többértékű mezők is használhatók legyenek klasszikus modellekben.
 \end{itemize}
 
+A jellemzők kiválasztását megelőzően a numerikus változók közötti kapcsolatok
+feltárására korrelációvizsgálatot végeztem annak ellenőrzésére, hogy az egyes
+attribútumok nem hordoznak-e jelentős mértékben redundáns információt.
+A vizsgálat eredményei alapján a numerikus változók között nem volt megfigyelhető
+erős lineáris kapcsolat, ezért egyik változó kizárása sem volt indokolt.
+
+A dimenziócsökkentési módszerek (például főkomponens-analízis) alkalmazhatóságát
+szintén megvizsgáltam.
+Az eredmények azt mutatták, hogy az információ nem koncentrálódik néhány
+komponensbe, így a dimenziócsökkentés nem eredményezett volna lényegesen
+egyszerűbb reprezentációt az értelmezhetőség romlása nélkül.
+Ennek megfelelően a további elemzések során az eredeti jellemzők kerültek
+felhasználásra.
+
+A korrelációvizsgálat eredményeit a \ref{fig:corr_matrix} ábra,
+a PCA kumulált magyarázott varianciáját pedig a \ref{fig:pca_variance} ábra szemlélteti
+(a függelékben).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/correlation_matrix.png}
+    \caption{Numerikus változók korrelációs mátrixa}
+    \label{fig:corr_matrix}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/pca_cumulative_variance.png}
+    \caption{A numerikus változók PCA-alapú kumulált magyarázott varianciája}
+    \label{fig:pca_variance}
+\end{figure}
+
 \subsection{Előfeldolgozás}
-A pipeline-ban a numerikus változókat skálázom,
-a kategóriákat pedig bináris oszlopokra bontom. A cél az, hogy a különböző típusú változók
-egységes, modellbarát mátrixba kerüljenek.
+A kiválasztott jellemzők modellbarát formára alakításához
+egységes előfeldolgozási lépéseket alkalmaztam.
+A numerikus változókat skálázom,
+a kategóriajellegű attribútumokat pedig bináris indikátorváltozókká alakítom.
+Ennek célja, hogy a különböző típusú jellemzők egyetlen,
+egységes bemeneti mátrixban jelenjenek meg, amely közvetlenül
+felhasználható a tanuló algoritmusok számára.
 
 \subsection{Tanítás/tesztelés és metrikák}
-A tanító és teszt halmazokat stratifikált módon választottam szét,
-hogy az osztályok aránya mindkét részben hasonló maradjon.
+Az adathalmazt tanító és teszt halmazra bontottam 80--20\% arányban.
+A felosztás során ügyeltem arra, hogy a sikeres és nem sikeres játékok aránya
+mindkét részhalmazban megegyezzen az eredeti adathalmaz eloszlásával.
+Ez biztosítja, hogy a modell tanítása és értékelése során egyik osztály se legyen
+felül- vagy alulreprezentált.
+
 A teljesítményt több metrika alapján értékeltem:
 
 \begin{itemize}
     \item \textbf{Accuracy} (pontosság)\cite{metrics} – összes helyes besorolás aránya,
     \item \textbf{Precision} (precízió), \textbf{Recall, F1}\cite{metrics} – különösen hasznos, ha az osztályok eloszlása nem tökéletesen egyenletes,
-    \item \textbf{Konfúziós mátrix}\cite{metrics} – a tévesztések típusainak áttekintésére,
     \item ahol releváns, \textbf{ROC--AUC}\cite{roc-auc} – rangsorolási minőség mérésére.
 \end{itemize}
 
@@ -107,7 +181,7 @@ A pozitív értékelések átlagos arányának alakulását az évek függvény�
 
 A bemutatott ábrák nemcsak leíró statisztikai szerepet töltenek be, hanem megalapozzák a későbbi prediktív modellezést is, mivel rávilágítanak a sikerességi mutató eloszlására és időbeli viselkedésére.
 
-\Section{Domain 2: Multiplayer vs. singleplayer osztályozás}
+\Section{Vizsgálat 2: Multiplayer vs. singleplayer osztályozás}
 
 \subsection{A probléma specifikációja (cél)}
 A második feladat célja annak meghatározása, hogy egy játék inkább
@@ -117,14 +191,69 @@ a multiplayerhez kapcsolódó jelölések (pl. \textit{Multi-player}, \textit{On
 \textit{Co-op} stb.) jelenléte esetén a rekord a multiplayer osztályba kerül.
 
 \subsection{Adatkijelölés és jellemzők}
-Ehhez a feladathoz a játékok \textit{szöveges leírását} és a kapcsolódó információkat használtam fel.
-A jellemzőképzés alapja a szöveg vektorizálása:
 
+Ehhez a feladathoz a játékok \textit{szöveges leírásait}
+és a kapcsolódó metaadatokat használtam fel,
+mivel a multiplayer jelleg elsősorban
+a játékmechanikákra és funkciókra vonatkozó információkból
+vezethető le.
+
+A numerikus jellemzők (például ár, értékelésszám,
+átlagos játékidő vagy Metacritic-pontszám)
+előzetes vizsgálata során
+korrelációanalízist és főkomponens-elemzést alkalmaztam.
+Ezek az elemzések azt mutatták,
+hogy a célváltozó (\textit{multiplayer vs. singleplayer})
+csak gyenge kapcsolatot mutat a mennyiségi attribútumokkal,
+valamint hogy a numerikus jellemzők
+erősen redundáns információt hordoznak.
+Ez alapján a numerikus változók
+nem tekinthetők elsődleges prediktoroknak
+a vizsgált osztályozási feladatban.
+
+Ennek megfelelően a jellemzőképzés fókuszába
+a szöveges és strukturált leíró információk kerültek,
+amelyek közvetlenebb módon tükrözik
+a játékok funkcionalitását és játékmenetét.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/numeric_correlation_mp.png}
+    \caption{A numerikus jellemzők és a célváltozó kapcsolata}
+    \label{fig:numeric_correlation_mp}
+\end{figure}
+
+A numerikus jellemzők és a célváltozó kapcsolatát
+a \ref{fig:numeric_correlation_mp} ábra szemlélteti.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/pca_numeric_mp.png}
+    \caption{A főkomponens-elemzés eredményei}
+    \label{fig:pca_numeric_mp}
+\end{figure}
+
+A főkomponens-elemzés eredményeit
+a \ref{fig:pca_numeric_mp} ábra mutatja.
+
+A felhasznált jellemzők a következők voltak:
 \begin{itemize}
-    \item \textbf{Szövegmezők:} például a játék leírása (\textit{about\_the\_game} vagy hasonló mezők),
-    \item \textbf{Szöveges reprezentáció:} TF--IDF (Term Frequency – Inverse Document Frequency)\cite{tf-idf} vektorizálás, amely a gyakori, de kevésbé informatív szavakat
-    leértékeli, és a megkülönböztető kifejezéseket kiemeli.
+    \item \textbf{Szöveges mezők:} a játék részletes leírása
+    (\textit{about\_the\_game}) és rövid leírása
+    (\textit{short\_description}),
+    \item \textbf{Szöveges reprezentáció:}
+    TF--IDF (Term Frequency – Inverse Document Frequency)\cite{tf-idf} vektorizálás,
+    amely a gyakori, de kevésbé informatív szavakat leértékeli,
+    míg a megkülönböztető kifejezéseket nagyobb súllyal emeli ki,
+    \item \textbf{Strukturált jellemzők:}
+    a játékokhoz tartozó tagek és műfajok,
+    bináris (multi-hot)\cite{multi-hot} kódolás formájában.
 \end{itemize}
+
+Ez a jellemzőválasztás lehetővé tette,
+hogy a modellek egyszerre használják ki
+a természetes nyelvű leírásokban rejlő szemantikai információt
+és a metaadatok explicit módon megadott kategorizálását.
 
 \subsection{Előfeldolgozás}
 
@@ -170,18 +299,13 @@ mint a logisztikus regresszió\cite{logistic regression} vagy a lineáris SVM\ci
 amelyek hatékonyan kezelik a magas dimenziós,
 szórványos jellemzőtereket.
 
-
 \subsection{Tanítás/tesztelés és metrikák}
-A tanító/teszt felosztást itt is stratifikált módon készítettem,
-mivel a multiplayer/singleplayer címkék eloszlása torzított lehet.
-A kiértékelés a klasszikus osztályozási metrikák mentén történt:
 
-\begin{itemize}
-    \item \textbf{Accuracy} (pontosság)\cite{metrics} – összes helyes besorolás aránya,
-    \item \textbf{Precision} (precízió), \textbf{Recall, F1}\cite{metrics} – különösen hasznos, ha az osztályok eloszlása nem tökéletesen egyenletes,
-    \item \textbf{Konfúziós mátrix}\cite{metrics} – a tévesztések típusainak áttekintésére,
-    \item ahol releváns, \textbf{ROC--AUC}\cite{roc-auc} – rangsorolási minőség mérésére.
-\end{itemize}
+A tanító/teszt felosztást stratifikált módon végeztem, hogy az osztálycímkék
+eloszlása mindkét részhalmazban megőrződjön.
+A modell teljesítményét az osztályozási feladatoknál szokásos metrikák
+segítségével értékeltem (Accuracy, Precision, Recall, F1\cite{metrics}, valamint ahol
+releváns, ROC--AUC\cite{roc-auc}), az előző alfejezetben bemutatott módon.
 
 \subsection{Mennyiségi jellemzők és osztályeloszlás}
 
@@ -203,12 +327,17 @@ alkalmazását.
 A szöveges leírás hosszának eloszlását osztályonként
 a \ref{fig:description_length_by_class} ábra szemlélteti.
 Az ábra normalizált gyakoriságokat mutat,
-a szélsőséges értékek hatásának csökkentése érdekében
+a szélsőséges értékek vizuális hatásának csökkentése érdekében
 a 99. percentilisig korlátozott tartományban.
 
-Megfigyelhető, hogy a multiplayer játékok leírásai
-jellemzően hosszabbak,
-és eloszlásuk jobbra elnyúlóbb a singleplayer játékokéhoz képest.
+Megfigyelhető, hogy mindkét osztály esetén az eloszlás
+erősen jobbra ferde, hosszú jobb oldali farokkal rendelkezik,
+ami kizárja a normalitás feltételezését.
+Az eloszlás alakja lognormális jellegre utal,
+ami összhangban van a szöveghossz multiplikatív természetével.
+
+A multiplayer játékok leírásai jellemzően hosszabbak,
+és eloszlásuk nagyobb szórást mutat a singleplayer játékokéhoz képest.
 Ez arra utal, hogy a leírás hossza
 megkülönböztető információt hordozhat az osztályok között,
 ami indokolja a szöveges jellemzők bevonását
@@ -221,18 +350,41 @@ a későbbi modellezési lépések során.
     \label{fig:description_length_by_class}
 \end{figure}
 
-\Section{Átvezetés a következő fejezetre}
+A log(1 + szószám) transzformáció után az eloszlások közel szimmetrikussá válnak
+(lásd \ref{fig:description_length_by_class_log} ábra),
+ami alátámasztja a lognormális jelleg feltételezését.
 
-A fejezetben bemutatott osztályozási problémákhoz kapcsolódó
-adatelőkészítési lépések, jellemzőelemzések és célváltozó-definíciók
-megalapozták a további modellezési feladatokat.
-A bemutatott mennyiségi jellemzők és eloszlások alapján
-mindkét vizsgált domain esetében indokolt a gépi tanulási
-osztályozási módszerek alkalmazása.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/eda_description_length_distribution_by_class_log.png}
+    \caption{A leírás hosszának eloszlása log(1 + szószám) transzformáció után}
+    \label{fig:description_length_by_class_log}
+\end{figure}
 
-A következő fejezet az előzőekben definiált osztályozási problémák
-konkrét megoldására fókuszál.
-Bemutatásra kerülnek az alkalmazott tanulóalgoritmusok,
-a tanítás és validálás folyamata, valamint az egyes modellek
-teljesítményének összehasonlítása a kiválasztott értékelési
-metrikák segítségével.
+\Section{Összegzés és további vizsgálati lehetőségek}
+
+Az 5. fejezetben két, egymástól eltérő bináris osztályozási problémát
+fogalmaztam meg a Steam\cite{steam}-adathalmaz alapján.
+A célváltozók definiálását részletes jellemzőelemzés és
+eloszlásvizsgálat előzte meg,
+amelyek rávilágítottak az egyes feladatok eltérő jellegére
+és a releváns prediktorváltozók körére.
+
+A sikeresség becslésére irányuló feladat esetében
+a numerikus és kategóriajellegű változók együttes alkalmazása
+indokoltnak bizonyult,
+míg a multiplayer vs. singleplayer osztályozásnál
+a szöveges leírások és strukturált metaadatok
+hordozzák a legfontosabb megkülönböztető információt.
+A leíráshossz eloszlásának vizsgálata azt is megmutatta,
+hogy a szöveges jellemzők statisztikai tulajdonságai
+nemlineáris jellegűek,
+ami befolyásolja a később alkalmazott modellek megválasztását.
+
+A bemutatott elemzések megalapozták a következő fejezetben tárgyalt
+osztályozási modellek kiválasztását és értékelését.
+További vizsgálati lehetőséget jelenthetne például
+összetettebb szöveges reprezentációk
+(beágyazások, neurális nyelvi modellek),
+valamint alternatív küszöbértékek és költségérzékeny
+osztályozási megközelítések elemzése.

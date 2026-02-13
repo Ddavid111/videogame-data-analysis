@@ -11,6 +11,45 @@ különös tekintettel az osztályok közötti kiegyensúlyozottságra
 
 \subsection{Alternatív osztályozási módszerek összehasonlítása}
 
+\subsubsection{A Random Forest és Gradient Boosting modellek paraméterezése}
+
+A nemlineáris modellek implementációja a \texttt{scikit-learn}\cite{scikit} könyvtár
+keretrendszerében történt. Mindkét modell döntési fák együttes alkalmazásán
+alapul, azonban eltérő tanítási stratégiát alkalmaznak.
+
+A Random Forest modell\cite{random forest} több, egymástól független döntési fa
+bootstrap mintavételezéssel történő tanításán alapul,
+majd az egyes fák predikcióit aggregálja (többségi szavazás).
+A modell tanítása során az alábbi fő paramétereket alkalmaztam:
+
+\begin{itemize}
+    \item döntési fák száma: \texttt{n\_estimators = 200},
+    \item véletlen inicializáció: \texttt{random\_state = 42},
+    \item párhuzamos feldolgozás engedélyezve: \texttt{n\_jobs = -1},
+    \item a további paraméterek a \texttt{scikit-learn} alapértelmezett beállításai
+    (például \texttt{criterion = gini}, \texttt{bootstrap = True},
+    \texttt{max\_depth = None}).
+\end{itemize}
+
+A Gradient Boosting modell\cite{gradient boosting} ezzel szemben szekvenciális módon építi fel
+a döntési fákat, ahol minden új fa a korábbi modellek hibájának
+csökkentésére törekszik. A tanítás során az alábbi paraméterezést alkalmaztam:
+
+\begin{itemize}
+    \item véletlen inicializáció: \texttt{random\_state = 42},
+    \item a további paraméterek a \texttt{scikit-learn} alapértelmezett beállításai
+    (például az iterációk száma, tanulási ráta és fa-struktúra paraméterei).
+\end{itemize}
+
+A modellek tanítása azonos tanító- és teszthalmaz felosztás mellett történt,
+biztosítva az összehasonlítás konzisztenciáját.
+Az alkalmazott paraméterek a szakirodalomban gyakran használt
+alapértelmezett konfigurációt követik, amely megfelelő kiindulópontot
+biztosít a különböző modellek összehasonlító vizsgálatához.
+
+
+\subsubsection{Az alkalmazott osztályozási modellek és értékelésük}
+
 A logisztikus regresszió\cite{logistic regression} mellett több további, gyakran alkalmazott osztályozási módszert is
 megvizsgáltam a videojátékok sikerességének becslésére.
 Mivel a jellemzőmátrix és a célváltozó már rendelkezésre állt, az összehasonlítás egységes
@@ -115,7 +154,7 @@ ami alátámasztja a korábbi fejezetekben levont következtetéseket.
 
 \subsection{A strukturált jellemzők hatása}
 
-A tagek és műfajok bináris (multi-hot) reprezentációjának hozzáadása
+A tagek és műfajok bináris (multi-hot)\cite{multi-hot} reprezentációjának hozzáadása
 különösen a multiplayer osztály visszahívási arányát növelte.
 Ez azt jelzi, hogy a strukturált metaadatok
 explicit módon hordozzák a játékmechanikákra vonatkozó információkat,
