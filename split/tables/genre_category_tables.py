@@ -73,14 +73,10 @@ def create_categories_table(master_df: pd.DataFrame, output_dir: str = None):
 
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
-        logging.info(
-            "Saved 'categories.csv' "
-            f"({len(categories_df)} rows) to {output_dir}"
-        )
-        logging.info(
-            "Saved 'game_category.csv' "
-            f"({len(game_category_df)} rows) to {output_dir}"
-        )
+        categories_path = os.path.join(output_dir, "categories.csv")
+        game_category_path = os.path.join(output_dir, "game_category.csv")
+        categories_df.to_csv(categories_path, index=False)
+        game_category_df.to_csv(game_category_path, index=False)
         logging.info(
             "Saved 'categories.csv' "
             f"({len(categories_df)} rows) to {output_dir}"
