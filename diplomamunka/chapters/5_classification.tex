@@ -72,8 +72,6 @@ Ez különösen hasznos a videojátékok sikerességének becslése során,
 ahol a cél nemcsak a bináris döntés,
 hanem a játékok relatív rangsorolása is.
 
-
-
 \Section{Vizsgálat 1: Videójáték sikerességének becslése}
 
 \subsection{A probléma specifikációja (cél)}
@@ -162,7 +160,7 @@ A pozitív értékelések arányának eloszlását a \ref{fig:positive_ratio_dis
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/pos_rating_ratio_distribution.png}
+    \includegraphics[width=0.8\textwidth]{images/pos_rating_ratio_threshold.png}
     \caption{A pozitív értékelések arányának eloszlása a videojátékok között}
     \label{fig:positive_ratio_dist}
 \end{figure}
@@ -222,6 +220,15 @@ a játékok funkcionalitását és játékmenetét.
     \caption{A numerikus jellemzők és a célváltozó kapcsolata}
     \label{fig:numeric_correlation_mp}
 \end{figure}
+
+A korrelációs mátrix alapján különösen magas kapcsolat figyelhető meg
+a \textit{num\_reviews\_total}, \textit{positive} és \textit{negative}
+változók között.
+Ez a jelenség a változók definíciójából fakad:
+az összes értékelésszám közelítőleg a pozitív és negatív értékelések összege,
+így ezek nem független információforrások.
+A magas korreláció tehát strukturális eredetű,
+és a jellemzők redundáns jellegére utal.
 
 A numerikus jellemzők és a célváltozó kapcsolatát
 a \ref{fig:numeric_correlation_mp} ábra szemlélteti.
@@ -326,38 +333,51 @@ alkalmazását.
 
 A szöveges leírás hosszának eloszlását osztályonként
 a \ref{fig:description_length_by_class} ábra szemlélteti.
-Az ábra normalizált gyakoriságokat mutat,
-a szélsőséges értékek vizuális hatásának csökkentése érdekében
-a 99. percentilisig korlátozott tartományban.
+Az ábra normalizált gyakoriságokat mutat.
+A szélsőséges értékek vizuális torzító hatásának csökkentése érdekében
+az ábrázolás a 99. percentilisig korlátozott tartományra fókuszál:
+a jobb oldali legfelső 1\%-ba eső leíráshosszakat nem távolítottam el az adathalmazból,
+hanem a hisztogramon a 99. percentilis értékére korlátoztam.
+Ezáltal a grafikon az esetek 99\%-ának eloszlását mutatja,
+és jobban áttekinthetővé válik a fő tömeg szerkezete.
 
 Megfigyelhető, hogy mindkét osztály esetén az eloszlás
-erősen jobbra ferde, hosszú jobb oldali farokkal rendelkezik,
+erősen jobbra ferde, a magas értékek irányába kifejezett elnyúlással jellemezhető,
 ami kizárja a normalitás feltételezését.
 Az eloszlás alakja lognormális jellegre utal,
 ami összhangban van a szöveghossz multiplikatív természetével.
 
-A multiplayer játékok leírásai jellemzően hosszabbak,
-és eloszlásuk nagyobb szórást mutat a singleplayer játékokéhoz képest.
-Ez arra utal, hogy a leírás hossza
-megkülönböztető információt hordozhat az osztályok között,
+A multiplayer játékok leírásai hosszabbak és nagyobb szórást mutatnak.
+A medián szószám multiplayer esetén 250 (IQR\cite{IQR} 169--362),
+míg singleplayer esetén 201 (IQR: 137--291).
+Az átlagos leíráshossz szintén magasabb multiplayer játékoknál
+(290.04 szó), mint singleplayer esetén (234.76 szó).
+A felső 1\%-ba tartozó értékek is jelentősen nagyobbak
+(multiplayer: 975.25 szó, singleplayer: 782 szó),
+ami erősebb felső tartománybeli elnyúlásra utal.
+
+Az eloszlások közötti különbségek arra utalnak,
+hogy a leírás hossza diszkriminatív információt hordozhat az osztályok között,
 ami indokolja a szöveges jellemzők bevonását
 a későbbi modellezési lépések során.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{images/eda_description_length_distribution_by_class_p99_normalized.png}
-    \caption{A leírás hosszának eloszlása osztályonként (normalizált)}
+    \caption{A leírás hosszának eloszlása osztályonként (normalizált, 0--99. percentilis)}
     \label{fig:description_length_by_class}
 \end{figure}
 
-A log(1 + szószám) transzformáció után az eloszlások közel szimmetrikussá válnak
+A $\log(1 + \text{szószám})$ transzformáció csökkenti
+a magas értékek irányába mutató elnyúlás mértékét,
+és az eloszlásokat közel szimmetrikussá teszi
 (lásd \ref{fig:description_length_by_class_log} ábra),
-ami alátámasztja a lognormális jelleg feltételezését.
+ami tovább erősíti a lognormális jelleg feltételezését.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{images/eda_description_length_distribution_by_class_log.png}
-    \caption{A leírás hosszának eloszlása log(1 + szószám) transzformáció után}
+    \caption{A leírás hosszának eloszlása $\log(1 + \text{szószám})$ transzformáció után}
     \label{fig:description_length_by_class_log}
 \end{figure}
 
