@@ -1,5 +1,13 @@
-pandas
+beautifulsoup4
+ipywidgets
+jupyter
 matplotlib
+matplotlib-venn
+nbconvert
+numpy
+pandas
+scikit-learn
 seaborn
-standard-imghdr
+sphinx
+sphinx-rtd-theme
 sphinx-plantuml
