@@ -15,7 +15,7 @@ Az alábbi jegyzékek vesznek részt az adathalmazok összefésülésében:
 * `merge/visualization/ <https://github.com/Ddavid111/videogame-data-analysis/tree/main/merge/visualization>`_
   – A mergelt adathalmazra épülő hisztogramok, Venn-diagram és összefoglaló ábrák generálása.
 
-* `merge/output/ <https://github.com/Ddavid111/videogame-data-analysis/tree/main/merge/output>`_
+* `merge/generated/ <https://github.com/Ddavid111/videogame-data-analysis/tree/main/merge/generated>`_
   – A futtatás során keletkező kimeneti ábrák (PNG fájlok) gyűjtőmappája.
 
 
@@ -264,15 +264,15 @@ Az alábbi részlet egy valós futtatás logkimenetéből származik:
     [2025-11-17 20:57:53] INFO: Loaded: steam_requirements_data.csv (27319 rows)
     [2025-11-17 20:57:55] INFO: SteamSpy tags converted → 28447 appid with tag data
     [2025-11-17 20:57:55] INFO: A source merged: 27075 rows
-    [2025-11-17 20:58:00] INFO: A source saved: C:\Users\zalma\merge\A_merged.csv
+    [2025-11-17 20:58:00] INFO: A source saved: merge/generated/sources/A_merged.csv
     [2025-11-17 20:58:12] INFO: B source loaded from JSON: 111452 rows
-    [2025-11-17 20:58:25] INFO: B source saved: C:\Users\zalma\merge\B_full.csv
+    [2025-11-17 20:58:25] INFO: B source saved: merge/generated/sources/B_full.csv
     [2025-11-17 20:58:32] INFO: Loaded: games_march2025_cleaned.csv (89618 rows)
     [2025-11-17 20:58:38] INFO: Loaded: games_march2025_full.csv (94948 rows)
     [2025-11-17 20:58:44] INFO: Loaded: games_may2024_cleaned.csv (83646 rows)
     [2025-11-17 20:58:49] INFO: Loaded: games_may2024_full.csv (87806 rows)
     [2025-11-17 20:58:49] INFO: C source combined: 356018 rows
-    [2025-11-17 20:59:27] INFO: C source saved: C:\Users\zalma\merge\C_full.csv
+    [2025-11-17 20:59:27] INFO: C source saved: merge/generated/sources/C_full.csv
     [2025-11-17 20:59:28] INFO: Merging sources with C→B→A priority...
     [2025-11-17 20:59:52] INFO: Merge complete (112855 rows, 63 columns)
     [2025-11-17 20:59:57] INFO: Normalized thumbnail screenshots for source A (27075 items)
@@ -288,10 +288,10 @@ Az alábbi részlet egy valós futtatás logkimenetéből származik:
     [2025-11-17 21:02:25] INFO: Final language cleanup on supported_languages: 542206 → 542160 entries (after filtering).
     [2025-11-17 21:02:29] INFO: Final language cleanup on full_audio_languages: 212743 → 212736 entries (after filtering).
     [2025-11-17 21:02:29] INFO: 41830 rows have identical supported and audio language sets.
-    [2025-11-17 21:02:48] INFO: Merged table saved: C:\Users\zalma\merge\merged_master.csv
-    [2025-11-17 21:02:48] INFO: Merged master table saved to: C:\Users\zalma\merge\merged_master.csv
-    [2025-11-17 21:02:48] INFO: Source summary saved: C:\Users\zalma\merge\source_summary.csv
-    [2025-11-17 21:02:48] INFO: Integrity check completed, saved to C:\Users\zalma\merge\integrity_report.csv
+    [2025-11-17 21:02:48] INFO: Merged table saved: merge/generated/tables/merged_master.csv
+    [2025-11-17 21:02:48] INFO: Merged master table saved to: merge/generated/tables/merged_master.csv
+    [2025-11-17 21:02:48] INFO: Source summary saved: merge/generated/reports/source_summary.csv
+    [2025-11-17 21:02:48] INFO: Integrity check completed, saved to merge/generated/reports/integrity_report.csv
     [2025-11-17 21:02:48] INFO: === Generating histograms ===
     [2025-11-17 21:03:11] INFO: === Merge process successfully completed ===
 
