@@ -100,7 +100,8 @@ def main():
     - HTML tisztítás
     - mentés
     """
-    base_path = r"C:\Users\zalma"
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+    base_path = os.path.join(project_root, "data")
     raw_path = os.path.join(base_path, "A", "steam_description_data.csv")
     clean_filename = "steam_description_data_cleaned.csv"
     clean_path = os.path.join(base_path, "A", clean_filename)

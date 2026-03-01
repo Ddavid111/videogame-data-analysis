@@ -6,7 +6,9 @@ merge/A_merged.csv
 merge/B_full.csv
 merge/C_full.csv
 merge/merged_master.csv
-split/*.csv
+merge/generated/sources
+merge/generated/tables
+split/generated/tables
 diplomamunka/**/*.aux
 diplomamunka/**/*.log
 diplomamunka/**/*.out
@@ -15,3 +17,4 @@ diplomamunka/**/*.synctex.gz
 diplomamunka/**/*.thm
 diplomamunka/**/*.pdf
 !diplomamunka/images/**/*.pdf
+data

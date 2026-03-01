@@ -11,9 +11,9 @@ from sklearn.linear_model import LinearRegression
 # =========================================
 # CONFIG
 # =========================================
-BASE_PATH = r"C:\Users\zalma\videogame-data-analysis"
-MERGED_PATH = os.path.join(BASE_PATH, "merge", "merged_master.csv")
-OUTPUT_DIR = os.path.join(BASE_PATH, "merge", "output")
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+MERGED_PATH = os.path.join(PROJECT_ROOT, "merge", "generated", "tables", "merged_master.csv")
+OUTPUT_DIR = os.path.join(PROJECT_ROOT, "merge", "generated", "plots")
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
