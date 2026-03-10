@@ -7,9 +7,9 @@ elkülöníthetők és önállóan is áttekinthetők.
 
 Az egyes munkafüzetek az alábbi linkeken érhetők el:
 
-* `A adathalmaz munkafüzete <https://github.com/Ddavid111/videogame-data-analysis/blob/main/notebooks/A.ipynb>`_
-* `B adathalmaz munkafüzete <https://github.com/Ddavid111/videogame-data-analysis/blob/main/notebooks/B.ipynb>`_
-* `C adathalmaz munkafüzete <https://github.com/Ddavid111/videogame-data-analysis/blob/main/notebooks/C.ipynb>`_
+* `A adathalmaz munkafüzete <https://github.com/Ddavid111/videogame-data-analysis/blob/main/notebooks/Dataset_Analyses/A.ipynb>`_
+* `B adathalmaz munkafüzete <https://github.com/Ddavid111/videogame-data-analysis/blob/main/notebooks/Dataset_Analyses/B.ipynb>`_
+* `C adathalmaz munkafüzete <https://github.com/Ddavid111/videogame-data-analysis/blob/main/notebooks/Dataset_Analyses/C.ipynb>`_
 
 Az eredeti CSV fájlok a projekt *README* fájljában megadott linken érhetők el.
 

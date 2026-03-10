@@ -26,7 +26,7 @@ Az eredményt egy jól áttekinthető CSV táblázatba is elmenti.
 
 A generált állomány itt érhető el:
 
-`source_summary.csv <https://github.com/Ddavid111/videogame-data-analysis/blob/main/merge/generated/reports/source_summary.csv>`_ — *Forrásonkénti rekordmegoszlás*
+`source_summary.csv <https://github.com/Ddavid111/videogame-data-analysis/blob/main/notebooks/merge/generated/reports/source_summary.csv>`_ — *Forrásonkénti rekordmegoszlás*
 
 
 .. code-block:: python
@@ -68,7 +68,7 @@ végzi el:
 
 Az eredmény egy külön CSV jelentésben kerül mentésre.
 
-`integrity_report.csv <https://github.com/Ddavid111/videogame-data-analysis/blob/main/merge/generated/reports/integrity_report.csv>`_ — *Integritásvizsgálati összesítő*
+`integrity_report.csv <https://github.com/Ddavid111/videogame-data-analysis/blob/main/notebooks/merge/generated/reports/integrity_report.csv>`_ — *Integritásvizsgálati összesítő*
 
 
 .. code-block:: python

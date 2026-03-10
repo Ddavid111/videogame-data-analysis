@@ -5,7 +5,7 @@ A három forrásadat (A, B, C) közötti átfedést egy **Venn-diagram** szemlé
 amely megmutatja, hogy mely appID-k találhatók meg kizárólag egy adott 
 adatforrásban, illetve melyek vannak jelen több forrás metszetében is.
 
-.. image:: ../../merge/generated/venn/venn_diagram.png
+.. image:: ../../notebooks/merge/generated/venn/venn_diagram.png
    :align: center
    :alt: Források átfedése – Venn-diagram
    :class: merge-diagram
@@ -73,4 +73,4 @@ A Venn-diagram létrehozását az alábbi három lépés valósítja meg:
       )
 
    A diagram a ``merge/generated/venn/venn_diagram.png`` fájlba kerül mentésre, 
-   míg az elemszámos táblázat `venn_table.csv <https://github.com/Ddavid111/videogame-data-analysis/blob/main/merge/generated/venn/venn_table.csv>`_ formában is elérhető.
+   míg az elemszámos táblázat `venn_table.csv <https://github.com/Ddavid111/videogame-data-analysis/blob/main/notebooks/merge/generated/venn/venn_table.csv>`_ formában is elérhető.

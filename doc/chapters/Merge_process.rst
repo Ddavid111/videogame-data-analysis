@@ -1,13 +1,13 @@
 Merge Process
 =============
 
-.. image:: ../../merge/merge_folyamat.svg
+.. image:: ../Merge_process_diagram/merge_folyamat.svg
    :align: center
    :alt: Merge folyamat ábrája
    :class: merge-diagram
 
 *A fenti ábra PlantUML forráskódja külön fájlban is elérhető:*  
-`merge_process.puml <https://github.com/Ddavid111/videogame-data-analysis/blob/main/merge/merge.puml>`_
+`merge_process.puml <https://github.com/Ddavid111/videogame-data-analysis/blob/main/doc/Merge_process_diagram/merge.puml>`_
 
 Lépések
 --------

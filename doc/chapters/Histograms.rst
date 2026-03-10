@@ -18,12 +18,12 @@ Az elemzésben megjelennek:
 
 Az ábrák minden esetben a következő könyvtárban találhatók:
 
-`merge/generated/plots <https://github.com/Ddavid111/videogame-data-analysis/tree/main/merge/generated/plots>`_
+`merge/generated/plots <https://github.com/Ddavid111/videogame-data-analysis/tree/main/notebooks/merge/generated/plots>`_
 
 Összes játék megjelenése évente
 -------------------------------------------
 
-.. image:: ../../merge/generated/plots/hist_all_years.png
+.. image:: ../../notebooks/merge/generated/plots/hist_all_years.png
    :align: center
    :alt: Összes játék megjelenése évente
    :class: merge-diagram
@@ -36,7 +36,7 @@ melyet a Steam Direct modell és az indie fejlesztők tömeges megjelenése okoz
 Játékmegjelenések 2010 előtt
 -------------------------------------------
 
-.. image:: ../../merge/generated/plots/hist_pre2010.png
+.. image:: ../../notebooks/merge/generated/plots/hist_pre2010.png
    :align: center
    :alt: Megjelenések 2010 előtt
    :class: merge-diagram
@@ -48,7 +48,7 @@ a kiadói modell dominált, indie fejlesztők alig voltak jelen.
 Játékmegjelenések 2010 után
 -------------------------------------------
 
-.. image:: ../../merge/generated/plots/hist_post2010.png
+.. image:: ../../notebooks/merge/generated/plots/hist_post2010.png
    :align: center
    :alt: Megjelenések 2010 után
    :class: merge-diagram
@@ -70,21 +70,21 @@ A három kategória külön grafikonon is megjelenik.
 
 **A kategória:**
 
-.. image:: ../../merge/generated/plots/hist_sources_A.png
+.. image:: ../../notebooks/merge/generated/plots/hist_sources_A.png
    :align: center
    :alt: A kategória évenkénti megjelenései
    :class: merge-diagram
 
 **B kategória:**
 
-.. image:: ../../merge/generated/plots/hist_sources_B.png
+.. image:: ../../notebooks/merge/generated/plots/hist_sources_B.png
    :align: center
    :alt: B kategória évenkénti megjelenései
    :class: merge-diagram
 
 **C kategória:**
 
-.. image:: ../../merge/generated/plots/hist_sources_C.png
+.. image:: ../../notebooks/merge/generated/plots/hist_sources_C.png
    :align: center
    :alt: C kategória évenkénti megjelenései
    :class: merge-diagram
@@ -96,7 +96,7 @@ A **B** és **C** kategória növekedése sokkal szignifikánsabb, mint az **A**
 Top 5 műfaj időbeli trendje
 -------------------------------------------
 
-.. image:: ../../merge/generated/plots/hist_genres_top5.png
+.. image:: ../../notebooks/merge/generated/plots/hist_genres_top5.png
    :align: center
    :alt: Top 5 műfaj trendje
    :class: merge-diagram
@@ -175,7 +175,7 @@ idősorai nem tekinthetők egymástól függetlennek.
 Éves növekedési faktor (log-skála)
 -------------------------------------------
 
-.. image:: ../../merge/generated/plots/hist_growth_rates.png
+.. image:: ../../notebooks/merge/generated/plots/hist_growth_rates.png
    :align: center
    :alt: Éves növekedési faktor
    :class: merge-diagram
@@ -187,7 +187,7 @@ illetve a stagnáló vagy visszaeső periódusokat.
 Év × nap hőtérkép
 -------------------------------------------
 
-.. image:: ../../merge/generated/plots/heatmap_year_day.png
+.. image:: ../../notebooks/merge/generated/plots/heatmap_year_day.png
    :align: center
    :alt: Év × Nap hőtérkép
    :class: merge-diagram
@@ -205,7 +205,7 @@ kapcsolódó hatások ebben a nézetben részben elkenődnek.
 Év × (ISO hét × hét napja) hőtérkép
 -----------------------------------
 
-.. image:: ../../merge/generated/plots/heatmap_year_weekday_aligned.png
+.. image:: ../../notebooks/merge/generated/plots/heatmap_year_weekday_aligned.png
    :align: center
    :alt: Év × ISO hét × hét napja hőtérkép
    :class: merge-diagram
@@ -226,7 +226,7 @@ mivel az eltérő felbontások más-más jellegű mintázatokat emelnek ki.
 
 **Havi overlay:**
 
-.. image:: ../../merge/generated/plots/seasonal_monthly_overlay.png
+.. image:: ../../notebooks/merge/generated/plots/seasonal_monthly_overlay.png
    :align: center
    :alt: Havi szezonális mintázatok
    :class: merge-diagram
@@ -237,7 +237,7 @@ szinte minden hónapban emelkedő trendet követ, jelentősebb visszaesések né
 
 **Heti overlay:**
 
-.. image:: ../../merge/generated/plots/seasonal_weekly_overlay.png
+.. image:: ../../notebooks/merge/generated/plots/seasonal_weekly_overlay.png
    :align: center
    :alt: Heti szezonális mintázatok
    :class: merge-diagram
@@ -248,7 +248,7 @@ ami arra utal, hogy a publikálási dinamika időben stabil szerkezetet követ.
 
 **Napi (ISO-heti igazított) overlay:**
 
-.. image:: ../../merge/generated/plots/seasonal_weekly_overlay_iso.png
+.. image:: ../../notebooks/merge/generated/plots/seasonal_weekly_overlay_iso.png
    :align: center
    :alt: Heti bontás – weekday-hatás csökkentése
    :class: merge-diagram
@@ -269,7 +269,7 @@ megjelenésszám figyelhető meg.
 2026 előrejelzés (log-lineáris trend alapján)
 ---------------------------------------------
 
-.. image:: ../../merge/generated/plots/forecast_2026_log_modern.png
+.. image:: ../../notebooks/merge/generated/plots/forecast_2026_log_modern.png
    :align: center
    :alt: 2026 előrejelzés log-lineáris trenddel
    :class: merge-diagram
@@ -287,7 +287,7 @@ miatt a következő években mérséklődhet.
 Modellvalidáció – 2024 visszateszt
 ----------------------------------
 
-.. image:: ../../merge/generated/plots/forecast_2024_log_modern.png
+.. image:: ../../notebooks/merge/generated/plots/forecast_2024_log_modern.png
    :align: center
    :alt: 2024 előrejelzés visszateszt
    :class: merge-diagram

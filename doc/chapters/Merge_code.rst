@@ -6,24 +6,24 @@ A merge-kód felépítése
 
 Az alábbi jegyzékek vesznek részt az adathalmazok összefésülésében:
 
-* `merge/sources/ <https://github.com/Ddavid111/videogame-data-analysis/tree/main/merge/sources>`_
+* `merge/sources/ <https://github.com/Ddavid111/videogame-data-analysis/tree/main/notebooks/merge/sources>`_
   – Az A, B és C forrásadatok beolvasásáért és előtisztításáért felelős modulok.
 
-* `merge/utils/ <https://github.com/Ddavid111/videogame-data-analysis/tree/main/merge/utils>`_
+* `merge/utils/ <https://github.com/Ddavid111/videogame-data-analysis/tree/main/notebooks/merge/utils>`_
   – Általános segédfüggvények az I/O műveletekhez, tisztításhoz, normalizáláshoz és a merge-lépések támogatásához.
 
-* `merge/visualization/ <https://github.com/Ddavid111/videogame-data-analysis/tree/main/merge/visualization>`_
+* `merge/visualization/ <https://github.com/Ddavid111/videogame-data-analysis/tree/main/notebooks/merge/visualization>`_
   – A mergelt adathalmazra épülő hisztogramok, Venn-diagram és összefoglaló ábrák generálása.
 
-* `merge/generated/ <https://github.com/Ddavid111/videogame-data-analysis/tree/main/merge/generated>`_
+* `merge/generated/ <https://github.com/Ddavid111/videogame-data-analysis/tree/main/notebooks/merge/generated>`_
   – A futtatás során keletkező kimeneti ábrák (PNG fájlok) gyűjtőmappája.
 
 
 A merge folyamatot a  
-`merge/main.ipynb <https://github.com/Ddavid111/videogame-data-analysis/blob/main/merge/main.ipynb>`_  
+`merge/main.ipynb <https://github.com/Ddavid111/videogame-data-analysis/blob/main/notebooks/merge/main.ipynb>`_  
 notebook vezérli,  
 a közös beállításokat pedig a  
-`merge/config.py <https://github.com/Ddavid111/videogame-data-analysis/blob/main/merge/config.py>`_  
+`merge/config.py <https://github.com/Ddavid111/videogame-data-analysis/blob/main/notebooks/merge/config.py>`_  
 tartalmazza.
 
 Kiemelt kódrészletek

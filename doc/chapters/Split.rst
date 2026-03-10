@@ -3,9 +3,9 @@ A merged tábla felosztása (splitting)
 
 A split folyamat célja, hogy a ``merged_master.csv`` egyetlen, nagy
 táblájából **tematikus, normalizált CSV-fájlokat** hozzon létre.
-Minden táblát külön függvény épít fel, és a fájlok a `split/generated/tables/ <https://github.com/Ddavid111/videogame-data-analysis/tree/main/split/generated/tables>`_  könyvtárba
+Minden táblát külön függvény épít fel, és a fájlok a `split/generated/tables/ <https://github.com/Ddavid111/videogame-data-analysis/tree/main/notebooks/split/generated/tables>`_  könyvtárba
 kerülnek mentésre. A kód futása során részletes log készül
-(`split_log.txt <https://github.com/Ddavid111/videogame-data-analysis/blob/main/split/generated/logs/split_log.txt>`_ ), amelyben minden művelet nyomon követhető.
+(`split_log.txt <https://github.com/Ddavid111/videogame-data-analysis/blob/main/notebooks/split/generated/logs/split_log.txt>`_ ), amelyben minden művelet nyomon követhető.
 
 A folyamat lépései röviden
 --------------------------
