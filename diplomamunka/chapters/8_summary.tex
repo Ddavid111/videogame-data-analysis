@@ -1,3 +1,147 @@
 \Chapter{Összegzés}
 
+A dolgozat célja a Steam platformról származó videojáték-adatok
+elemzése és különböző osztályozási feladatok megfogalmazása volt
+gépi tanulási módszerek alkalmazásával.
+A kutatás során egy valós, heterogén szerkezetű adathalmaz került
+feldolgozásra, amely numerikus változókat,
+kategóriajellegű metaadatokat és szöveges leírásokat is tartalmazott.
+A munka egyik fontos célkitűzése az volt,
+hogy bemutassa, miként használhatók fel ezek az eltérő típusú információk
+prediktív modellezési feladatokban.
+
+A feldolgozás első lépéseként az adatok tisztítása és egységesítése történt meg.
+Ez magában foglalta a hiányzó értékek kezelését,
+a változók típusának egységesítését,
+valamint a modellek számára megfelelő jellemzők kialakítását.
+A kategóriajellegű mezők bináris reprezentációvá alakítása,
+illetve a szöveges leírások TF--IDF alapú vektorizálása
+lehetővé tette, hogy az eltérő típusú adatok közös jellemzőtérben jelenjenek meg.
+
+A dolgozat két eltérő osztályozási problémát vizsgált.
+Az első feladat a videojátékok sikerességének becslése volt
+a felhasználói értékelésekből származtatott címke alapján.
+Ebben az esetben a strukturált metaadatok és numerikus változók
+alkották a prediktív modellek bemenetét.
+Az elemzés rámutatott arra, hogy a játékok egyes funkcionális
+jellemzői és platformszolgáltatásai kapcsolatban állhatnak
+a felhasználói visszajelzések által tükrözött sikerességgel.
+
+A második vizsgált feladat a multiplayer és singleplayer
+játékok automatikus elkülönítése volt.
+Ebben az esetben a szöveges leírások és a strukturált tagek
+bizonyultak a leginformatívabb jellemzőknek.
+A szöveges reprezentáció lehetővé tette,
+hogy a modellek a játékmechanikákra és funkciókra utaló
+kifejezések alapján különítsék el a két kategóriát.
+
+A különböző osztályozási modellek összehasonlítása azt mutatta,
+hogy mind a lineáris, mind a nemlineáris módszerek
+képesek értelmezhető és stabil predikciókat adni.
+A lineáris modellek előnye elsősorban az értelmezhetőségben
+és a nagy dimenziós jellemzőterek hatékony kezelésében jelentkezett,
+míg az ensemble módszerek bizonyos esetekben
+jobb prediktív teljesítményt mutattak.
+Az eredmények összességében azt jelzik,
+hogy a videojátékokhoz kapcsolódó metaadatok
+és szöveges információk alkalmasak
+gépi tanulási modellek bemeneteként történő felhasználásra.
+
+A dolgozat egyik fontos tanulsága,
+hogy a strukturált és a szöveges jellemzők kombinációja
+jelentősen növelheti az osztályozási modellek információtartalmát.
+A videojátékok leírásai és metaadatai nemcsak marketingcélú
+információkat hordoznak,
+hanem a játékmechanikákra és felhasználói élményre
+vonatkozó implicit jelzéseket is tartalmaznak,
+amelyek a prediktív modellek számára is hasznosak lehetnek.
+
+A bemutatott megközelítés több irányban is továbbfejleszthető.
+A jövőbeni kutatások egyik lehetséges iránya
+összetettebb természetesnyelv-feldolgozási módszerek alkalmazása lehet,
+például szóbeágyazások vagy neurális nyelvi modellek bevonásával.
+Ezek képesek lehetnek a szövegek mélyebb szemantikai szerkezetének
+megragadására, ami tovább javíthatja az osztályozási teljesítményt.
+
+További fejlesztési lehetőséget jelenthet
+összetettebb gépi tanulási modellek alkalmazása is,
+például mély neurális hálózatok vagy fejlettebb ensemble módszerek használata.
+Emellett érdemes lehet a sikeresség fogalmának finomabb modellezése,
+például többosztályos vagy regressziós megközelítés formájában,
+ahol a célváltozó nem bináris,
+hanem folytonos vagy több kategóriából áll.
+
+Összességében a dolgozat bemutatta,
+hogy a Steam platformon elérhető videojáték-adatok
+alkalmasak adatvezérelt elemzések és prediktív modellezési feladatok
+megvalósítására.
+Az alkalmazott módszerek nemcsak a prediktív teljesítmény szempontjából
+bizonyultak hasznosnak,
+hanem lehetőséget adtak a videojátékok tulajdonságai
+és a felhasználói visszajelzések közötti összefüggések
+jobb megértésére is.
+
 \Chapter{Summary}
+
+The aim of this thesis was to analyze video game data obtained from the Steam\cite{steam} platform and to formulate different classification problems using machine learning methods.
+During the research a real, heterogeneous dataset was processed, which contains numerical variables, categorical metadata and textual descriptions.
+One of the main objectives of the work was to demonstrate how these different types of information can be used in predictive modelling tasks.
+
+The first step of the processing was the cleaning and standardization of the data.
+This included the handling of missing values, the unification of variable types,
+and the construction of features suitable for the models.
+Transforming categorical fields into binary representations,
+as well as the TF--IDF based vectorization of textual descriptions,
+made it possible for the different types of data to appear in a common feature space.
+
+The thesis examined two different classification problems.
+The first task was the estimation of the success of video games
+based on a label derived from user reviews.
+In this case structured metadata and numerical variables formed the input of the predictive models.
+The analysis showed that certain functional characteristics and platform services of games
+may be related to the success reflected by user feedback.
+
+The second examined task was the automatic separation of multiplayer and singleplayer games.
+In this case textual descriptions and structured tags proved to be the most informative features.
+The textual representation made it possible for the models
+to distinguish between the two categories
+based on expressions referring to game mechanics and functions.
+
+The comparison of the different classification models showed
+that both linear and nonlinear methods are capable of producing interpretable and stable predictions.
+The advantage of linear models primarily appeared in interpretability
+and in the efficient handling of high-dimensional feature spaces,
+while ensemble methods in some cases showed better predictive performance.
+Overall, the results indicate that the metadata
+and textual information related to video games
+are suitable for being used as inputs of machine learning models.
+
+One important conclusion of the thesis is
+that the combination of structured and textual features
+can significantly increase the information content of classification models.
+Game descriptions and metadata do not only contain marketing information,
+but also implicit signals related to game mechanics and user experience,
+which may also be useful for predictive models.
+
+The presented approach can be further developed in several directions.
+One possible direction of future research is the application
+of more advanced natural language processing methods,
+for example the use of word embeddings or neural language models.
+These may be capable of capturing the deeper semantic structure of texts,
+which could further improve classification performance.
+
+Another possible development direction is the application
+of more complex machine learning models,
+for example deep neural networks or more advanced ensemble methods.
+In addition, the concept of success could be modeled in a more detailed way,
+for example by using multiclass or regression approaches,
+where the target variable is not binary
+but continuous or consists of several categories.
+
+Overall, the thesis demonstrated
+that the video game data available on the Steam platform
+are suitable for data-driven analysis and predictive modelling tasks.
+The applied methods proved to be useful not only from the perspective of predictive performance,
+but also made it possible to better understand the relationships
+between the characteristics of video games
+and user feedback.

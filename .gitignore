@@ -1,14 +1,11 @@
+data/
 doc/_build
 doc/Relational_data_models/*.dia~
 __pycache__/
 .ipynb_checkpoints/
-merge/A_merged.csv
-merge/B_full.csv
-merge/C_full.csv
-merge/merged_master.csv
-merge/generated/sources
-merge/generated/tables
-split/generated/tables
+notebooks/merge/generated/sources
+notebooks/merge/generated/tables
+notebooks/split/generated/tables
 diplomamunka/**/*.aux
 diplomamunka/**/*.log
 diplomamunka/**/*.out
@@ -17,4 +14,3 @@ diplomamunka/**/*.synctex.gz
 diplomamunka/**/*.thm
 diplomamunka/**/*.pdf
 !diplomamunka/images/**/*.pdf
-data

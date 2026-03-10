@@ -1,0 +1,116 @@
+@startuml
+title Videogame Data Merge – implementációs áttekintés
+
+top to bottom direction
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam defaultFontSize 12
+skinparam titleFontSize 14
+skinparam packageStyle rectangle
+
+skinparam class {
+    BackgroundColor #F8F8F8
+    BorderColor #4472C4
+    FontColor Black
+}
+
+skinparam package {
+    BackgroundColor #FFF2CC
+    BorderColor #BF9000
+    FontColor Black
+}
+
+package "merge" {
+
+  class "main.ipynb" as Main {
+    +pipeline vezérlés
+    +források betöltése
+    +merge futtatása
+  }
+
+  class "config.py" as Config
+
+  package "sources" {
+    class "clean_description.py" as CleanDesc {
+      +read_and_fix_multiline_csv(...)
+      +clean_html_text(...)
+      +strip_html(...)
+      +process_description_data(...)
+      +main()
+    }
+
+    class "source_a.py" as SourceA {
+      +load_source_a(...)
+    }
+
+    class "source_b.py" as SourceB {
+      +load_source_b(...)
+    }
+
+    class "source_c.py" as SourceC {
+      +load_source_c(...)
+    }
+  }
+
+  package "utils" {
+    class "category_utils.py" as CatUtils {
+      +combine_cols(...)
+      +merge_developers_publishers(...)
+      +parse_categories(...)
+      +combine_categories(...)
+      +merge_categories(...)
+      +merge_tags_column(...)
+    }
+
+    class "clean_utils.py" as CleanUtils {
+      +clean_columns(...)
+      +clean_language_field_merged(...)
+      +final_clean_language_list(...)
+      +clean_html_entities(...)
+    }
+
+    class "io_utils.py" as IOUtils {
+      +load_csv_safely(...)
+      +save_merged(...)
+      +save_source_summary(...)
+      +validate_integrity(...)
+    }
+
+    class "merge_utils.py" as MergeUtils {
+      +fill_missing_from_source(...)
+      +merge_sources(...)
+      +finalize_sources(...)
+      +merge_and_finalize(...)
+    }
+
+    class "normalize_utils.py" as NormUtils {
+      +normalize_tags_column(...)
+      +normalize_screenshots_column(...)
+      +process_screenshots(...)
+      +normalize_movies_column(...)
+      +dedup_join(...)
+      +flatten_values(...)
+      +list_to_clean_string(...)
+    }
+  }
+}
+
+Main --> Config
+Main --> CleanDesc
+Main --> SourceA
+Main --> SourceB
+Main --> SourceC
+Main --> MergeUtils
+Main --> IOUtils
+
+MergeUtils ..> CatUtils
+MergeUtils ..> CleanUtils
+MergeUtils ..> NormUtils
+SourceA ..> IOUtils
+SourceB ..> IOUtils
+SourceC ..> IOUtils
+CleanDesc ..> CleanUtils
+
+@enduml

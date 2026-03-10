@@ -1,0 +1,65 @@
+@startuml
+title Videogame Data Merge – vizualizációs és riport modulok
+
+top to bottom direction
+
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam defaultFontSize 12
+skinparam titleFontSize 14
+skinparam packageStyle rectangle
+
+skinparam class {
+    BackgroundColor #F8F8F8
+    BorderColor #4472C4
+    FontColor Black
+}
+
+skinparam package {
+    BackgroundColor #FFF2CC
+    BorderColor #BF9000
+    FontColor Black
+}
+
+package "merge/visualization" {
+
+  class "histograms.py" as Hist {
+    +parse_genres(...)
+    +apply_latest_year_label(...)
+    +plot_all_years(...)
+    +plot_pre2010(...)
+    +plot_post2010(...)
+    +plot_by_sources(...)
+    +plot_genres(...)
+    +analyze_genre_correlation(...)
+    +plot_growth_rates(...)
+    +plot_monthly_overlay(...)
+    +plot_weekly_overlay(...)
+    +plot_weekly_overlay_from_daily(...)
+    +plot_heatmap_year_day(...)
+    +plot_heatmap_year_weekday_aligned(...)
+    +forecast_year_log_modern(...)
+    +rolling_backtest_log_modern(...)
+    +forecast_2026(...)
+    +expanding_window_one_step_backtest_log_modern(...)
+    +plot_histograms(...)
+    +main()
+  }
+
+  class "summaries.py" as Summ {
+    +save_source_summary(...)
+    +validate_integrity(...)
+  }
+
+  class "venn_diagram.py" as Venn {
+    +compute_venn_sets(...)
+    +compute_venn_table(...)
+    +plot_and_save_venn(...)
+  }
+}
+
+Hist ..> Summ
+Venn ..> Summ
+
+@enduml

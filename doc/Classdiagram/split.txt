@@ -1,78 +1,121 @@
 @startuml
-title Videogame Data Split – OOP osztálydiagram (áttekintő)
+title Videogame Data Split – implementációs áttekintés
 
+top to bottom direction
+
+skinparam backgroundColor white
+skinparam shadowing false
 skinparam classAttributeIconSize 0
+skinparam defaultFontSize 12
+skinparam titleFontSize 14
+skinparam packageStyle rectangle
 
-' ======= KÖZÖS ŐSOSZTÁLYOK / SZEREPKÖRÖK =======
-
-abstract class Service
-abstract class AbstractTableBuilder
-
-' ======= PIPELINE =======
-
-class SplitPipeline {
-  +run(master_df)
+skinparam class {
+    BackgroundColor #F8F8F8
+    BorderColor #4472C4
+    FontColor Black
 }
 
-' ======= TABLE BUILDER ABSZTRAKCIÓ =======
-
-interface TableBuilder {
-  +create_table(master_df)
+skinparam package {
+    BackgroundColor #FFF2CC
+    BorderColor #BF9000
+    FontColor Black
 }
 
-AbstractTableBuilder <|-- TableBuilder
+package "split" {
 
-' ======= KONKRÉT TABLE BUILDER-ÖK (RÉSZBEN KIBONTVA) =======
+  class "main.ipynb" as Main {
+    +pipeline vezérlés
+    +master_df betöltése
+  }
 
-class DeveloperPublisherTableBuilder {
-  +create_developer_tables(master_df)
-  +create_publisher_tables(master_df)
+  package "tables" {
+
+    class "game_metadata.py" as GameMeta {
+      +create_description_table(...)
+      +create_game_table(...)
+    }
+
+    class "developer_publisher_tables.py" as DevPub {
+      +create_developer_tables(...)
+      +create_publisher_tables(...)
+    }
+
+    class "genre_category_tables.py" as GenreCat {
+      +create_genres_table(...)
+      +create_categories_table(...)
+    }
+
+    class "language_tables.py" as Lang {
+      +create_languages_table(...)
+    }
+
+    class "media_tables.py" as Media {
+      +create_media_table(...)
+      +create_screenshots_table(...)
+      +create_movies_table(...)
+    }
+
+    class "package_tables.py" as Pack {
+      +create_packages_table(...)
+    }
+
+    class "platforms_tables.py" as Plat {
+      +create_platforms_table(...)
+    }
+
+    class "requirements_tables.py" as Req {
+      +create_requirements_table(...)
+    }
+
+    class "support_tables.py" as Supp {
+      +create_support_table(...)
+    }
+
+    class "tags_tables.py" as Tags {
+      +create_tags_table(...)
+    }
+
+    GameMeta -[hidden]down-> DevPub
+    DevPub -[hidden]down-> GenreCat
+    GenreCat -[hidden]down-> Lang
+    Lang -[hidden]down-> Media
+    Media -[hidden]down-> Pack
+    Pack -[hidden]down-> Plat
+    Plat -[hidden]down-> Req
+    Req -[hidden]down-> Supp
+    Supp -[hidden]down-> Tags
+  }
+
+  package "utils" {
+    class "io_utils.py" as IO {
+      +load_csv_safely(...)
+    }
+
+    class "text_utils.py" as Text {
+      +clean_requirements_text(...)
+      +split_min_rec(...)
+      +join_urls(...)
+    }
+
+    IO -[hidden]down-> Text
+  }
 }
 
-class GenreCategoryTableBuilder {
-  +create_genres_table(master_df)
-  +create_categories_table(master_df)
-}
+Main -down-> GameMeta
+Main -down-> DevPub
+Main -down-> GenreCat
+Main -down-> Lang
+Main -down-> Media
+Main -down-> Pack
+Main -down-> Plat
+Main -down-> Req
+Main -down-> Supp
+Main -down-> Tags
+Main -down-> IO
 
-TableBuilder <|.. DeveloperPublisherTableBuilder
-TableBuilder <|.. GenreCategoryTableBuilder
-
-' a pipeline több különböző TableBuilder-t is használhat
-SplitPipeline --> "1..*" TableBuilder : uses
-
-' ======= TOVÁBBI TABLE BUILDER-ÖK (CSAK FELSOROLVA) =======
-
-class GameMetadataTableBuilder
-class LanguageTableBuilder
-class MediaTableBuilder
-class PackageTableBuilder
-class PlatformTableBuilder
-class RequirementsTableBuilder
-class SupportTableBuilder
-class TagsTableBuilder
-
-AbstractTableBuilder <|-- DeveloperPublisherTableBuilder
-AbstractTableBuilder <|-- GenreCategoryTableBuilder
-AbstractTableBuilder <|-- GameMetadataTableBuilder
-AbstractTableBuilder <|-- LanguageTableBuilder
-AbstractTableBuilder <|-- MediaTableBuilder
-AbstractTableBuilder <|-- PackageTableBuilder
-AbstractTableBuilder <|-- PlatformTableBuilder
-AbstractTableBuilder <|-- RequirementsTableBuilder
-AbstractTableBuilder <|-- SupportTableBuilder
-AbstractTableBuilder <|-- TagsTableBuilder
-
-' ======= SERVICE OSZTÁLYOK =======
-
-class TextUtils
-class IOService
-
-Service <|-- TextUtils
-Service <|-- IOService
-
-' ======= KAPCSOLAT A PIPELINE-NAL =======
-
-SplitPipeline ..> TextUtils
-SplitPipeline ..> IOService
+Req ..> Text
+Supp ..> Text
+Media ..> Text
 
 @enduml

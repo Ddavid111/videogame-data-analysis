@@ -16,28 +16,13 @@ A Steam \cite{steam} egy digitális videojáték-disztribúciós platform, amely
 
 A Steam platformon elérhető videojátékokhoz számos, nyilvánosan hozzáférhető adat kapcsolódik. Ezek közé tartoznak többek között a játékok alapvető jellemzői (például cím, megjelenési dátum, fejlesztő, kiadó), műfaji besorolásuk, felhasználói értékelések, valamint egyes esetekben teljesítményre és népszerűségre vonatkozó mutatók. Az ilyen típusú adatok különösen alkalmasak statisztikai elemzésre és gépi tanulási módszerek alkalmazására.
 
-A Steam által kezelt adatok mennyisége és sokfélesége miatt a platform gyakran szolgál adatforrásként kutatási és elemzési célokra. A játékokhoz kapcsolódó strukturált adatok lehetőséget biztosítanak különböző mintázatok feltárására, például a műfajok közötti különbségek, a felhasználói értékelések alakulása vagy a játékok népszerűségének vizsgálata során. Ennek köszönhetően a Steamhez kapcsolódó adathalmazok jól illeszkednek adatfeldolgozási és gépi tanulási feladatok bemutatásához. A Steam digitális videojáték-disztribúciós platform logóját a \ref{fig:steam_logo} ábra szemlélteti.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.3\textwidth]{images/Steam_icon_logo.pdf}
-    \caption{A Steam digitális videojáték-disztribúciós platform logója}\cite{steam_logo}
-    \label{fig:steam_logo}
-\end{figure}
+A Steam által kezelt adatok mennyisége és sokfélesége miatt a platform gyakran szolgál adatforrásként kutatási és elemzési célokra. Korábbi vizsgálatok elemezték például a Steam-felhasználói értékelések jellemzőit és információtartalmát \cite{Lin2019SteamReviews}, a játékok népszerűségének előrejelezhetőségét a platformon elérhető metaadatok alapján \cite{DeLuisa2021SteamPopularity}, valamint a címkéken és műfajokon keresztül kirajzolódó szerkezeti mintázatokat is \cite{Rizani2020SteamTags}. A játékokhoz kapcsolódó strukturált adatok ezért lehetőséget biztosítanak különböző mintázatok feltárására, például a műfajok közötti különbségek, a felhasználói értékelések alakulása vagy a játékok népszerűségének vizsgálata során. Ennek köszönhetően a Steamhez kapcsolódó adathalmazok jól illeszkednek adatfeldolgozási és gépi tanulási feladatok bemutatásához.
 
 \subsection{A Kaggle platform szerepe}
 
 A Kaggle \cite{kaggle} egy online adatmegosztó és adatverseny-platform, amely elsősorban adatkutatási és gépi tanulási feladatokhoz biztosít nyilvánosan elérhető adathalmazokat. A platformon a felhasználók különböző forrásokból származó, dokumentált adatállományokat oszthatnak meg, amelyek kutatási és oktatási célokra egyaránt felhasználhatók.
 
-A dolgozat során alkalmazott adathalmazok a Kaggle platformon kerültek publikálásra, és Steamhez kapcsolódó, nyilvános adatok feldolgozott formáit tartalmazzák. A Kaggle egységes hozzáférést, verziókezelést és leírást biztosít az adatkészletekhez, ami megkönnyíti azok összehasonlítható és reprodukálható feldolgozását. A Kaggle adatmegosztó és adatkutatási platform vizuális
-azonosítóját a \ref{fig:kaggle_logo} ábra mutatja be.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.25\textwidth]{images/Kaggle_logo.pdf}
-    \caption{A Kaggle adatmegosztó és adatkutatási platform logója}\cite{kaggle_logo}
-    \label{fig:kaggle_logo}
-\end{figure}
+A dolgozat során alkalmazott adathalmazok a Kaggle platformon kerültek publikálásra, és Steamhez kapcsolódó, nyilvános adatok feldolgozott formáit tartalmazzák. A Kaggle egységes hozzáférést, verziókezelést és leírást biztosít az adatkészletekhez, ami megkönnyíti azok összehasonlítható és reprodukálható feldolgozását.
 
 \subsection{Az elemzés során használt eszközök}
 
@@ -100,11 +85,16 @@ amely a későbbi elemzési és gépi tanulási feladatok alapját képezi.
 A felhasznált adathalmazok főbb mennyiségi jellemzőit,
 táblánkénti bontásban, a \ref{tab:datasets} táblázat foglalja össze.
 
+A továbbiakban az A, B és C adathalmazok neve egyúttal az adott adathalmazhoz tartozó fájlokat tartalmazó jegyzék nevét is jelenti.
+
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|l|c|c|}
+\begin{tabular}{|l|l|r|r|}
 \hline
-\textbf{Adathalmaz} & \textbf{Tábla} & \textbf{Rekordok száma} & \textbf{Attribútumok száma} \\
+\textbf{\begin{tabular}[c]{@{}l@{}}Adat-\\halmaz\end{tabular}} &
+\textbf{Tábla} &
+\textbf{\begin{tabular}[c]{@{}r@{}}Rekordok\\száma\end{tabular}} &
+\textbf{\begin{tabular}[c]{@{}r@{}}Attribútumok\\száma\end{tabular}} \\
 \hline
 A & steam.csv & \num{27075} & 18 \\
 A & steam\_description\_data.csv & \num{27334} & 4 \\
@@ -128,12 +118,16 @@ C & games\_may2024\_full.csv & \num{87806} & 46 \\
 
 A vizsgált adathalmazok előzetes feltárása és elemzése különálló
 Jupyter \cite{jupyter} munkafüzetekben történt, adathalmazonként
-elkülönítve. Az A \cite{a}, B \cite{b} és C \cite{c} adathalmazok
-önálló munkafüzetekben kerültek feldolgozásra, ami lehetővé tette az
-egyes adatkészletek szerkezetének, tartalmának és sajátosságainak
-részletes megismerését, valamint az adatokra jellemző problémák korai
-azonosítását. Az egyes vizsgálatok részletes dokumentációja a dolgozathoz
-mellékelt \textit{notebooks} jegyzékében érhető el.
+elkülönítve. Az A \cite{a}, B \cite{b} és C \cite{c} adathalmazokhoz
+tartozó elemzések a dolgozathoz mellékelt \textit{notebooks/Dataset\_Analyses}
+jegyzékben található \textit{A.ipynb}, \textit{B.ipynb} és
+\textit{C.ipynb} munkafüzetekben kerültek feldolgozásra. Ez a felosztás
+lehetővé tette az egyes adatkészletek szerkezetének, tartalmának és
+sajátosságainak részletes megismerését, valamint az adatokra jellemző
+problémák korai azonosítását. A munkafüzetekből létrehozott egyes ábrák
+külön mentésre kerültek a \textit{notebooks/generated/A},
+\textit{notebooks/generated/B} és \textit{notebooks/generated/C}
+jegyzékekbe.
 
 A külön munkafüzetek alkalmazása elősegítette a feldolgozási folyamat
 átláthatóságát, mivel az egyes adathalmazok eltérő szerkezettel,
@@ -163,11 +157,14 @@ eloszlásainak és időbeli mintázatainak bemutatása.
 
 Az \textit{A adathalmaz} esetében a játékok átlagos árának időbeli
 alakulását vizsgáltam. A \ref{fig:mean} ábra az éves átlagárak változását
-mutatja, amely alapján hosszabb távú trendek és árszintváltozások
-azonosíthatók. Az ábra rávilágít arra, hogy az átlagár nem állandó,
-hanem az egyes időszakokban számottevő ingadozást mutat, ami a
-Steam-platform üzleti modelljének és a megjelenő játékok összetételének
-változásával hozható összefüggésbe.
+mutatja. A töröttvonalas ábrázolás célja az egymást követő évek közötti
+változások áttekinthetőbb megjelenítése; a vonalszakaszok a közbülső
+értékek szemléletes közelítését adják, nem pedig ténylegesen megfigyelt
+adatpontokat jelölnek. Az ábra alapján hosszabb távú trendek és
+árszintváltozások azonosíthatók. Az eredmények arra utalnak, hogy az
+átlagár nem állandó, hanem az egyes időszakokban számottevő ingadozást
+mutat, ami a Steam platform üzleti modelljének és a megjelenő játékok
+összetételének változásával hozható összefüggésbe.
 
 \begin{figure}[H]
     \centering
@@ -206,7 +203,7 @@ adatokban.
     \label{fig:platforms}
 \end{figure}
 
-A \textit{C adathalmaz} elemzése során a játékok Metacritic értékeinek
+A \textit{C adathalmaz} elemzése során a játékok Metacritic \cite{metacritic} értékeinek
 időbeli alakulása került előtérbe. A \ref{fig:metacritic} ábra a
 Metacritic pontszámok és a kiadási év kapcsolatát ábrázolja. Az ábra
 alapján megfigyelhető, hogy az értékelések jelentős szórást mutatnak

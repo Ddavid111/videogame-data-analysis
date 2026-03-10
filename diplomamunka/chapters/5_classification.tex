@@ -46,7 +46,7 @@ metrikát alkalmaztam, amelyek a predikciók különböző aspektusait
 ragadják meg.
 
 Az alapvető mutatók közé tartozik a pontosság (accuracy),
-a precízió (precision), a visszahívás (recall) és az F1-mérték\cite{metrics}.
+a precízió (Precision), a visszahívás (Recall) és az F1-mérték\cite{metrics}.
 Ezek a metrikák a konfúziós mátrix elemein alapulnak,
 és információt adnak a modell tévesztéseinek jellegéről.
 
@@ -168,7 +168,7 @@ A pozitív értékelések arányának eloszlását a \ref{fig:positive_ratio_dis
 Amennyiben a játékok megjelenési ideje is rendelkezésre áll, lehetőség nyílik a pozitív értékelések arányának időbeli vizsgálatára is. 
 Az évek szerinti bontás alapján megfigyelhető, hogy a pozitív visszajelzések átlagos aránya nem állandó, hanem hosszabb távon változó tendenciát mutat. 
 Ez arra utalhat, hogy a felhasználói értékelési szokások, illetve a platform jellege időben módosult.
-A pozitív értékelések átlagos arányának alakulását az évek függvényében a \ref{fig:positive_ratio_trend} ábra mutatja be.
+A pozitív értékelések átlagos arányának alakulását az évek függvényében a  \aref{fig:positive_ratio_trend} ábra mutatja be.
 
 \begin{figure}[H]
     \centering
@@ -253,7 +253,7 @@ A felhasznált jellemzők a következők voltak:
     amely a gyakori, de kevésbé informatív szavakat leértékeli,
     míg a megkülönböztető kifejezéseket nagyobb súllyal emeli ki,
     \item \textbf{Strukturált jellemzők:}
-    a játékokhoz tartozó tagek és műfajok,
+    a játékokhoz tartozó címkék (tagek) és műfajok,
     bináris (multi-hot)\cite{multi-hot} kódolás formájában.
 \end{itemize}
 
@@ -268,7 +268,7 @@ A multiplayer vs. singleplayer osztályozási feladat során
 a játékok szöveges leírásait numerikus reprezentációvá kellett alakítani,
 hogy azok gépi tanulási modellek bemeneteként felhasználhatók legyenek.
 Ennek érdekében a szöveges mezőket
-TF--IDF (Term Frequency -- Inverse Document Frequency)\cite{tf-idf} vektorizálással
+TF--IDF vektorizálással
 dolgoztam fel.
 
 A TF--IDF módszer célja,
@@ -316,23 +316,22 @@ releváns, ROC--AUC\cite{roc-auc}), az előző alfejezetben bemutatott módon.
 
 \subsection{Mennyiségi jellemzők és osztályeloszlás}
 
-A multiplayer és singleplayer játékok arányát a
-\ref{fig:mp_sp_distribution} ábra szemlélteti.
+A multiplayer és singleplayer játékok arányát
+\aref{fig:mp_sp_distribution} ábra szemlélteti.
 Az adathalmaz erősen kiegyensúlyozatlan, a singleplayer játékok
 jelentős többségben vannak, ami indokolja az osztályozási modellek értékelésénél
 a pontosság mellett további metrikák
-(például precision, recall és F1-mérték)
+(például Precision, Recall és F1-mérték)
 alkalmazását.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{images/eda_target_distribution_multiplayer.png}
-    \caption{A célváltozó eloszlása: multiplayer vs singleplayer}
+    \caption{A célváltozó eloszlása: Singleplayer vs Multiplayer}
     \label{fig:mp_sp_distribution}
 \end{figure}
 
-A szöveges leírás hosszának eloszlását osztályonként
-a \ref{fig:description_length_by_class} ábra szemlélteti.
+A szöveges leírás hosszának eloszlását osztályonként \aref{fig:description_length_by_class} ábra szemlélteti.
 Az ábra normalizált gyakoriságokat mutat.
 A szélsőséges értékek vizuális torzító hatásának csökkentése érdekében
 az ábrázolás a 99. percentilisig korlátozott tartományra fókuszál:
@@ -351,7 +350,7 @@ A multiplayer játékok leírásai hosszabbak és nagyobb szórást mutatnak.
 A medián szószám multiplayer esetén 250 (IQR\cite{IQR} 169--362),
 míg singleplayer esetén 201 (IQR: 137--291).
 Az átlagos leíráshossz szintén magasabb multiplayer játékoknál
-(290.04 szó), mint singleplayer esetén (234.76 szó).
+(29004 szó), mint singleplayer esetén (23476 szó).
 A felső 1\%-ba tartozó értékek is jelentősen nagyobbak
 (multiplayer: 975.25 szó, singleplayer: 782 szó),
 ami erősebb felső tartománybeli elnyúlásra utal.

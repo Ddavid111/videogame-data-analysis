@@ -2,7 +2,24 @@
 
 Ebben a fejezetben a vizsgált adathalmazok egységes adatstruktúrába szervezésének folyamata kerül bemutatásra. A fejezet célja annak ismertetése, hogy a korábban elkülönítve feldolgozott, eltérő szerkezetű adatkészletek hogyan alakíthatók át egy közös, jól strukturált adatsémává, amely alkalmas további elemzési és gépi tanulási feladatok elvégzésére.
 
-A fejezet első részében az adathalmazok közötti kapcsolatok és relációs sémák elemzése történik meg, amely alapot szolgáltat az adatok logikus felépítéséhez. Ezt követően bemutatásra kerülnek az alkalmazott normalizálási lépések, valamint azok indoklása az adatbázis-tervezési alapelvek figyelembevételével. A továbbiakban az adatok tisztításával kapcsolatos feladatok kerülnek ismertetésre, különös tekintettel a hiányzó és inkonzisztens értékek kezelésére. A fejezet zárásaként az egyes adathalmazok összevonásának (merge) folyamata kerül bemutatásra, amelynek eredményeként egy egységes, elemzésre kész adatstruktúra jön létre.
+A fejezet első részében az adathalmazok közötti kapcsolatok és relációs
+sémák elemzése történik meg, amely alapot szolgáltat az adatok logikus
+felépítéséhez. Ezt követően bemutatásra kerülnek az alkalmazott
+normalizálási lépések, valamint azok indoklása az adatbázis-tervezési
+alapelvek figyelembevételével. Emellett ismertetésre kerülnek az adatok
+tisztításával kapcsolatos feladatok is, különös tekintettel a hiányzó és
+inkonzisztens értékek kezelésére. A fejezet további részében az egyes
+adathalmazok összevonásának (merge), valamint az egységesített adathalmaz
+normalizált résztáblákra bontásának folyamata kerül bemutatásra.
+
+A fejezetben ismertetett lépések nem csupán elméleti adatmodellezési
+döntéseket jelentenek, hanem egy külön fejlesztett, moduláris felépítésű
+Python-alapú feldolgozórendszer konkrét műveleteihez kapcsolódnak. Az
+összefésülési feladatok a \texttt{merge} könyvtárban, míg az egységesített
+adatállomány normalizált résztáblákra bontása a \texttt{split}
+könyvtárban került megvalósításra. Mindkét feldolgozási szakasz a megfelelő
+\texttt{main.ipynb} munkafüzetből került végrehajtásra, amely a háttérben
+meghívja a szükséges Python modulokat és segédfüggvényeket.
 
 \Section{Relációs sémák elemzése}
 
@@ -21,6 +38,17 @@ A relációs sémák vizsgálata rávilágított arra, hogy az eltérő szerkeze
 \Section{Normalizálás}
 
 A normalizálás célja az adatredundancia csökkentése, az adatintegritás biztosítása, valamint az adatok logikus, karbantartható és bővíthető szerkezetbe rendezése. A dolgozat során alkalmazott normalizálási lépések az első, második és harmadik normálforma (1NF–3NF) követelményeit követik, figyelembe véve az egyes adathalmazok eltérő szerkezeti sajátosságait.
+
+A bemutatott normalizálási döntések gyakorlati megvalósítása az
+egységesített adathalmaz előállítását követően, elsősorban a projekt
+\texttt{split} könyvtárában történt. A \texttt{split/main.ipynb}
+munkafüzet vezérli az egységesített \textit{merged\_master.csv} állomány
+feldolgozását, míg a normalizált relációk előállítását a
+\texttt{split/tables} alkönyvtár tematikusan szervezett moduljai végzik.
+Ezek a programrészek hozzák létre a fejezetben ismertetett entitásokat és
+kapcsolótáblákat, például a játékok metaadatait, a műfajokhoz,
+kategóriákhoz, platformokhoz, nyelvekhez, fejlesztőkhöz, kiadókhoz és
+címkékhez tartozó relációkat.
 
 \subsection{Az A adathalmaz normalizálása}
 
@@ -53,21 +81,17 @@ A normalizálási folyamat eredményeként az A adathalmaz \cite{a} relációs s
 
 Az A adathalmaz normalizálási lépései biztosították az adatredundancia minimalizálását, a tranzitív függőségek megszüntetését, valamint a listaértékű és összetett attribútumok önálló táblákba történő szétválasztását. A kialakított relációs séma jól strukturált, karbantartható és alkalmas arra, hogy alapjául szolgáljon a további adatintegrációs és gépi tanulási feladatoknak.
 
-Az A adathalmaz részletes attribútumleírását és az egyes mezők jelentését tartalmazó adatleíró (data dictionary) a dolgozat mellékletei között érhető el. Az A adathalmaz normalizálatlan relációs sémáját a \ref{fig:A_unnormalized} ábra, míg a normalizált relációs sémát a \ref{fig:A_normalized} ábra szemlélteti. A \textit{tags} tábla esetében az eredeti adathalmaz rendkívül nagyszámú, bináris címkeattribútumot tartalmaz, ezért ezek teljes felsorolása terjedelmi okokból nem jelenik meg az ábrán; a sémadiagram elsősorban az adatszerkezet logikai felépítését szemlélteti, nem az összes konkrét címkét.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1.0\textwidth]{images/A_unnormalized.pdf}
-    \caption{Az A adathalmaz normalizálatlan relációs sémája}
-    \label{fig:A_unnormalized}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1.0\textwidth]{images/A_normalized.pdf}
-    \caption{Az A adathalmaz normalizált relációs sémája}
-    \label{fig:A_normalized}
-\end{figure}
+Az A adathalmaz részletes attribútumleírását és az egyes mezők jelentését
+tartalmazó adatleíró (data dictionary) a projekt \texttt{doc/Dictionaries}
+könyvtárában található \texttt{A\_schema\_data\_dictionary.xlsx}
+állományban érhető el. Az A adathalmaz normalizálatlan relációs sémája a
+függelék \ref{fig:A_unnormalized}. ábráján, míg a normalizált relációs
+sémája a függelék \ref{fig:A_normalized}. ábráján látható. A
+\textit{tags} tábla esetében az eredeti adathalmaz rendkívül nagyszámú,
+bináris címkeattribútumot tartalmaz, ezért ezek teljes felsorolása
+terjedelmi okokból nem jelenik meg az ábrán; a sémadiagram elsősorban az
+adatszerkezet logikai felépítését szemlélteti, nem az összes konkrét
+címkét.
 
 \subsection{A B adathalmaz normalizálása}
 
@@ -97,21 +121,13 @@ A normalizálás eredményeként a B \cite{b} adathalmaz relációs sémája egy
 
 A B adathalmaz normalizálási folyamata eredményeként egy tiszta, jól strukturált adatmodell jött létre, amely megfelel az első három normálforma követelményeinek. A kialakított séma atomi értékeket tartalmaz, megszünteti a részleges és tranzitív függőségeket, valamint külön táblákban kezeli az összetett és listaértékű mezőket. Az alkalmazott struktúra jól bővíthető, karbantartható, és minimális adatredundanciát biztosít a további feldolgozási és elemzési lépésekhez.
 
-A B adathalmaz normalizált sémájához tartozó adatleíró (data dictionary), amely az attribútumok jelentését és típusát részletezi, a dolgozat mellékleteiben található. A B adathalmaz normalizálatlan relációs sémáját a \ref{fig:B_unnormalized} ábra, míg a normalizált relációs sémát a \ref{fig:B_normalized} ábra szemlélteti.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{images/B_unnormalized.pdf}
-    \caption{A B adathalmaz normalizálatlan relációs sémája}
-    \label{fig:B_unnormalized}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1.0\textwidth]{images/B_normalized.pdf}
-    \caption{A B adathalmaz normalizált relációs sémája}
-    \label{fig:B_normalized}
-\end{figure}
+A B adathalmaz normalizált sémájához tartozó adatleíró (data dictionary),
+amely az attribútumok jelentését és típusát részletezi, a projekt
+\texttt{doc/Dictionaries} könyvtárában található
+\texttt{B\_schema\_data\_dictionary.xlsx} állományban érhető el. A B
+adathalmaz normalizálatlan relációs sémája a függelék
+\ref{fig:B_unnormalized}. ábráján, míg a normalizált relációs sémája a
+függelék \ref{fig:B_normalized}. ábráján látható.
 
 \subsection{A C adathalmaz normalizálása}
 
@@ -143,21 +159,13 @@ A normalizálás eredményeként a C adathalmaz relációs sémája egy egysége
 
 A C adathalmaz normalizálása során négy különálló, eltérő időpontból származó CSV-fájl került egységes relációs struktúrába szervezésre. Az alkalmazott normalizálási lépések biztosítják az első három normálforma követelményeinek teljesülését, elkülönítik a felirat- és hangnyelveket, valamint strukturált módon kezelik a játékcsomagokat. A kialakított séma csökkenti az adatredundanciát, elősegíti az adatok konzisztenciáját, és rugalmasan kezeli a 2024-es és 2025-ös adatforrások közötti eltéréseket, így megfelelő alapot biztosít a további integrációs és elemzési feladatokhoz.
 
-A C adathalmaz normalizált sémájához tartozó adatleíró (data dictionary), amely az egyes attribútumok jelentését és típusát részletezi, a dolgozat mellékleteiben található. A C adathalmaz normalizálatlan relációs sémáját a\ref{fig:C_unnormalized} ábra, míg a normalizált relációs sémát a \ref{fig:C_normalized} ábra szemlélteti.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1.0\textwidth]{images/C_unnormalized.pdf}
-    \caption{A C adathalmaz normalizálatlan relációs sémája}
-    \label{fig:C_unnormalized}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1.0\textwidth]{images/C_normalized.pdf}
-    \caption{A C adathalmaz normalizált relációs sémája}
-    \label{fig:C_normalized}
-\end{figure}
+A C adathalmaz normalizált sémájához tartozó adatleíró (data dictionary),
+amely az egyes attribútumok jelentését és típusát részletezi, a projekt
+\texttt{doc/Dictionaries} könyvtárában található
+\texttt{C\_schema\_data\_dictionary.xlsx} állományban érhető el. A C
+adathalmaz normalizálatlan relációs sémája a függelék
+\ref{fig:C_unnormalized}. ábráján, míg a normalizált relációs sémája a
+függelék \ref{fig:C_normalized}. ábráján látható.
 
 \subsection{A D adathalmaz normalizálása}
 
@@ -193,7 +201,7 @@ A D adathalmaz normalizált relációs sémájának SQL-alapú megvalósítása 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{images/D_schema.pdf}
+    \includegraphics[width=0.90\textwidth]{images/D_schema.pdf}
     \caption{A D adathalmaz egységes, normalizált relációs sémája}
     \label{fig:D_schema}
 \end{figure}
@@ -214,7 +222,6 @@ Az adathalmazok összefésülésének folyamata az A \cite{a}, B \cite{b} és C 
     \caption{Az A, B és C adathalmazok összefésülésének folyamata}
     \label{fig:merge_process}
 \end{figure}
-
 
 Az ábra PlantUML \cite{plantuml} alapú forráskódja külön fájlban is elérhető (\textit{merge\_process.puml}), amely a folyamat reprodukálhatóságát és dokumentáltságát biztosítja.
 
@@ -243,20 +250,28 @@ A folyamat eredményeként egy egységes relációs struktúra jött létre (\te
 
 \subsection{Az összefésülés megvalósítása}
 
-Ebben az alfejezetben az A \cite{a}, B \cite{b} és C \cite{c} adathalmazok összefésülésének szoftveres megvalósítása kerül bemutatásra. A merge-folyamat egy moduláris felépítésű Python \cite{python} projektként valósult meg, amely külön kezeli a forrásadatok betöltését, az előfeldolgozási és tisztítási lépéseket, valamint az adatok egységesítését és ellenőrzését. A bemutatott kódrészletek nem a teljes implementációt fedik le, hanem a összefésülés-folyamat szempontjából lényeges, nem triviális megoldásokat szemléltetik.
+Ebben az alfejezetben az A \cite{a}, B \cite{b} és C \cite{c} adathalmazok összefésülésének szoftveres megvalósítása kerül bemutatásra. A merge-folyamat egy moduláris felépítésű Python \cite{python} projektként valósult meg, amely külön kezeli a forrásadatok betöltését, az előfeldolgozási és tisztítási lépéseket, valamint az adatok egységesítését és ellenőrzését. A bemutatott kódrészletek nem a teljes implementációt fedik le, hanem az összefésülési folyamat szempontjából lényeges, nem triviális megoldásokat szemléltetik.
 
 \subsubsection{A merge-kód felépítése}
 
-Az adathalmazok összefésülésében az alábbi főbb modulok vesznek részt:
+Az adathalmazok összefésülése egy külön \texttt{merge} könyvtárban
+megvalósított, moduláris Python-alapú feldolgozórendszerrel történt. A
+folyamat belépési pontja a \texttt{merge/main.ipynb} munkafüzet, amely a
+teljes merge-folyamatot vezérli, és a háttérben a szükséges Python
+modulokat hívja meg. A globális paraméterezést a \texttt{merge/config.py}
+állomány tartalmazza.
 
-\begin{itemize}
-    \item \texttt{merge/sources} – az A, B és C forrásadatok beolvasásáért és előtisztításáért felelős modulok,
-    \item \texttt{merge/utils} – általános segédfüggvények az adatkezelési, tisztítási, normalizálási és merge-lépések támogatására,
-    \item \texttt{merge/visualization} – a mergelt adathalmazra épülő statisztikai ábrák és összefoglaló vizualizációk generálása,
-    \item \texttt{merge/output} – a futtatás során keletkező kimeneti állományok és ábrák gyűjtőmappája.
-\end{itemize}
-
-A teljes merge-folyamatot a \texttt{merge/main.ipynb} Jupyter \cite{jupyter} munkafüzet vezérli, míg a globális beállításokat és paramétereket a \texttt{merge/config.py} konfigurációs állomány tartalmazza.
+A forrásadathalmazok beolvasását és előzetes feldolgozását a
+\texttt{merge/sources} alkönyvtár moduljai végzik
+(\texttt{source\_a.py}, \texttt{source\_b.py}, \texttt{source\_c.py}),
+míg az általános adatkezelési, tisztítási, normalizálási és egyesítési
+segédfüggvények a \texttt{merge/utils} könyvtárban kaptak helyet. Az
+összefésülés eredményei és köztes kimenetei a \texttt{merge/generated}
+könyvtárba kerülnek mentésre, beleértve a részforrásokból előállított
+\textit{A\_merged.csv}, \textit{B\_full.csv}, \textit{C\_full.csv}
+állományokat, valamint a végső \textit{merged\_master.csv} táblát is. A
+folyamat során készült naplófájlok, jelentések és vizualizációk szintén
+itt kerülnek eltárolásra.
 
 \subsubsection{Kiemelt kódrészletek}
 
@@ -343,20 +358,46 @@ def load_source_b(base_path: str) -> pd.DataFrame:
 
 Az összefésülési folyamat teljes egészében részletes naplózással került végrehajtásra. A logolás lehetővé tette a forrásfájlok betöltésének, a feldolgozott rekordok számának, valamint az egyes tisztítási és összefésülési lépések nyomon követését. A naplóállományok segítségével a teljes feldolgozási folyamat visszakövethetővé vált, és az esetleges hibák vagy inkonzisztenciák gyorsan azonosíthatók voltak. 
 
-Az összefésülési folyamat során keletkező naplóbejegyzések egy különálló logfájlba kerülnek mentésre. A részletes futási információk, figyelmeztetések és státuszüzenetek a \texttt{merge/merge\_log.txt} állományban kerülnek rögzítésre, amely lehetővé teszi a feldolgozási lépések utólagos ellenőrzését és visszakövetését.
-
+A részletes futási információk, figyelmeztetések és státuszüzenetek a
+\texttt{merge/generated/logs/merge\_log.txt} állományban kerülnek
+rögzítésre, amely lehetővé teszi a feldolgozási lépések utólagos
+ellenőrzését és visszakövetését.
 
 A logolás kiterjedt többek között a forrásadatok betöltésére, az ideiglenes rész-adathalmazok mentésére, az adatok egyesítésére, valamint a végső, egységes D adathalmaz előállítására. Ez a megközelítés biztosította a merge-folyamat átláthatóságát és reprodukálhatóságát.
 
 \Section{Az egységesített adathalmaz felbontása}
 
+A fejezetben ismertetett normalizált relációs struktúra gyakorlati
+előállítását a \texttt{split} könyvtárban megvalósított programrész végzi.
+A feldolgozás belépési pontja a \texttt{split/main.ipynb} munkafüzet,
+amely az egységesített \textit{merged\_master.csv} állományból kiindulva
+meghívja a normalizált táblák előállításáért felelős modulokat. Az egyes
+relációk létrehozása a \texttt{split/tables} könyvtár tematikus
+programrészeiben történik, így a normalizálási döntések közvetlenül
+konkrét, végrehajtható függvényekhez és modulokhoz kapcsolódnak.
+
+A \texttt{split/tables} alkönyvtár moduljai funkcionális bontásban
+valósítják meg a relációk létrehozását. A \texttt{game\_metadata.py} a
+játékok alapadataihoz és leírásaihoz tartozó táblákat állítja elő, a
+\texttt{media\_tables.py} a médiatartalmakhoz kapcsolódó relációkat kezeli,
+a \texttt{genre\_category\_tables.py}, \texttt{platforms\_tables.py} és
+\texttt{tags\_tables.py} a kategorizáló attribútumokhoz tartozó entitásokat
+és kapcsolótáblákat generálja, míg a \texttt{language\_tables.py},
+\texttt{developer\_publisher\_tables.py}, \texttt{package\_tables.py},
+\texttt{requirements\_tables.py} és \texttt{support\_tables.py} az adott
+szakterületekhez tartozó normalizált táblák előállítását végzik.
+
 Az összefésülési folyamat eredményeként létrejött \textit{merged\_master.csv} egyetlen, nagyméretű, összevont adatállományt tartalmazott. A split folyamat célja az volt, hogy ebből az egységesített táblából tematikus, normalizált CSV-fájlok jöjjenek létre, amelyek közvetlenül megfelelnek a kialakított relációs adatmodell struktúrájának.
 
-A feldolgozás során minden egyes résztábla létrehozása külön függvények segítségével történt. Az elkészült CSV-fájlok a \texttt{split/} könyvtárba kerültek mentésre. A kód futása közben részletes naplózás készült, amely a \texttt{split\_log.txt} állományban rögzíti a feldolgozás egyes lépéseit, biztosítva a folyamat átláthatóságát és visszakövethetőségét.
+A kód futása közben részletes naplózás készült, amely a
+\texttt{split/generated/logs/split\_log.txt} állományban rögzíti a
+feldolgozás egyes lépéseit, biztosítva a folyamat átláthatóságát és
+visszakövethetőségét.
 
 \subsection{A split folyamat lépései}
 
-A teljes felosztási folyamatot a \texttt{main()} függvény automatizálja, amely az alábbi fő lépésekből áll:
+A teljes felosztási folyamatot a \texttt{split/main.ipynb} munkafüzet
+vezérli, amely az alábbi fő lépéseket hajtja végre:
 \begin{itemize}
     \item a \textit{merged\_master.csv} állomány betöltése,
     \item az egyes relációknak megfelelő résztáblák létrehozása,
@@ -388,7 +429,7 @@ A split folyamat során az alábbi CSV-fájlok kerülnek előállításra:
 
 \subsection{A split folyamat működési elvei}
 
-A résztáblák előállítása során minden feldolgozási lépés azonos alapelveket követett. A master táblából kizárólag az adott relációhoz tartozó oszlopok kerültek kiválasztásra, a listaértékű mezők normalizálása megtörtént, és szükség esetén új azonosítók kerültek generálásra (például műfajok, címkék vagy nyelvek esetében). A több–több kapcsolatok kezelésére minden esetben külön kapcsolótáblák jöttek létre.
+A résztáblák előállítása során minden feldolgozási lépés azonos alapelveket követett. A \textit{master} táblából kizárólag az adott relációhoz tartozó oszlopok kerültek kiválasztásra, a listaértékű mezők normalizálása megtörtént, és szükség esetén új azonosítók kerültek generálásra (például műfajok, címkék vagy nyelvek esetében). A több–több kapcsolatok kezelésére minden esetben külön kapcsolótáblák jöttek létre.
 
 A split folyamat eredményeként az eredetileg egyetlen, összevont adatállományból olyan, logikailag elkülönített és normalizált táblák jöttek létre, amelyek teljes mértékben megfelelnek a relációs adatbázis-tervezési elveknek, és közvetlenül alkalmasak SQL-alapú adatbázisba történő importálásra.
 
