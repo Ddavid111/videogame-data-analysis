@@ -11,11 +11,11 @@ különös tekintettel az osztályok közötti kiegyensúlyozottságra
 
 \subsection{A Random Forest és Gradient Boosting modellek összehasonlítása}
 
-A nemlineáris modellek implementációja a \texttt{scikit-learn}\cite{scikit} könyvtár
+A nemlineáris modellek implementációja a \texttt{scikit-learn} \cite{scikit} könyvtár
 keretrendszerében történt. Mindkét modell döntési fák együttes alkalmazásán
 alapul, azonban eltérő tanítási stratégiát alkalmaznak.
 
-A Random Forest modell\cite{random forest} több, egymástól független döntési fa
+A Random Forest modell \cite{random forest} több, egymástól független döntési fa
 bootstrap mintavételezéssel történő tanításán alapul,
 majd az egyes fák predikcióit aggregálja (többségi szavazás).
 A modell tanítása során az alábbi fő paramétereket alkalmaztam:
@@ -24,12 +24,12 @@ A modell tanítása során az alábbi fő paramétereket alkalmaztam:
     \item döntési fák száma: \texttt{n\_estimators = 200},
     \item véletlen inicializáció: \texttt{random\_state = 42},
     \item párhuzamos feldolgozás engedélyezve: \texttt{n\_jobs = -1},
-    \item a további paraméterek a \texttt{scikit-learn} alapértelmezett beállításai
+    \item a további paraméterek a \texttt{scikit-learn} alapértelmezett beállításai \\
     (például \texttt{criterion = gini}, \texttt{bootstrap = True},
     \texttt{max\_depth = None}).
 \end{itemize}
 
-A Gradient Boosting modell\cite{gradient boosting} ezzel szemben szekvenciális módon építi fel
+A Gradient Boosting modell \cite{gradient boosting} ezzel szemben szekvenciális módon építi fel
 a döntési fákat, ahol minden új fa a korábbi modellek hibájának
 csökkentésére törekszik. A tanítás során az alábbi paraméterezést alkalmaztam:
 
@@ -48,13 +48,13 @@ biztosít a különböző modellek összehasonlító vizsgálatához.
 
 \subsection{Az alkalmazott osztályozási modellek és értékelésük}
 
-A logisztikus regresszió\cite{logistic regression} mellett több további, gyakran alkalmazott osztályozási módszert is
-megvizsgáltam a videojátékok sikerességének becslésére.
+A logisztikus regresszió \cite{logistic regression} mellett több további, gyakran alkalmazott osztályozási módszert is
+megvizsgáltam a videójátékok sikerességének becslésére.
 Mivel a jellemzőmátrix és a célváltozó már rendelkezésre állt, az összehasonlítás egységes
 adatfelosztás mellett, alapértelmezett paraméterezéssel történt.
 
-Az összehasonlítás során Random Forest\cite{random forest} és Gradient Boosting\cite{gradient boosting} modellek kerültek kipróbálásra.
-A modellek teljesítményét a ROC--AUC\cite{roc-auc} mutató alapján értékeltem, mivel ez a metrika
+Az összehasonlítás során Random Forest \cite{random forest} és Gradient Boosting \cite{gradient boosting} modellek kerültek kipróbálásra.
+A modellek teljesítményét a ROC--AUC \cite{roc-auc} mutató alapján értékeltem, mivel ez a metrika
 küszöbfüggetlen módon méri a modellek rangsorolási képességét.
 Az eredményeket a \ref{tab:model_comparison} táblázat foglalja össze.
 
@@ -93,8 +93,8 @@ majd ezek teljesítményét strukturált metaadatok
 
 Az összehasonlítás során az alábbi modellek kerültek alkalmazásra:
 \begin{itemize}
-    \item TF--IDF\cite{tf-idf} + logisztikus regresszió\cite{logistic regression} (csak szöveges jellemzők),
-    \item TF--IDF + lineáris SVM\cite{svm} (csak szöveges jellemzők),
+    \item TF--IDF \cite{tf-idf} + logisztikus regresszió \cite{logistic regression} (csak szöveges jellemzők),
+    \item TF--IDF + lineáris SVM \cite{svm} (csak szöveges jellemzők),
     \item TF--IDF + logisztikus regresszió strukturált jellemzőkkel,
     \item TF--IDF + lineáris SVM strukturált jellemzőkkel.
 \end{itemize}
@@ -107,16 +107,16 @@ ne befolyásolja a teljesítménymérést.
 \subsection{Teljesítménybeli különbségek elemzése}
 
 Az egyes modellek teljesítményét több metrika mentén értékeltem,
-beleértve a pontosság, precízió, recall és F1-mérték\cite{metrics} értékeket.
+beleértve a pontosság, precízió, recall és F1-mérték \cite{metrics} értékeket.
 Az összehasonlítás során különös figyelmet kapott
 a kisebbségi multiplayer osztály felismerési képessége,
 mivel az adathalmaz jelentősen kiegyensúlyozatlan.
 
 Az eredmények alapján megállapítható,
-hogy a lineáris SVM\cite{svm} modellek következetesen jobb teljesítményt nyújtottak,
+hogy a lineáris SVM \cite{svm} modellek következetesen jobb teljesítményt nyújtottak,
 különösen a recall és az F1-mérték tekintetében.
 Ez arra utal, hogy ezek a modellek hatékonyabban kezelik
-a nagy dimenziós, ritka TF--IDF\cite{tf-idf} reprezentációkat,
+a nagy dimenziós, ritka TF--IDF \cite{tf-idf} reprezentációkat,
 mint a logisztikus regresszió.
 
 A kizárólag szöveges jellemzőkre épülő modellek
@@ -152,7 +152,7 @@ ami alátámasztja a korábbi fejezetekben levont következtetéseket.
 
 \subsection{A strukturált jellemzők hatása}
 
-A tagek és műfajok bináris (multi-hot)\cite{multi-hot} reprezentációjának hozzáadása
+A tagek és műfajok bináris (multi-hot) \cite{multi-hot} reprezentációjának hozzáadása
 különösen a multiplayer osztály visszahívási arányát növelte.
 Ez azt jelzi, hogy a strukturált metaadatok
 explicit módon hordozzák a játékmechanikákra vonatkozó információkat,
@@ -167,9 +167,9 @@ kiemelten fontos javulást jelent.
 \subsection{Összegző értékelés}
 
 Az összehasonlító elemzés alapján megállapítható,
-hogy a TF--IDF\cite{tf-idf} alapú szöveges reprezentációt
+hogy a TF--IDF \cite{tf-idf} alapú szöveges reprezentációt
 és a strukturált metaadatokat együttesen alkalmazó
-lineáris SVM\cite{svm} modell bizonyult a leghatékonyabb megoldásnak
+lineáris SVM \cite{svm} modell bizonyult a leghatékonyabb megoldásnak
 a multiplayer vs. singleplayer osztályozási feladatra.
 
 Ez a modell nemcsak magas összesített pontosságot ért el,

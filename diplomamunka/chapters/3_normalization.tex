@@ -27,7 +27,7 @@ Az adathalmazok egységes struktúrába szervezésének első lépéseként az e
 
 A feldolgozás során az A \cite{a}, B \cite{b} és C \cite{c} adathalmazokhoz külön relációs sémák kerültek kialakításra. Ezek a sémák az egyes adatkészletek logikai felépítését írják le, kiemelve a fő entitásokat, azok attribútumait, valamint az elsődleges és idegen kulcsokat. Az elkülönített sémák vizsgálata lehetővé tette az adathalmazok közötti hasonlóságok és szerkezeti eltérések azonosítását.
 
-Az A adathalmaz relációs sémája a videojátékok alapvető jellemzőit tartalmazza, és referenciapontként szolgált a további adatkészletek integrálása során. A B és C adathalmazok sémái kiegészítő információkat hordoznak, amelyek eltérő attribútumkészlettel rendelkeznek, ugyanakkor közös játékazonosítók mentén kapcsolhatók az A adathalmazhoz.
+Az A adathalmaz relációs sémája a videójátékok alapvető jellemzőit tartalmazza, és referenciapontként szolgált a további adatkészletek integrálása során. A B és C adathalmazok sémái kiegészítő információkat hordoznak, amelyek eltérő attribútumkészlettel rendelkeznek, ugyanakkor közös játékazonosítók mentén kapcsolhatók az A adathalmazhoz.
 
 Az A, B és C adathalmazok sémáinak elemzését követően került kialakításra a D adathalmaz relációs sémája, amely az eredeti adatkészletek összevonásával létrehozott, egységes adatstruktúrát írja le. A D adathalmaz sémája már a normalizálási és tisztítási lépések eredményét tükrözi, és közvetlen alapját képezi a további elemzési és gépi tanulási feladatoknak.
 
@@ -40,9 +40,10 @@ A relációs sémák vizsgálata rávilágított arra, hogy az eltérő szerkeze
 A normalizálás célja az adatredundancia csökkentése, az adatintegritás biztosítása, valamint az adatok logikus, karbantartható és bővíthető szerkezetbe rendezése. A dolgozat során alkalmazott normalizálási lépések az első, második és harmadik normálforma (1NF–3NF) követelményeit követik, figyelembe véve az egyes adathalmazok eltérő szerkezeti sajátosságait.
 
 A bemutatott normalizálási döntések gyakorlati megvalósítása az
-egységesített adathalmaz előállítását követően, elsősorban a projekt
+egységesített \\
+adathalmaz előállítását követően, elsősorban a projekt
 \texttt{split} könyvtárában történt. A \texttt{split/main.ipynb}
-munkafüzet vezérli az egységesített \textit{merged\_master.csv} állomány
+munkafüzet vezérli az egységesített \texttt{merged\_master.csv} állomány
 feldolgozását, míg a normalizált relációk előállítását a
 \texttt{split/tables} alkönyvtár tematikusan szervezett moduljai végzik.
 Ezek a programrészek hozzák létre a fejezetben ismertetett entitásokat és
@@ -195,9 +196,11 @@ A több-több kapcsolatok minden esetben kapcsolótáblák segítségével kerü
 
 A D adathalmaz relációs sémája az A, B és C adathalmazok összevonásával létrehozott, egységes adatmodellt képvisel. A kialakított struktúra biztosítja az első három normálforma követelményeinek teljesülését, megszünteti a redundáns és nem atomi mezőket, valamint strukturált módon kezeli a több-több kapcsolatokat és az összetett csomagstruktúrákat. A séma képes kezelni az eltérő adatforrások közötti különbségeket, bővíthető a jövőbeni adatokkal, és stabil alapot biztosít a további elemzési és gépi tanulási feladatokhoz.
 
-A D adathalmaz normalizált sémájához tartozó adatleíró (data dictionary), amely az egyes attribútumok jelentését és típusát részletezi, a dolgozat mellékleteiben található.
+A D adathalmaz részletes attribútumleírását és az egyes mezők jelentését
+tartalmazó adatleíró (data dictionary) a projekt \texttt{doc/Dictionaries}
+könyvtárában található \texttt{D\_schema\_data\_dictionary.xlsx}
 
-A D adathalmaz normalizált relációs sémájának SQL-alapú megvalósítása a dolgozat mellékleteiben található. Az ott bemutatott SQL definíciók a végső adatmodellt írják le, és egyértelműen jelölik, hogy az egyes táblák és attribútumok mely forrásadathalmazokból (A, B vagy C) származnak. A D adathalmaz egységesített, normalizált relációs sémája a \ref{fig:D_schema} ábrán látható.
+A D adathalmaz normalizált relációs sémájának SQL-alapú megvalósítása a dolgozat mellékleteiben található, a \texttt{doc/db} jegyzéken belül. Az ott bemutatott SQL definíciók a végső adatmodellt írják le, és egyértelműen jelölik, hogy az egyes táblák és attribútumok mely forrásadathalmazokból (A, B vagy C) származnak. A D adathalmaz egységesített, normalizált relációs sémája a \ref{fig:D_schema} ábrán látható.
 
 \begin{figure}[H]
     \centering
@@ -223,17 +226,17 @@ Az adathalmazok összefésülésének folyamata az A \cite{a}, B \cite{b} és C 
     \label{fig:merge_process}
 \end{figure}
 
-Az ábra PlantUML \cite{plantuml} alapú forráskódja külön fájlban is elérhető (\textit{merge\_process.puml}), amely a folyamat reprodukálhatóságát és dokumentáltságát biztosítja.
+Az ábra PlantUML \cite{plantuml} alapú forráskódja külön fájlban is elérhető\\ (\texttt{doc/Merge\_process\_diagram/merge.puml}), amely a folyamat reprodukálhatóságát és dokumentáltságát biztosítja.
 
 \subsubsection{Az összefésülés lépései}
 
 Az \ref{fig:merge_process} ábrán bemutatott folyamat három fő részlépésből áll, amelyek során az egyes forrásadathalmazok önállóan kerülnek feldolgozásra és előkészítésre az egységesítés előtt.
 
-Első lépésként a C forrás feldolgozása történik meg, amely során a 2024-es és 2025-ös CSV-fájlok kerülnek összevonásra és előtisztításra. Ennek eredményeként jön létre a \textit{C\_combined.csv} állomány, amely már egységes szerkezetben tartalmazza az időben eltérő adatforrások adatait.
+Első lépésként a C forrás feldolgozása történik meg, amely során a 2024-es és 2025-ös CSV-fájlok kerülnek összevonásra és előtisztításra. Ennek eredményeként jön létre a \texttt{C\_combined.csv} állomány, amely már egységes szerkezetben tartalmazza az időben eltérő adatforrások adatait.
 
-Második lépésként a B forrás feldolgozása következik, ahol a JSON formátumban elérhető SteamSpy \cite{steamspy} adatok normalizálása és táblásítása történik meg. A feldolgozás eredményeként a \textit{B\_full.csv} állomány jön létre, amely strukturált formában tartalmazza a másodlagos adatforrásból származó információkat.
+Második lépésként a B forrás feldolgozása következik, ahol a JSON formátumban elérhető SteamSpy \cite{steamspy} adatok normalizálása és táblásítása történik meg. A feldolgozás eredményeként a \texttt{B\_full.csv} állomány jön létre, amely strukturált formában tartalmazza a másodlagos adatforrásból származó információkat.
 
-Harmadik lépésként az A forrás feldolgozása valósul meg, amely során a több CSV-fájlból álló Steam-metaadatok belső összevonása történik meg. Az eredmény az \textit{A\_merged.csv} állomány, amely az A adathalmaz egységesített változatát tartalmazza.
+Harmadik lépésként az A forrás feldolgozása valósul meg, amely során a több CSV-fájlból álló Steam-metaadatok belső összevonása történik meg. Az eredmény az \texttt{A\_merged.csv} állomány, amely az A adathalmaz egységesített változatát tartalmazza.
 
 \subsubsection{Források egyesítése és prioritási sorrend}
 
@@ -246,7 +249,7 @@ A prioritási sorrend az alábbiak szerint alakult:
     \item az A adathalmaz kiegészítő, kitöltő szerepet töltött be.
 \end{itemize}
 
-A folyamat eredményeként egy egységes relációs struktúra jött létre (\textit{merged\_master.csv}), amely már közvetlenül alkalmas volt a normalizálási lépések végrehajtására és az SQL-alapú adatbázis felépítésére.
+A folyamat eredményeként egy egységes relációs struktúra jött létre\\ (\texttt{merged\_master.csv}), amely már közvetlenül alkalmas volt a normalizálási lépések végrehajtására és az SQL-alapú adatbázis felépítésére.
 
 \subsection{Az összefésülés megvalósítása}
 
@@ -256,21 +259,21 @@ Ebben az alfejezetben az A \cite{a}, B \cite{b} és C \cite{c} adathalmazok öss
 
 Az adathalmazok összefésülése egy külön \texttt{merge} könyvtárban
 megvalósított, moduláris Python-alapú feldolgozórendszerrel történt. A
-folyamat belépési pontja a \texttt{merge/main.ipynb} munkafüzet, amely a
-teljes merge-folyamatot vezérli, és a háttérben a szükséges Python
-modulokat hívja meg. A globális paraméterezést a \texttt{merge/config.py}
-állomány tartalmazza.
+folyamat belépési pontja a \\
+\texttt{merge/main.ipynb} munkafüzet, amely a teljes merge-folyamatot vezérli, és a háttérben a szükséges Python
+modulokat hívja meg. A globális paraméterezést a \\
+ \texttt{merge/config.py} állomány tartalmazza.
 
 A forrásadathalmazok beolvasását és előzetes feldolgozását a
 \texttt{merge/sources} alkönyvtár moduljai végzik
 (\texttt{source\_a.py}, \texttt{source\_b.py}, \texttt{source\_c.py}),
 míg az általános adatkezelési, tisztítási, normalizálási és egyesítési
 segédfüggvények a \texttt{merge/utils} könyvtárban kaptak helyet. Az
-összefésülés eredményei és köztes kimenetei a \texttt{merge/generated}
-könyvtárba kerülnek mentésre, beleértve a részforrásokból előállított
-\textit{A\_merged.csv}, \textit{B\_full.csv}, \textit{C\_full.csv}
-állományokat, valamint a végső \textit{merged\_master.csv} táblát is. A
-folyamat során készült naplófájlok, jelentések és vizualizációk szintén
+összefésülés eredményei és köztes kimenetei a \\
+\texttt{merge/generated} könyvtárba kerülnek mentésre, beleértve a részforrásokból előállított
+\texttt{A\_merged.csv}, \texttt{B\_full.csv}, \texttt{C\_full.csv}
+állományokat, valamint a végső \\
+ \texttt{merged\_master.csv} táblát is. A folyamat során készült naplófájlok, jelentések és vizualizációk szintén
 itt kerülnek eltárolásra.
 
 \subsubsection{Kiemelt kódrészletek}
@@ -358,7 +361,7 @@ def load_source_b(base_path: str) -> pd.DataFrame:
 
 Az összefésülési folyamat teljes egészében részletes naplózással került végrehajtásra. A logolás lehetővé tette a forrásfájlok betöltésének, a feldolgozott rekordok számának, valamint az egyes tisztítási és összefésülési lépések nyomon követését. A naplóállományok segítségével a teljes feldolgozási folyamat visszakövethetővé vált, és az esetleges hibák vagy inkonzisztenciák gyorsan azonosíthatók voltak. 
 
-A részletes futási információk, figyelmeztetések és státuszüzenetek a
+A részletes futási információk, figyelmeztetések és státuszüzenetek a \\
 \texttt{merge/generated/logs/merge\_log.txt} állományban kerülnek
 rögzítésre, amely lehetővé teszi a feldolgozási lépések utólagos
 ellenőrzését és visszakövetését.
@@ -369,8 +372,8 @@ A logolás kiterjedt többek között a forrásadatok betöltésére, az ideigle
 
 A fejezetben ismertetett normalizált relációs struktúra gyakorlati
 előállítását a \texttt{split} könyvtárban megvalósított programrész végzi.
-A feldolgozás belépési pontja a \texttt{split/main.ipynb} munkafüzet,
-amely az egységesített \textit{merged\_master.csv} állományból kiindulva
+A feldolgozás belépési pontja a \\
+\texttt{split/main.ipynb} munkafüzet, amely az egységesített \texttt{merged\_master.csv} állományból kiindulva
 meghívja a normalizált táblák előállításáért felelős modulokat. Az egyes
 relációk létrehozása a \texttt{split/tables} könyvtár tematikus
 programrészeiben történik, így a normalizálási döntések közvetlenül
@@ -383,13 +386,14 @@ játékok alapadataihoz és leírásaihoz tartozó táblákat állítja elő, a
 a \texttt{genre\_category\_tables.py}, \texttt{platforms\_tables.py} és
 \texttt{tags\_tables.py} a kategorizáló attribútumokhoz tartozó entitásokat
 és kapcsolótáblákat generálja, míg a \texttt{language\_tables.py},
-\texttt{developer\_publisher\_tables.py}, \texttt{package\_tables.py},
+\texttt{developer\_publisher\_tables.py}, \texttt{package\_tables.py}, \\
 \texttt{requirements\_tables.py} és \texttt{support\_tables.py} az adott
 szakterületekhez tartozó normalizált táblák előállítását végzik.
 
-Az összefésülési folyamat eredményeként létrejött \textit{merged\_master.csv} egyetlen, nagyméretű, összevont adatállományt tartalmazott. A split folyamat célja az volt, hogy ebből az egységesített táblából tematikus, normalizált CSV-fájlok jöjjenek létre, amelyek közvetlenül megfelelnek a kialakított relációs adatmodell struktúrájának.
+Az összefésülési folyamat eredményeként létrejött \textit{merged\_master.csv} egyetlen, \\ 
+nagyméretű, összevont adatállományt tartalmazott. A split folyamat célja az volt, hogy ebből az egységesített táblából tematikus, normalizált CSV-fájlok jöjjenek létre, amelyek közvetlenül megfelelnek a kialakított relációs adatmodell struktúrájának.
 
-A kód futása közben részletes naplózás készült, amely a
+A kód futása közben részletes naplózás készült, amely a \\
 \texttt{split/generated/logs/split\_log.txt} állományban rögzíti a
 feldolgozás egyes lépéseit, biztosítva a folyamat átláthatóságát és
 visszakövethetőségét.
@@ -409,7 +413,7 @@ vezérli, amely az alábbi fő lépéseket hajtja végre:
 
 A split folyamat során az alábbi CSV-fájlok kerülnek előállításra:
 \begin{itemize}
-    \item \textit{game.csv} – a videojátékok alapadatai,
+    \item \textit{game.csv} – a videójátékok alapadatai,
     \item \textit{description.csv} – részletes, rövid és „about” leírások,
     \item \textit{media.csv} – fejléc- és háttérképek,
     \item \textit{screenshots.csv} – teljes méretű és előnézeti képernyőképek,

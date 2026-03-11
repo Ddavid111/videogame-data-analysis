@@ -12,11 +12,11 @@ szoftveres eszközök is.
 
 \subsection{A Steam szolgáltatás áttekintése}
 
-A Steam \cite{steam} egy digitális videojáték-disztribúciós platform, amelyet a Valve Corporation \cite{valve} üzemeltet, és amely világszerte az egyik legnagyobb online videojáték-áruháznak számít. A szolgáltatás lehetőséget biztosít videojátékok vásárlására, letöltésére és frissítésére, valamint különböző közösségi funkciók – például értékelések, fórumok és statisztikák – elérésére.
+A Steam \cite{steam} egy digitális videójáték-disztribúciós platform, amelyet a Valve Corporation \cite{valve} üzemeltet, és amely világszerte az egyik legnagyobb online videójáték-áruháznak számít. A szolgáltatás lehetőséget biztosít videójátékok vásárlására, letöltésére és frissítésére, valamint különböző közösségi funkciók – például értékelések, fórumok és statisztikák – elérésére.
 
-A Steam platformon elérhető videojátékokhoz számos, nyilvánosan hozzáférhető adat kapcsolódik. Ezek közé tartoznak többek között a játékok alapvető jellemzői (például cím, megjelenési dátum, fejlesztő, kiadó), műfaji besorolásuk, felhasználói értékelések, valamint egyes esetekben teljesítményre és népszerűségre vonatkozó mutatók. Az ilyen típusú adatok különösen alkalmasak statisztikai elemzésre és gépi tanulási módszerek alkalmazására.
+A Steam platformon elérhető videójátékokhoz számos, nyilvánosan hozzáférhető adat kapcsolódik. Ezek közé tartoznak többek között a játékok alapvető jellemzői (például cím, megjelenési dátum, fejlesztő, kiadó), műfaji besorolásuk, felhasználói értékelések, valamint egyes esetekben teljesítményre és népszerűségre vonatkozó mutatók. Az ilyen típusú adatok különösen alkalmasak statisztikai elemzésre és gépi tanulási módszerek alkalmazására.
 
-A Steam által kezelt adatok mennyisége és sokfélesége miatt a platform gyakran szolgál adatforrásként kutatási és elemzési célokra. Korábbi vizsgálatok elemezték például a Steam-felhasználói értékelések jellemzőit és információtartalmát \cite{Lin2019SteamReviews}, a játékok népszerűségének előrejelezhetőségét a platformon elérhető metaadatok alapján \cite{DeLuisa2021SteamPopularity}, valamint a címkéken és műfajokon keresztül kirajzolódó szerkezeti mintázatokat is \cite{Rizani2020SteamTags}. A játékokhoz kapcsolódó strukturált adatok ezért lehetőséget biztosítanak különböző mintázatok feltárására, például a műfajok közötti különbségek, a felhasználói értékelések alakulása vagy a játékok népszerűségének vizsgálata során. Ennek köszönhetően a Steamhez kapcsolódó adathalmazok jól illeszkednek adatfeldolgozási és gépi tanulási feladatok bemutatásához.
+A Steam által kezelt adatok mennyisége és sokfélesége miatt a platform gyakran szolgál adatforrásként kutatási és elemzési célokra. Korábbi vizsgálatok elemezték például a Steam-felhasználói értékelések jellemzőit és információtartalmát \cite{Lin2019SteamReviews}, a játékok népszerűségének előrejelezhetőségét a platformon elérhető metaadatok alapján  \cite{DeLuisa2021SteamPopularity}, valamint a címkéken és műfajokon keresztül kirajzolódó szerkezeti mintázatokat is \cite{Rizani2020SteamTags}. A játékokhoz kapcsolódó strukturált adatok ezért lehetőséget biztosítanak különböző mintázatok feltárására, például a műfajok közötti különbségek, a felhasználói értékelések alakulása vagy a játékok népszerűségének vizsgálata során. Ennek köszönhetően a Steamhez kapcsolódó adathalmazok jól illeszkednek adatfeldolgozási és gépi tanulási feladatok bemutatásához.
 
 \subsection{A Kaggle platform szerepe}
 
@@ -32,7 +32,7 @@ fejlesztőkörnyezet, valamint Jupyter Notebook \cite{jupyter} alapú munkafüze
 kerültek alkalmazásra, amelyek lehetővé tették az interaktív
 adatelemzést és az egyes lépések dokumentálását.
 
-Az adatok kezeléséhez és előfeldolgozásához elsősorban a \texttt{pandas} \cite{pandas}
+Az adatok kezeléséhez és előfeldolgozásához elsősorban a \texttt{pandas}  \cite{pandas}
 és \texttt{NumPy} \cite{numpy} könyvtárak kerültek felhasználásra, míg a
 vizualizációk elkészítéséhez a \texttt{matplotlib} \cite{matplotlib} és
 \texttt{seaborn} \cite{seaborn} csomagok szolgáltak alapul. A gépi tanulási és
@@ -51,7 +51,7 @@ követően különálló adatfájlokat (CSV és JSON formátumú táblákat) tar
 Az elsőként vizsgált adatkészlet a
 \textit{Steam Store Games (Clean dataset)} \cite{a},
 amely a továbbiakban \textit{A adathalmazként} kerül hivatkozásra.
-Az adathalmaz a Steam áruházban elérhető videojátékok különböző jellemzőit
+Az adathalmaz a Steam áruházban elérhető videójátékok különböző jellemzőit
 tartalmazza, többek között műfaji besorolásokat, leírásokat, címkéket és
 becsült tulajdonosi adatokat.
 Az adatok a Steam Store és a SteamSpy \cite{steamspy} API-k felhasználásával
@@ -85,7 +85,7 @@ amely a későbbi elemzési és gépi tanulási feladatok alapját képezi.
 A felhasznált adathalmazok főbb mennyiségi jellemzőit,
 táblánkénti bontásban, a \ref{tab:datasets} táblázat foglalja össze.
 
-A továbbiakban az A, B és C adathalmazok neve egyúttal az adott adathalmazhoz tartozó fájlokat tartalmazó jegyzék nevét is jelenti.
+A továbbiakban az A, B és C adathalmazok neve egyúttal az adott adathalmazhoz tartozó fájlokat tartalmazó jegyzék nevét is jelenti, amiket a \texttt{data} jegyzékben tárolok.
 
 \begin{table}[H]
 \centering
@@ -119,14 +119,14 @@ C & games\_may2024\_full.csv & \num{87806} & 46 \\
 A vizsgált adathalmazok előzetes feltárása és elemzése különálló
 Jupyter \cite{jupyter} munkafüzetekben történt, adathalmazonként
 elkülönítve. Az A \cite{a}, B \cite{b} és C \cite{c} adathalmazokhoz
-tartozó elemzések a dolgozathoz mellékelt \textit{notebooks/Dataset\_Analyses}
-jegyzékben található \textit{A.ipynb}, \textit{B.ipynb} és
-\textit{C.ipynb} munkafüzetekben kerültek feldolgozásra. Ez a felosztás
+tartozó elemzések a dolgozathoz mellékelt \texttt{notebooks/Dataset\_Analyses}
+jegyzékben található \texttt{A.ipynb}, \texttt{B.ipynb} és
+\texttt{C.ipynb} munkafüzetekben kerültek feldolgozásra. Ez a felosztás
 lehetővé tette az egyes adatkészletek szerkezetének, tartalmának és
 sajátosságainak részletes megismerését, valamint az adatokra jellemző
 problémák korai azonosítását. A munkafüzetekből létrehozott egyes ábrák
-külön mentésre kerültek a \textit{notebooks/generated/A},
-\textit{notebooks/generated/B} és \textit{notebooks/generated/C}
+külön mentésre kerültek a \texttt{notebooks/generated/A},
+\texttt{notebooks/generated/B} és \texttt{notebooks/generated/C}
 jegyzékekbe.
 
 A külön munkafüzetek alkalmazása elősegítette a feldolgozási folyamat
@@ -145,7 +145,8 @@ alábbi vizsgálatok történtek meg:
     oszlopok számát, adattípusokat és a hiányzó értékek előfordulását,
     \item alapvető statisztikai leíró mutatók vizsgálata,
     \item a főbb attribútumok vizualizációja, például eloszlások,
-    időbeli trendek és kategória-gyakoriságok megjelenítése,
+    időbeli trendek és \\
+    kategória-gyakoriságok megjelenítése,
     \item adatminőségi problémák, kiugró értékek és jellegzetes mintázatok
     azonosítása.
 \end{itemize}

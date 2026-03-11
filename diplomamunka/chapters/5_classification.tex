@@ -1,6 +1,6 @@
 \Chapter{Osztályozási problémák}
 
-Ebben a fejezetben a korábban előkészített és egységesített Steam\cite{steam}-adatokból
+Ebben a fejezetben a korábban előkészített és egységesített Steam \cite{steam} adatokból
 két, egymástól eltérő \textit{bináris osztályozási} feladatot fogalmazok meg és
 vizsgálok. A két feladat közös jellemzője, hogy mindkettőnél a célváltozó két értéket vehet fel,
 és a modellezés célja a játékok egyes tulajdonságai alapján a megfelelő osztály előrejelzése.
@@ -13,7 +13,7 @@ A két vizsgált osztályozási probléma:
     \item \textbf{Multiplayer vs. singleplayer} kategória becslése (címkék és leírás alapján képzett címke).
 \end{itemize}
 
-A fejezet célja nem egyetlen konkrét algoritmus kiemelése,
+A két osztályozási feladat munkafüzete a \texttt{notebooks/Classification} jegyzékben található meg. A fejezet célja nem egyetlen konkrét algoritmus kiemelése,
 hanem egy átlátható, reprodukálható osztályozási munkafolyamat bemutatása,
 amely később új célváltozókra is kiterjeszthető.
 
@@ -28,12 +28,12 @@ Mindkét osztályozási feladatnál az alábbi feldolgozási folyamatot alkalmaz
     azoknak a rekordoknak és attribútumoknak a kiválasztása, amelyek relevánsak a célváltozóhoz.
     \item \textbf{Előfeldolgozás és jellemzőképzés:}
     hiányzó értékek kezelése, numerikus változók skálázása, kategóriák binarizálása,
-    illetve a szöveges mezők vektorizálása (TF--IDF\cite{tf-idf}).
+    illetve a szöveges mezők vektorizálása (TF--IDF \cite{tf-idf}).
     \item \textbf{Tanítás és tesztelés:}
     a tanító és teszt halmazok szétválasztása, majd modellillesztés.
     \item \textbf{Értékelés:}
-    több metrika alapján (pontosság, precízió, recall, F1\cite{metrics}; ahol releváns, ROC--AUC\cite{roc-auc}),
-    továbbá konfúziós mátrix\cite{metrics} és részletes osztályozási jelentés alapján.
+    több metrika alapján (pontosság, precízió, recall, F1 \cite{metrics}; ahol releváns, ROC--AUC \cite{roc-auc}),
+    továbbá konfúziós mátrix \cite{metrics} és részletes osztályozási jelentés alapján.
 \end{enumerate}
 
 A módszertan előnye, hogy a két külön feladatra ugyanaz a \textit{logikai szerkezet} alkalmazható,
@@ -46,12 +46,12 @@ metrikát alkalmaztam, amelyek a predikciók különböző aspektusait
 ragadják meg.
 
 Az alapvető mutatók közé tartozik a pontosság (accuracy),
-a precízió (Precision), a visszahívás (Recall) és az F1-mérték\cite{metrics}.
+a precízió (Precision), a visszahívás (Recall) és az F1-mérték  \cite{metrics}.
 Ezek a metrikák a konfúziós mátrix elemein alapulnak,
 és információt adnak a modell tévesztéseinek jellegéről.
 
 A modellek rangsorolási képességének értékelésére a
-ROC--AUC (Receiver Operating Characteristic – Area Under Curve)\cite{roc-auc}
+ROC--AUC (Receiver Operating Characteristic – Area Under Curve) \cite{roc-auc}
 mutatót is alkalmaztam.
 A ROC görbe a valódi pozitív arány (true positive rate)
 és a hamis pozitív arány (false positive rate) kapcsolatát ábrázolja
@@ -68,7 +68,7 @@ A ROC--AUC mutató értelmezhető annak valószínűségeként,
 hogy a modell egy véletlenszerűen kiválasztott pozitív példát
 magasabb valószínűséggel sorol a pozitív osztályba,
 mint egy véletlenszerűen kiválasztott negatív példát.
-Ez különösen hasznos a videojátékok sikerességének becslése során,
+Ez különösen hasznos a videójátékok sikerességének becslése során,
 ahol a cél nemcsak a bináris döntés,
 hanem a játékok relatív rangsorolása is.
 
@@ -89,7 +89,7 @@ A sikeresség-becsléshez olyan változókat választottam, amelyek a piaci telj
     \item \textbf{Numerikus alapjellemzők:} például ár (\textit{price}), korhatár
     (\textit{required\_age}), megjelenési év (\textit{release\_date}), és további, adathalmazban elérhető számszerű mutatók.
     \item \textbf{Kategória jellegű változók:} műfajok és kategóriák bináris indikátorváltozókká alakítva
-    (multi-hot\cite{multi-hot} reprezentáció), hogy a többértékű mezők is használhatók legyenek klasszikus modellekben.
+    (multi-hot \cite{multi-hot} reprezentáció), hogy a többértékű mezők is használhatók legyenek klasszikus modellekben.
 \end{itemize}
 
 A jellemzők kiválasztását megelőzően a numerikus változók közötti kapcsolatok
@@ -143,14 +143,14 @@ felül- vagy alulreprezentált.
 A teljesítményt több metrika alapján értékeltem:
 
 \begin{itemize}
-    \item \textbf{Accuracy} (pontosság)\cite{metrics} – összes helyes besorolás aránya,
-    \item \textbf{Precision} (precízió), \textbf{Recall, F1}\cite{metrics} – különösen hasznos, ha az osztályok eloszlása nem tökéletesen egyenletes,
-    \item ahol releváns, \textbf{ROC--AUC}\cite{roc-auc} – rangsorolási minőség mérésére.
+    \item \textbf{Accuracy} (pontosság) \cite{metrics} – összes helyes besorolás aránya,
+    \item \textbf{Precision} (precízió), \textbf{Recall, F1} \cite{metrics} – különösen hasznos, ha az osztályok eloszlása nem tökéletesen egyenletes,
+    \item ahol releváns, \textbf{ROC--AUC} \cite{roc-auc} – rangsorolási minőség mérésére.
 \end{itemize}
 
 \subsection{Mennyiségi jellemzők és javasolt ábrák}
 
-Az adathalmaz több olyan mennyiségi jellemzőt tartalmaz, amelyek számszerű formában írják le a videojátékok tulajdonságait és a felhasználói visszajelzéseket. 
+Az adathalmaz több olyan mennyiségi jellemzőt tartalmaz, amelyek számszerű formában írják le a videójátékok tulajdonságait és a felhasználói visszajelzéseket. 
 Ezek közé tartozik többek között a játék ára, megjelenési éve, korhatár-besorolása, valamint a felhasználói értékelésekhez kapcsolódó mennyiségek.
 
 A sikeresség mérésére használt pozitív értékelési arány folytonos változó, amelynek eloszlása önmagában is fontos információt hordoz. 
@@ -161,7 +161,7 @@ A pozitív értékelések arányának eloszlását a \ref{fig:positive_ratio_dis
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/pos_rating_ratio_threshold.png}
-    \caption{A pozitív értékelések arányának eloszlása a videojátékok között}
+    \caption{A pozitív értékelések arányának eloszlása a videójátékok között}
     \label{fig:positive_ratio_dist}
 \end{figure}
 
@@ -221,8 +221,8 @@ a játékok funkcionalitását és játékmenetét.
     \label{fig:numeric_correlation_mp}
 \end{figure}
 
-A korrelációs mátrix alapján különösen magas kapcsolat figyelhető meg
-a \textit{num\_reviews\_total}, \textit{positive} és \textit{negative}
+A korrelációs mátrix alapján különösen magas kapcsolat figyelhető meg a \\
+\textit{num\_reviews\_total}, \textit{positive} és \textit{negative}
 változók között.
 Ez a jelenség a változók definíciójából fakad:
 az összes értékelésszám közelítőleg a pozitív és negatív értékelések összege,
@@ -249,12 +249,12 @@ A felhasznált jellemzők a következők voltak:
     (\textit{about\_the\_game}) és rövid leírása
     (\textit{short\_description}),
     \item \textbf{Szöveges reprezentáció:}
-    TF--IDF (Term Frequency – Inverse Document Frequency)\cite{tf-idf} vektorizálás,
+    TF--IDF (Term Frequency – Inverse Document Frequency) \cite{tf-idf} vektorizálás,
     amely a gyakori, de kevésbé informatív szavakat leértékeli,
     míg a megkülönböztető kifejezéseket nagyobb súllyal emeli ki,
     \item \textbf{Strukturált jellemzők:}
     a játékokhoz tartozó címkék (tagek) és műfajok,
-    bináris (multi-hot)\cite{multi-hot} kódolás formájában.
+    bináris (multi-hot) \cite{multi-hot} kódolás formájában.
 \end{itemize}
 
 Ez a jellemzőválasztás lehetővé tette,
@@ -302,7 +302,7 @@ ami a szövegállomány jelentős nyelvi változatosságára utal.
 
 A nagy dimenziószám és a ritka reprezentáció
 indokolttá teszi lineáris osztályozó algoritmusok alkalmazását,
-mint a logisztikus regresszió\cite{logistic regression} vagy a lineáris SVM\cite{svm},
+mint a logisztikus regresszió \cite{logistic regression} vagy a lineáris SVM  \cite{svm},
 amelyek hatékonyan kezelik a magas dimenziós,
 szórványos jellemzőtereket.
 
@@ -311,8 +311,8 @@ szórványos jellemzőtereket.
 A tanító/teszt felosztást stratifikált módon végeztem, hogy az osztálycímkék
 eloszlása mindkét részhalmazban megőrződjön.
 A modell teljesítményét az osztályozási feladatoknál szokásos metrikák
-segítségével értékeltem (Accuracy, Precision, Recall, F1\cite{metrics}, valamint ahol
-releváns, ROC--AUC\cite{roc-auc}), az előző alfejezetben bemutatott módon.
+segítségével értékeltem (Accuracy, Precision, Recall, F1 \cite{metrics}, valamint ahol
+releváns, ROC--AUC \cite{roc-auc}), az előző alfejezetben bemutatott módon.
 
 \subsection{Mennyiségi jellemzők és osztályeloszlás}
 
@@ -347,12 +347,12 @@ Az eloszlás alakja lognormális jellegre utal,
 ami összhangban van a szöveghossz multiplikatív természetével.
 
 A multiplayer játékok leírásai hosszabbak és nagyobb szórást mutatnak.
-A medián szószám multiplayer esetén 250 (IQR\cite{IQR} 169--362),
+A medián szószám multiplayer esetén 250 (IQR \cite{IQR} 169--362),
 míg singleplayer esetén 201 (IQR: 137--291).
 Az átlagos leíráshossz szintén magasabb multiplayer játékoknál
-(29004 szó), mint singleplayer esetén (23476 szó).
+(\num{29004} szó), mint singleplayer esetén (\num{23476} szó).
 A felső 1\%-ba tartozó értékek is jelentősen nagyobbak
-(multiplayer: 975.25 szó, singleplayer: 782 szó),
+(multiplayer: \num{97525} szó, singleplayer: 782 szó),
 ami erősebb felső tartománybeli elnyúlásra utal.
 
 Az eloszlások közötti különbségek arra utalnak,
@@ -383,7 +383,7 @@ ami tovább erősíti a lognormális jelleg feltételezését.
 \Section{Összegzés és további vizsgálati lehetőségek}
 
 Az 5. fejezetben két, egymástól eltérő bináris osztályozási problémát
-fogalmaztam meg a Steam\cite{steam}-adathalmaz alapján.
+fogalmaztam meg a Steam \cite{steam}-adathalmaz alapján.
 A célváltozók definiálását részletes jellemzőelemzés és
 eloszlásvizsgálat előzte meg,
 amelyek rávilágítottak az egyes feladatok eltérő jellegére

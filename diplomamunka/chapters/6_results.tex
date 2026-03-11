@@ -9,7 +9,7 @@ milyen jellemzők alapján hozzák meg döntéseiket,
 
 A fejezet két, eltérő jellegű problématerületre (domainre) bontva
 mutatja be az osztályozási feladatokat.
-Az első domain a videojátékok sikerességének becslésére fókuszál
+Az első domain a videójátékok sikerességének becslésére fókuszál
 felhasználói visszajelzések és strukturált metaadatok alapján,
 míg a második domain a játékok multiplayer és singleplayer jellegének
 automatikus felismerését vizsgálja szöveges leírások
@@ -27,13 +27,13 @@ amely a különböző módszerek és jellemzők hatását vizsgálja.
 
 \subsection{A sikeresség-becslés eredményeinek értelmezése}
 
-A videojátékok sikerességének becslésére bináris osztályozási feladat került megfogalmazásra,
+A videójátékok sikerességének becslésére bináris osztályozási feladat került megfogalmazásra,
 ahol a cél annak eldöntése volt, hogy egy adott játék a felhasználói értékelések alapján
 sikeresnek tekinthető-e.
 A modell teljesítményének értelmezéséhez nemcsak az összesített metrikák,
 hanem a konfúziós mátrix is fontos információt szolgáltat.
 
-A logisztikus regresszió\cite{logistic regression} modell eredményeit a \ref{fig:confusion_success} ábra szemlélteti.
+A logisztikus regresszió \cite{logistic regression} modell eredményeit a \ref{fig:confusion_success} ábra szemlélteti.
 A konfúziós mátrix alapján megfigyelhető, hogy a modell a sikeres játékokat
 nagyobb arányban ismeri fel helyesen, mint a nem sikereseket.
 Ez összhangban van azzal, hogy az adathalmazban a sikeres játékok aránya enyhén domináns.
@@ -41,7 +41,7 @@ Ez összhangban van azzal, hogy az adathalmazban a sikeres játékok aránya eny
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{images/confusion_matrix_logistic_regression.png}
-    \caption{Konfúziós mátrix a videojátékok sikerességének becslésére (logisztikus regresszió)}
+    \caption{Konfúziós mátrix a videójátékok sikerességének becslésére (logisztikus regresszió)}
     \label{fig:confusion_success}
 \end{figure}
 
@@ -52,7 +52,7 @@ gyakrabban sorol nem sikeres játékot a sikeres kategóriába, mint fordítva.
 Ez a tulajdonság bizonyos alkalmazási esetekben előnyös lehet, amennyiben a cél
 a potenciálisan sikeres címek minél nagyobb arányú azonosítása.
 
-A modell teljesítményét jellemző ROC--AUC\cite{roc-auc} érték azt mutatja,
+A modell teljesítményét jellemző ROC--AUC \cite{roc-auc} érték azt mutatja,
 hogy a becslés nem csupán bináris döntésként értelmezhető,
 hanem a játékok sikeresség szerinti rangsorolására is alkalmas.
 Ez azt jelenti, hogy a modell általában magasabb siker-valószínűséget rendel
@@ -62,7 +62,7 @@ ami megerősíti a modell használhatóságát elemzési célokra.
 \subsection{A sikerességet befolyásoló jellemzők értelmezése}
 
 A prediktív teljesítmény értékelése mellett fontos szempont annak vizsgálata is,
-hogy a modell mely bemeneti változókat tekinti meghatározónak a videojátékok
+hogy a modell mely bemeneti változókat tekinti meghatározónak a videójátékok
 sikerességének becslése során.
 Ennek érdekében a logisztikus regresszió modell koefficienseit elemeztem,
 mivel ezek közvetlenül értelmezhető információt adnak a változók hatásának
@@ -123,7 +123,7 @@ A jellemzők számának és a modell teljesítményének kapcsolatát a
 
 \Section{Domain 2: Multiplayer vs. singleplayer osztályozás}
 
-A második vizsgált osztályozási probléma a videojátékok multiplayer és
+A második vizsgált osztályozási probléma a videójátékok multiplayer és
 singleplayer kategóriákba sorolására irányult.
 A bináris osztályozási feladat célja annak meghatározása volt,
 hogy egy adott játék rendelkezik-e többjátékos funkcionalitással,
@@ -131,12 +131,12 @@ a játékok szöveges leírásai és strukturált metaadatai alapján.
 
 A feladat megoldására több különböző modellt is kipróbáltam,
 amelyek eltérő jellemzőkészletekre épültek.
-A szöveges leírások feldolgozásához TF--IDF\cite{tf-idf} alapú
+A szöveges leírások feldolgozásához TF--IDF \cite{tf-idf} alapú
 vektorizálást alkalmaztam, amely a szavak relatív fontosságát
 számszerűsíti a dokumentumok között, és hatékony bemeneti
 reprezentációt biztosít lineáris osztályozási modellek számára.
 Alternatív megközelítésként lehetőség lett volna fejlettebb
-természetes nyelvfeldolgozó eszközök, például a spaCy\cite{spacy}
+természetes nyelvfeldolgozó eszközök, például a spaCy \cite{spacy}
 könyvtár alkalmazására is, amely támogatja a tokenizálást,
 lemmatizálást és egyéb nyelvi elemzési lépéseket.
 A jelen vizsgálatban azonban a TF--IDF reprezentáció önmagában is
@@ -144,7 +144,7 @@ megfelelő teljesítményt biztosított a feladat megoldásához.
 
 Az eredmények alapján a legjobb teljesítményt a
 TF--IDF alapú szöveges jellemzőket és a strukturált metaadatokat
-együttesen alkalmazó lineáris SVM (LinearSVC)\cite{svm} modell nyújtotta.
+együttesen alkalmazó lineáris SVM (LinearSVC) \cite{svm} modell nyújtotta.
 Ez a megoldás nemcsak az összesített pontosság,
 hanem a kiegyensúlyozottabb osztályonkénti teljesítmény tekintetében is
 kedvezőbbnek bizonyult.

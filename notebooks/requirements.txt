@@ -1,13 +1,14 @@
 beautifulsoup4
-ipywidgets
 jupyter
 matplotlib
 matplotlib-venn
-nbconvert
 numpy
 pandas
 scikit-learn
+scipy
 seaborn
 sphinx
 sphinx-rtd-theme
 sphinx-plantuml
+ipywidgets
+nbconvert
