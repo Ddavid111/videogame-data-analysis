@@ -63,9 +63,9 @@ folder "Forrás C\n(2024–2025 CSV-k)" as C {
 A -[hidden]right- B
 B -[hidden]right- C
 
-rectangle "A_merged.csv\n(belső merge – load_source_a)" as A_merged
-rectangle "B_full.csv\n(JSON feldolgozás – load_source_b)" as B_full
-rectangle "C_combined.csv\n(belső merge – load_source_c)" as C_combined
+rectangle "**A_merged.csv**\nBelső merge (load_source_a)" as A_merged
+rectangle "**B_full.csv**\nJSON feldolgozás (load_source_b)" as B_full
+rectangle "**C_combined.csv**\nBelső merge (load_source_c)" as C_combined
 
 A_files --> A_merged
 B_json --> B_full
@@ -74,7 +74,7 @@ C_files --> C_combined
 A_merged -[hidden]right- B_full
 B_full -[hidden]right- C_combined
 
-rectangle "D\n(merged_master.csv)\nEgységes relációs séma" as D
+rectangle "**merged_master.csv**\nEgységes relációs séma (D)" as D
 
 note right of D
 Forrás-prioritás:
