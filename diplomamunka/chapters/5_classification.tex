@@ -45,7 +45,7 @@ Az osztályozási modellek teljesítményének értékelésére több különbö
 metrikát alkalmaztam, amelyek a predikciók különböző aspektusait
 ragadják meg.
 
-Az alapvető mutatók közé tartozik a pontosság (accuracy),
+Az alapvető mutatók közé tartozik a pontosság (Accuracy),
 a precízió (Precision), a visszahívás (Recall) és az F1-mérték  \cite{metrics}.
 Ezek a metrikák a konfúziós mátrix elemein alapulnak,
 és információt adnak a modell tévesztéseinek jellegéről.
@@ -128,7 +128,7 @@ a PCA kumulált magyarázott varianciáját pedig a \ref{fig:pca_variance} ábra
 A kiválasztott jellemzők modellbarát formára alakításához
 egységes előfeldolgozási lépéseket alkalmaztam.
 A numerikus változókat skálázom,
-a kategóriajellegű attribútumokat pedig bináris indikátorváltozókká alakítom.
+a kategória jellegű attribútumokat pedig bináris indikátorváltozókká alakítom.
 Ennek célja, hogy a különböző típusú jellemzők egyetlen,
 egységes bemeneti mátrixban jelenjenek meg, amely közvetlenül
 felhasználható a tanuló algoritmusok számára.
@@ -390,7 +390,7 @@ amelyek rávilágítottak az egyes feladatok eltérő jellegére
 és a releváns prediktorváltozók körére.
 
 A sikeresség becslésére irányuló feladat esetében
-a numerikus és kategóriajellegű változók együttes alkalmazása
+a numerikus és kategória jellegű változók együttes alkalmazása
 indokoltnak bizonyult,
 míg a multiplayer vs. singleplayer osztályozásnál
 a szöveges leírások és strukturált metaadatok

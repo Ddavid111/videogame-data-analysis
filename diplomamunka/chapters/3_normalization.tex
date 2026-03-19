@@ -359,14 +359,14 @@ def load_source_b(base_path: str) -> pd.DataFrame:
 
 \subsubsection{Logolás és ellenőrzés a merge folyamat során}
 
-Az összefésülési folyamat teljes egészében részletes naplózással került végrehajtásra. A logolás lehetővé tette a forrásfájlok betöltésének, a feldolgozott rekordok számának, valamint az egyes tisztítási és összefésülési lépések nyomon követését. A naplóállományok segítségével a teljes feldolgozási folyamat visszakövethetővé vált, és az esetleges hibák vagy inkonzisztenciák gyorsan azonosíthatók voltak. 
+Az összefésülési folyamat teljes egészében részletes naplózással került végrehajtásra. Ez lehetővé tette a forrásfájlok betöltésének, a feldolgozott rekordok számának, valamint az egyes tisztítási és összefésülési lépések nyomon követését. A naplóállományok segítségével a teljes feldolgozási folyamat visszakövethetővé vált, és az esetleges hibák vagy inkonzisztenciák gyorsan azonosíthatók voltak. 
 
 A részletes futási információk, figyelmeztetések és státuszüzenetek a \\
 \texttt{merge/generated/logs/merge\_log.txt} állományban kerülnek
 rögzítésre, amely lehetővé teszi a feldolgozási lépések utólagos
 ellenőrzését és visszakövetését.
 
-A logolás kiterjedt többek között a forrásadatok betöltésére, az ideiglenes rész-adathalmazok mentésére, az adatok egyesítésére, valamint a végső, egységes D adathalmaz előállítására. Ez a megközelítés biztosította a merge-folyamat átláthatóságát és reprodukálhatóságát.
+A naplózás kiterjedt többek között a forrásadatok betöltésére, az ideiglenes rész-adathalmazok mentésére, az adatok egyesítésére, valamint a végső, egységes D adathalmaz előállítására. Ez a megközelítés biztosította a merge-folyamat átláthatóságát és reprodukálhatóságát.
 
 \Section{Az egységesített adathalmaz felbontása}
 

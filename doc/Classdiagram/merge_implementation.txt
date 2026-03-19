@@ -1,6 +1,4 @@
 @startuml
-title Videogame Data Merge – implementációs áttekintés
-
 top to bottom direction
 
 skinparam backgroundColor white
@@ -112,5 +110,4 @@ SourceA ..> IOUtils
 SourceB ..> IOUtils
 SourceC ..> IOUtils
 CleanDesc ..> CleanUtils
-
 @enduml

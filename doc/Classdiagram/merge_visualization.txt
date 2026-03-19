@@ -1,5 +1,4 @@
 @startuml
-title Videogame Data Merge – vizualizációs és riport modulok
 
 top to bottom direction
 
