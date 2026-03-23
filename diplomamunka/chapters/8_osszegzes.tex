@@ -1,0 +1,82 @@
+\Chapter{Összegzés}
+
+A dolgozat célja a Steam platformról származó videójáték-adatok
+elemzése és különböző osztályozási feladatok megfogalmazása volt
+gépi tanulási módszerek alkalmazásával.
+A kutatás során egy valós, heterogén szerkezetű adathalmaz került
+feldolgozásra, amely numerikus változókat,
+kategória jellegű metaadatokat és szöveges leírásokat is tartalmazott.
+A munka egyik fontos célkitűzése az volt,
+hogy bemutassa, miként használhatók fel ezek az eltérő típusú információk
+prediktív modellezési feladatokban.
+
+A feldolgozás első lépéseként az adatok tisztítása és egységesítése történt meg.
+Ez magában foglalta a hiányzó értékek kezelését,
+a változók típusának egységesítését,
+valamint a modellek számára megfelelő jellemzők kialakítását.
+A kategória jellegű mezők bináris reprezentációvá alakítása,
+illetve a szöveges leírások TF--IDF alapú vektorizálása
+lehetővé tette, hogy az eltérő típusú adatok közös jellemzőtérben jelenjenek meg.
+
+A dolgozat két eltérő osztályozási problémát vizsgált.
+Az első feladat a videójátékok sikerességének becslése volt
+a felhasználói értékelésekből származtatott címke alapján.
+Ebben az esetben a strukturált metaadatok és numerikus változók
+alkották a prediktív modellek bemenetét.
+Az elemzés rámutatott arra, hogy a játékok egyes funkcionális
+jellemzői és platformszolgáltatásai kapcsolatban állhatnak
+a felhasználói visszajelzések által tükrözött sikerességgel.
+
+A második vizsgált feladat a multiplayer és singleplayer
+játékok automatikus elkülönítése volt.
+Ebben az esetben a szöveges leírások és a strukturált tagek
+bizonyultak a leginformatívabb jellemzőknek.
+A szöveges reprezentáció lehetővé tette,
+hogy a modellek a játékmechanikákra és funkciókra utaló
+kifejezések alapján különítsék el a két kategóriát.
+
+A különböző osztályozási modellek összehasonlítása azt mutatta,
+hogy mind a lineáris, mind a nemlineáris módszerek
+képesek értelmezhető és stabil predikciókat adni.
+A lineáris modellek előnye elsősorban az értelmezhetőségben
+és a nagy dimenziós jellemzőterek hatékony kezelésében jelentkezett,
+míg az ensemble módszerek bizonyos esetekben
+jobb prediktív teljesítményt mutattak.
+Az eredmények összességében azt jelzik,
+hogy a videójátékokhoz kapcsolódó metaadatok
+és szöveges információk alkalmasak
+gépi tanulási modellek bemeneteként történő felhasználásra.
+
+A dolgozat egyik fontos tanulsága,
+hogy a strukturált és a szöveges jellemzők kombinációja
+jelentősen növelheti az osztályozási modellek információtartalmát.
+A videójátékok leírásai és metaadatai nemcsak marketingcélú
+információkat hordoznak,
+hanem a játékmechanikákra és felhasználói élményre
+vonatkozó implicit jelzéseket is tartalmaznak,
+amelyek a prediktív modellek számára is hasznosak lehetnek.
+
+A bemutatott megközelítés több irányban is továbbfejleszthető.
+A jövőbeni kutatások egyik lehetséges iránya
+összetettebb természetesnyelv-feldolgozási módszerek alkalmazása lehet,
+például szóbeágyazások vagy neurális nyelvi modellek bevonásával.
+Ezek képesek lehetnek a szövegek mélyebb szemantikai szerkezetének
+megragadására, ami tovább javíthatja az osztályozási teljesítményt.
+
+További fejlesztési lehetőséget jelenthet
+összetettebb gépi tanulási modellek alkalmazása is,
+például mély neurális hálózatok vagy fejlettebb ensemble módszerek használata.
+Emellett érdemes lehet a sikeresség fogalmának finomabb modellezése,
+például többosztályos vagy regressziós megközelítés formájában,
+ahol a célváltozó nem bináris,
+hanem folytonos vagy több kategóriából áll.
+
+Összességében a dolgozat bemutatta,
+hogy a Steam platformon elérhető videójáték-adatok
+alkalmasak adatvezérelt elemzések és prediktív modellezési feladatok
+megvalósítására.
+Az alkalmazott módszerek nemcsak a prediktív teljesítmény szempontjából
+bizonyultak hasznosnak,
+hanem lehetőséget adtak a videójátékok tulajdonságai
+és a felhasználói visszajelzések közötti összefüggések
+jobb megértésére is.

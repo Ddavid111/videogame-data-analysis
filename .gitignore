@@ -12,5 +12,4 @@ diplomamunka/**/*.out
 diplomamunka/**/*.toc
 diplomamunka/**/*.synctex.gz
 diplomamunka/**/*.thm
-diplomamunka/**/*.pdf
 !diplomamunka/images/**/*.pdf
