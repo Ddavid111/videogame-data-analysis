@@ -98,7 +98,7 @@ címkét.
 
 \subsubsection{Első normálforma (1NF)}
 
-Az eredeti \textit{games.csv} állomány több ismétlődő és listaértékű attribútumot tartalmazott, például képernyőképeket, címkéket, kategóriákat, műfajokat, támogatott nyelveket, szinkronhangokat és játékcsomagokat. Az első normálforma követelményeinek megfelelően ezek az attribútumok felbontásra kerültek, és az adatok atomi értékeket tartalmazó táblákba lettek átszervezve.
+Az eredeti \texttt{games.csv} állomány több ismétlődő és listaértékű attribútumot tartalmazott, például képernyőképeket, címkéket, kategóriákat, műfajokat, támogatott nyelveket, szinkronhangokat és játékcsomagokat. Az első normálforma követelményeinek megfelelően ezek az attribútumok felbontásra kerültek, és az adatok atomi értékeket tartalmazó táblákba lettek átszervezve.
 
 A médiatartalmak – képek és videók – külön táblákban kerültek tárolásra, ahol minden elem önálló rekordot képez. A kategóriák, műfajok és címkék esetében önálló entitások jöttek létre, míg a játékokkal való több–több kapcsolatukat kapcsolótáblák reprezentálják. A nyelvek külön táblában kerültek eltárolásra, és a játékokhoz való kapcsolódásuk felirat és szinkronhang szerinti bontásban történt. A platformok kezelése szintén normalizált formában, külön táblák és kapcsolatok segítségével valósult meg.
 
@@ -198,7 +198,7 @@ A D adathalmaz relációs sémája az A, B és C adathalmazok összevonásával 
 
 A D adathalmaz részletes attribútumleírását és az egyes mezők jelentését
 tartalmazó adatleíró (data dictionary) a projekt \texttt{doc/Dictionaries}
-könyvtárában található \texttt{D\_schema\_data\_dictionary.xlsx}
+könyvtárában található \texttt{D\_schema\_data\_dictionary.xlsx}.
 
 A D adathalmaz normalizált relációs sémájának SQL-alapú megvalósítása a dolgozat mellékleteiben található, a \texttt{doc/db} jegyzéken belül. Az ott bemutatott SQL definíciók a végső adatmodellt írják le, és egyértelműen jelölik, hogy az egyes táblák és attribútumok mely forrásadathalmazokból (A, B vagy C) származnak. A D adathalmaz egységesített, normalizált relációs sémája a \ref{fig:D_schema} ábrán látható.
 
@@ -390,7 +390,7 @@ a \texttt{genre\_category\_tables.py}, \texttt{platforms\_tables.py} és
 \texttt{requirements\_tables.py} és \texttt{support\_tables.py} az adott
 szakterületekhez tartozó normalizált táblák előállítását végzik.
 
-Az összefésülési folyamat eredményeként létrejött \textit{merged\_master.csv} egyetlen, \\ 
+Az összefésülési folyamat eredményeként létrejött \texttt{merged\_master.csv} egyetlen, \\ 
 nagyméretű, összevont adatállományt tartalmazott. A split folyamat célja az volt, hogy ebből az egységesített táblából tematikus, normalizált CSV-fájlok jöjjenek létre, amelyek közvetlenül megfelelnek a kialakított relációs adatmodell struktúrájának.
 
 A kód futása közben részletes naplózás készült, amely a \\
@@ -403,7 +403,7 @@ visszakövethetőségét.
 A teljes felosztási folyamatot a \texttt{split/main.ipynb} munkafüzet
 vezérli, amely az alábbi fő lépéseket hajtja végre:
 \begin{itemize}
-    \item a \textit{merged\_master.csv} állomány betöltése,
+    \item a \texttt{merged\_master.csv} állomány betöltése,
     \item az egyes relációknak megfelelő résztáblák létrehozása,
     \item a generált táblák mentése CSV formátumban,
     \item a folyamat közben a feldolgozási lépések naplózása.
@@ -413,22 +413,22 @@ vezérli, amely az alábbi fő lépéseket hajtja végre:
 
 A split folyamat során az alábbi CSV-fájlok kerülnek előállításra:
 \begin{itemize}
-    \item \textit{game.csv} – a videójátékok alapadatai,
-    \item \textit{description.csv} – részletes, rövid és „about” leírások,
-    \item \textit{media.csv} – fejléc- és háttérképek,
-    \item \textit{screenshots.csv} – teljes méretű és előnézeti képernyőképek,
-    \item \textit{movies.csv} – videók (Full HD, 480p és előnézeti változatok),
-    \item \textit{support.csv} – támogatási URL-ek és e-mail címek,
-    \item \textit{requirements.csv} – minimum és ajánlott rendszerkövetelmények operációs rendszer szerint,
-    \item \textit{platforms.csv} és \textit{game\_platform.csv} – platformok és kapcsolótábla,
-    \item \textit{genres.csv} és \textit{game\_genre.csv} – műfajok és kapcsolótábla,
-    \item \textit{categories.csv} és \textit{game\_category.csv} – kategóriák és kapcsolótábla,
-    \item \textit{packages.csv}, \textit{sub\_package.csv} és \textit{game\_package.csv} – Steam csomagok és kapcsolatok,
-    \item \textit{developers.csv} és \textit{game\_developer.csv} – fejlesztők,
-    \item \textit{publishers.csv} és \textit{game\_publisher.csv} – kiadók,
-    \item \textit{tags.csv} és \textit{game\_tag.csv} – címkék és súlyozásuk,
-    \item \textit{languages.csv} – normalizált nyelvlista,
-    \item \textit{game\_subtitles.csv} és \textit{game\_audio\_language.csv} – felirat- és hangnyelvek.
+    \item \texttt{game.csv} – a videójátékok alapadatai,
+    \item \texttt{description.csv} – részletes, rövid és „about” leírások,
+    \item \texttt{media.csv} – fejléc- és háttérképek,
+    \item \texttt{screenshots.csv} – teljes méretű és előnézeti képernyőképek,
+    \item \texttt{movies.csv} – videók (Full HD, 480p és előnézeti változatok),
+    \item \texttt{support.csv} – támogatási URL-ek és e-mail címek,
+    \item \texttt{requirements.csv} – minimum és ajánlott rendszerkövetelmények operációs rendszer szerint,
+    \item \texttt{platforms.csv} és \texttt{game\_platform.csv} – platformok és kapcsolótábla,
+    \item \texttt{genres.csv} és \texttt{game\_genre.csv} – műfajok és kapcsolótábla,
+    \item \texttt{categories.csv} és \texttt{game\_category.csv} – kategóriák és kapcsolótábla,
+    \item \texttt{packages.csv}, \texttt{sub\_package.csv} és \texttt{game\_package.csv} – Steam csomagok és kapcsolatok,
+    \item \texttt{developers.csv} és \texttt{game\_developer.csv} – fejlesztők,
+    \item \texttt{publishers.csv} és \texttt{game\_publisher.csv} – kiadók,
+    \item \texttt{tags.csv} és \texttt{game\_tag.csv} – címkék és súlyozásuk,
+    \item \texttt{languages.csv} – normalizált nyelvlista,
+    \item \texttt{game\_subtitles.csv} és \texttt{game\_audio\_language.csv} – felirat- és hangnyelvek.
 \end{itemize}
 
 \subsection{A split folyamat működési elvei}
