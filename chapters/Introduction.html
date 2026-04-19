@@ -1,0 +1,162 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="hu" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bevezetés &mdash; Diplomamunka  dokumentáció</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.min.css?v=6e7d0de0" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/pointer.css?v=c97663ff" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=24d5f357"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=ea187aaa"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=f0ca4bb6"></script>
+      <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Tárgymutató" href="../genindex.html" />
+    <link rel="search" title="Keresés" href="../search.html" />
+    <link rel="next" title="Adatvizsgálat és előkészítés" href="Data_exploration.html" />
+    <link rel="prev" title="Videójátékok adatainak elemzése Python alapú gépi tanulási eszközök segítségével" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Diplomamunka
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tartalomjegyzék:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Bevezetés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_exploration.html">Adatvizsgálat és előkészítés</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_preparation.html">A relációs séma normalizálás</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Merge.html">Adathalmazok összefésülése (merging)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html">Elemzések a merged tábláról</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Split.html">A merged tábla felosztása (splitting)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Game_stores.html">Konkurrens alkalmazásboltok és online játékkiadók</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Future_work.html">További fejlesztési és kutatási lehetőségek</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Diplomamunka</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Bevezetés</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/chapters/Introduction.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bevezetes">
+<h1>Bevezetés<a class="headerlink" href="#bevezetes" title="Link to this heading"></a></h1>
+<p>A dokumentáció célja, hogy bemutassa az adatelemzési és
+adat-előkészítési folyamat fő lépéseit, valamint az ezekhez tartozó
+munkafolyamatokat és eredményeket. A következő fő részek kerülnek
+bemutatásra:</p>
+<ul>
+<li><p><a class="reference internal" href="Data_exploration.html"><span class="doc">Az adathalmazok (A, B, C) külön-külön történő vizsgálata</span></a></p>
+<p>Mindegyik datasetet önálló Jupyter munkafüzetben elemeztem, ahol
+áttekintettem az adatok szerkezetét, statisztikáit, minőségét és
+alapvető mintázatait.</p>
+</li>
+<li><p><a class="reference internal" href="Data_preparation.html"><span class="doc">Normalizálási folyamat, relációs sémák és adatdictionary-k elkészítése</span></a></p>
+<p>Az <strong>A, B és C</strong> adathalmazok esetében először elkészítettem a
+normalizálási folyamat részletes leírását, majd ezek alapján
+felrajzoltam a teljes relációs sémákat, és összeállítottam az
+adathalmazokhoz tartozó adatdictionary-ket. Ezek a dokumentumok
+bemutatják a táblák szerkezetét, a mezők szerepét, adattípusait és
+az adatok közötti kapcsolatokat.</p>
+<p>Ezt követően elkészítettem a <strong>D adathalmaz</strong> normalizálási folyamatát is,
+amely az <strong>A, B és C összevont, egységesített adathalmazából</strong>
+jött létre. A D datasethez szintén felrajzoltam a teljes relációs sémát, összeállítottam az
+adatdictionary-t, majd létrehoztam a normalizált adatbázist, és összeírtam több alapvető
+SQL-lekérdezést, amelyek a struktúra ellenőrzését és a későbbi
+feldolgozási lépéseket támogatják.</p>
+</li>
+<li><p><a class="reference internal" href="Merge.html"><span class="doc">Adathalmazok összefésülése (merging)</span></a></p>
+<p>Rögzítettem a merge-folyamatot egy ábrával és kódrészletekkel.
+Néhány komplikáltabb implementációs részlet külön is ismertetésre kerül.</p>
+</li>
+<li><p><a class="reference internal" href="Visualization.html"><span class="doc">Elemzések a merged tábláról</span></a></p>
+<p>A létrehozott egyesített adatállományon további elemzéseket
+készítettem, többek között hisztogramokat, Venn-diagramot,
+forrás-eloszlási összegzést és integritásvizsgálatot.</p>
+</li>
+<li><p><a class="reference internal" href="Split.html"><span class="doc">A merged tábla felosztása</span></a></p>
+<p>A teljes összevont adathalmazt végül kisebb, tematikus részekre
+bontottam további feldolgozás és felhasználás céljából.</p>
+</li>
+</ul>
+<p>A fenti fejezetek részletesen ismertetik a munkafolyamatot az
+alapadatok megismerésétől kezdve egészen a végső, feldarabolt és
+továbbhasznosítható adatszerkezetig.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Videójátékok adatainak elemzése Python alapú gépi tanulási eszközök segítségével" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Data_exploration.html" class="btn btn-neutral float-right" title="Adatvizsgálat és előkészítés" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Dávid Drig.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
