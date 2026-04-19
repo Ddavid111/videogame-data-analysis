@@ -60,6 +60,8 @@ Az eredményeket a \ref{tab:model_comparison} táblázat foglalja össze.
 
 \begin{table}[h]
     \centering
+    \caption{Különböző osztályozási modellek összehasonlítása ROC--AUC alapján}
+    \label{tab:model_comparison}
     \begin{tabular}{l c}
         \hline
         \textbf{Modell} & \textbf{ROC--AUC} \\
@@ -69,8 +71,6 @@ Az eredményeket a \ref{tab:model_comparison} táblázat foglalja össze.
         Gradient Boosting & 0.754 \\
         \hline
     \end{tabular}
-    \caption{Különböző osztályozási modellek összehasonlítása ROC--AUC alapján}
-    \label{tab:model_comparison}
 \end{table}
 
 Az eredmények alapján megfigyelhető, hogy a nemlineáris modellek
@@ -124,7 +124,7 @@ már önmagukban is jó teljesítményt értek el,
 azonban a strukturált jellemzők bevonása
 minden esetben további javulást eredményezett.
 
-A \ref{tab:model_comparison} táblázat egyértelműen mutatja,
+A \ref{tab:mp_models} táblázat egyértelműen mutatja,
 hogy a strukturált jellemzők bevonása minden vizsgált modell esetében
 javulást eredményezett, különösen a kisebbségi multiplayer osztály
 visszahívási arányát és F1-mértékét tekintve.
@@ -132,7 +132,7 @@ visszahívási arányát és F1-mértékét tekintve.
 \begin{table}[H]
 \centering
 \caption{A különböző modellek teljesítményének összehasonlítása a multiplayer vs. singleplayer osztályozási feladatra}
-\label{tab:model_comparison}
+\label{tab:mp_models}
 \begin{tabular}{lcccc}
 \hline
 \textbf{Modell} & \textbf{Jellemzők} & \textbf{Accuracy} & \textbf{Recall (MP)} & \textbf{F1 (MP)} \\
